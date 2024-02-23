@@ -1,0 +1,20 @@
+<mat-toolbar class="header"><app-nav></app-nav></mat-toolbar>
+<mat-sidenav-container class="nav-container">
+  <mat-sidenav #sidenav mode="side" opened class="sidenav">
+    <p><button class="button-sidenav" mat-raised-button>New Ticket</button></p>
+    <p><button class="button-sidenav" mat-raised-button>My Tickets</button></p>
+    <p><button class="button-sidenav" mat-raised-button>Claim Ticket</button></p>
+    <p><button class="button-sidenav" mat-raised-button>My Queue</button></p>
+    <p><button class="button-sidenav" mat-raised-button>All Tickets</button></p>
+    <p><button class="button-sidenav" mat-raised-button>Users</button></p>
+    <p><button class="button-sidenav" mat-raised-button>Config</button></p>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button mat-icon-button color="primary" aria-label="Example icon button with a menu icon" (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<mat-toolbar class="footer">Footer</mat-toolbar>
+
+

@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { NavComponent } from './nav/nav.component';
+import { NavComponent } from './core/nav/nav.component';
+import { SidebarComponent } from './core/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { NavComponent } from './nav/nav.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NavComponent
+    NavComponent,
+    SidebarComponent
   ],
   providers: [
     provideAnimationsAsync()
