@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, OnInit, Component, Input, ViewChild } from '@angular/core';
 import { Ticket } from 'src/app/shared/models/ticket.model';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { TicketService } from 'src/app/shared/services/ticket.service';
 
 export interface TicketData {
   id: number;
@@ -25,19 +26,36 @@ export interface TicketData {
   templateUrl: './queue.component.html',
   styleUrl: './queue.component.css'
 })
-export class QueueComponent implements AfterViewInit {
+export class QueueComponent implements AfterViewInit, OnInit {
   @Input({required: true}) tickets: Ticket[] = [];
-  displayedColumns: string[] = ['date', 'created_by', 'title', 'description', 'status', 'group', 'assigned_tech', 'category', 'location'];
-  dataSource: MatTableDataSource<TicketData>;
+  displayedColumns: string[] = ['created_at', 'user_id', 'title', 'description', 'status_id', 'group_id', 'assigned_tech', 'category_id', 'location_id'];
+  dataSource: MatTableDataSource<Ticket>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {
+  constructor(private ticket: TicketService) {
+    console.log(this.tickets);
     this.dataSource = new MatTableDataSource(this.tickets);
   }
 
+  ngOnInit(): void {
+    this.ticket.getTickets().subscribe({
+      next: tickets => {
+        this.tickets = tickets;
+        this.dataSource = new MatTableDataSource(this.tickets);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        console.log("Home Tickets: ", this.tickets);
+      },
+      error: err => {
+        console.error(err);
+      },
+    });
+  }
+
   ngAfterViewInit() {
+    console.log(this.tickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

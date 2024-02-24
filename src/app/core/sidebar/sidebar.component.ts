@@ -33,14 +33,15 @@ export class SidebarComponent {
   constructor(private _formBuilder: FormBuilder, private ticket: TicketService) {
   }
 
-  ngOnInit(): void {
-    this.ticket.getTickets().subscribe({
-      next: tickets => {
-        this.homeTickets = tickets;
-      },
-      error: err => {
-        console.error(err);
-      },
-    });
-  }
+  // ngOnInit(): void {
+  //   this.ticket.getTickets().subscribe({
+  //     next: tickets => {
+  //       this.homeTickets = tickets;
+  //       console.log("Home Tickets: ", this.homeTickets);
+  //     },
+  //     error: err => {
+  //       console.error(err);
+  //     },
+  //   });
+  // }
 }
