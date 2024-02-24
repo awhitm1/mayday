@@ -4,9 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
-import { NavComponent } from './core/nav/nav.component';
-import { SidebarComponent } from './core/sidebar/sidebar.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SidebarComponent } from './core/sidebar/sidebar.component'
 
 @NgModule({
   declarations: [
@@ -15,8 +14,8 @@ import { SidebarComponent } from './core/sidebar/sidebar.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NavComponent,
-    SidebarComponent
+    SidebarComponent,
+    HttpClientModule
   ],
   providers: [
     provideAnimationsAsync()

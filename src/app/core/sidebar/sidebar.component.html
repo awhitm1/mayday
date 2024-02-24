@@ -13,8 +13,13 @@
     <button mat-icon-button color="primary" aria-label="Example icon button with a menu icon" (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
+    <app-queue [tickets]="homeTickets"/>
+    <router-outlet />
+
   </mat-sidenav-content>
 </mat-sidenav-container>
-<mat-toolbar class="footer">Footer</mat-toolbar>
+<mat-toolbar class="footer">
+  <p>All Rights Reserved. &copy; Aaron Whitmer, 2024</p>
+</mat-toolbar>
 
 
