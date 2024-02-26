@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { TicketService } from 'src/app/shared/services/ticket.service';
 
 @Component({
@@ -8,17 +9,22 @@ import { TicketService } from 'src/app/shared/services/ticket.service';
   templateUrl: './ticket.component.html',
   styleUrl: './ticket.component.css'
 })
-export class TicketComponent {
+export class TicketComponent implements OnInit, OnDestroy {
+  allTicketSub!: Subscription;
   constructor(private ticketService: TicketService) {}
 
   ngOnInit(): void {
-    this.ticketService.getTickets().subscribe({
-      next: tickets => {
-        console.log(tickets);
-      },
-      error: err => {
-        console.error(err);
-      },
-    });
+    // this.allTicketSub = this.ticketService.getTickets().subscribe({
+    //   next: tickets => {
+    //     console.log(tickets);
+    //   },
+    //   error: err => {
+    //     console.error(err);
+    //   },
+    // });
+  }
+
+  ngOnDestroy(): void {
+    this.allTicketSub.unsubscribe();
   }
 }

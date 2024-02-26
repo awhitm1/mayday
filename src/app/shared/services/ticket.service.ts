@@ -11,7 +11,11 @@ export class TicketService {
 
   constructor(private http: HttpClient) {}
 
-  getTickets(): Observable<Ticket[]> {
-    return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets`);
+  // getTickets(): Observable<Ticket[]> {
+  //   return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets`);
+  // }
+
+  workingTickets(){
+
   }
 }

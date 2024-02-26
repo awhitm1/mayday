@@ -10,11 +10,15 @@
           <a class="nav-link active" aria-current="page" href="#">Help Desk</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Profile</a>
+          <a class="nav-link"  >Profile</a>
         </li>
       </ul>
       <div class="d-flex">
-        <button mat-raised-button>Login</button>
+        @if (authService.isLoggedIn()){
+          <button mat-raised-button (click)="logout()">Logout</button>
+        } @else{
+        <button mat-raised-button routerLink="/login">Login</button>
+        }
       </div>
     </div>
   </div>

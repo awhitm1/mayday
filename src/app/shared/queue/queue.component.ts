@@ -40,18 +40,18 @@ export class QueueComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.ticket.getTickets().subscribe({
-      next: tickets => {
-        this.tickets = tickets;
-        this.dataSource = new MatTableDataSource(this.tickets);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        console.log("Home Tickets: ", this.tickets);
-      },
-      error: err => {
-        console.error(err);
-      },
-    });
+    // this.ticket.getTickets().subscribe({
+    //   next: tickets => {
+    //     this.tickets = tickets;
+    //     this.dataSource = new MatTableDataSource(this.tickets);
+    //     this.dataSource.paginator = this.paginator;
+    //     this.dataSource.sort = this.sort;
+    //     console.log("Home Tickets: ", this.tickets);
+    //   },
+    //   error: err => {
+    //     console.error(err);
+    //   },
+    // });
   }
 
   ngAfterViewInit() {

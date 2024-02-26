@@ -1,30 +1,33 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from './auth.guard';
+import { noAuthGuard } from './no-auth.guard';
 
 const routes: Routes = [
-  {path: '',
-		pathMatch: 'full',
-		loadComponent: () => import('./core/landing/landing.component').then((c) => c.LandingComponent),
+  {path: '', redirectTo: '/login', pathMatch: 'full',},
+  {path: 'login',
+		loadComponent: () => import('./features/auth/auth.component').then((m) => m.AuthComponent),
+    canActivate: [noAuthGuard],
   },
-  {path: 'auth',
-    pathMatch: 'full',
-    loadComponent: () => import('./features/auth/auth.component').then((c) => c.AuthComponent),
-  },
+
   {path: 'queue',
-    pathMatch: 'full',
-    loadComponent: () => import('./shared/queue/queue.component').then((c) => c.QueueComponent),
+    loadComponent: () => import('./shared/queue/queue.component').then((m) => m.QueueComponent),
+    canActivate: [authGuard],
   },
+
   {path: 'kanban',
-    pathMatch: 'full',
-    loadComponent: () => import('./shared/kanban/kanban.component').then((c) => c.KanbanComponent),
+    loadComponent: () => import('./shared/kanban/kanban.component').then((m) => m.KanbanComponent),
+    canActivate: [authGuard],
   },
+
   {path: 'profile',
-    pathMatch: 'full',
-    loadComponent: () => import('./features/profile/profile.component').then((c) => c.ProfileComponent),
+    loadComponent: () => import('./features/profile/profile.component').then((m) => m.ProfileComponent),
+    canActivate: [authGuard],
   },
+
   {path: 'settings',
-    pathMatch: 'full',
-    loadComponent: () => import('./features/settings/settings.component').then((c) => c.SettingsComponent),
+    loadComponent: () => import('./features/settings/settings.component').then((m) => m.SettingsComponent),
+    canActivate: [authGuard],
   },
 ];
 
