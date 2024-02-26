@@ -3,18 +3,21 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly tokenSubject = new BehaviorSubject<string | null>(null);
+  public readonly tokenSubject = new BehaviorSubject<string | null>(null);
+  private readonly userSubject = new BehaviorSubject< User | null>(null);
+  currentUser = new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password:string){
     console.log('Logging in with username: ', email, ' and password: ', password);
-    return this.http.post<{token: string}>(`${environment.apiUrl}/login`, {email, password});
+    return this.http.post<{token: string, user: User}>(`${environment.apiUrl}/login`, {email, password});
   }
 
   setToken(token: string){
@@ -30,9 +33,20 @@ export class AuthService {
     return !!this.getToken();
   }
 
+  setUser(user: User){
+    localStorage.setItem('user', JSON.stringify(user));
+    this.userSubject.next(user);
+  }
+
+  getUser(){
+    return JSON.parse(localStorage.getItem('user') || '{}');
+  }
+
   logout(){
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.tokenSubject.next(null);
+    this.userSubject.next(null);
     this.router.navigate(['/login']);
   }
 }

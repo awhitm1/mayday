@@ -6,6 +6,8 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { TicketService } from 'src/app/shared/services/ticket.service';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
 
 export interface TicketData {
   id: number;
@@ -27,19 +29,22 @@ export interface TicketData {
   styleUrl: './queue.component.css'
 })
 export class QueueComponent implements AfterViewInit, OnInit {
-  @Input({required: true}) tickets: Ticket[] = [];
+  // @Input({required: true}) tickets: Ticket[] = [];
+  tickets: Ticket[] = [];
   displayedColumns: string[] = ['created_at', 'user_id', 'title', 'description', 'status_id', 'group_id', 'assigned_tech', 'category_id', 'location_id'];
   dataSource: MatTableDataSource<Ticket>;
+  currentUser = this.authService.getUser();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private ticket: TicketService) {
-    console.log(this.tickets);
+  constructor(private ticketService: TicketService, private authService: AuthService) {
+    console.log("Tickets: ", this.tickets);
     this.dataSource = new MatTableDataSource(this.tickets);
   }
 
   ngOnInit(): void {
+    this.getCurrentUserTickets();
     // this.ticket.getTickets().subscribe({
     //   next: tickets => {
     //     this.tickets = tickets;
@@ -55,7 +60,7 @@ export class QueueComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.tickets);
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -67,5 +72,23 @@ export class QueueComponent implements AfterViewInit, OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  getCurrentUserTickets() {
+    if (this.ticketService.usersTickets !== null) {
+      return this.ticketService.usersTickets().subscribe({
+        next: tickets => {
+          this.tickets = tickets;
+          this.dataSource = new MatTableDataSource(this.tickets);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          console.log("Home Tickets: ", this.tickets);
+        },
+        error: err => {
+          console.error(err);
+        },
+      });
+    }
+    return null; // Add this line to return a value if the condition is not met
   }
 }

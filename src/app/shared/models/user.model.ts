@@ -7,4 +7,5 @@ export class User {
   active: boolean = true;
   is_admin: boolean = false;
   is_tech: boolean = false;
+  token?: string;
 }
