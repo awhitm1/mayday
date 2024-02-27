@@ -5,7 +5,7 @@ import { noAuthGuard } from './no-auth.guard';
 
 const routes: Routes = [
   {path: '', redirectTo: '/landing', pathMatch: 'full',},
-  
+
   {path: 'landing',
 		loadComponent: () => import('./core/landing/landing.component').then((m) => m.LandingComponent),
     canActivate: [noAuthGuard],
@@ -31,7 +31,7 @@ const routes: Routes = [
     canActivate: [authGuard],
   },
 
-  {path: 'settings',
+  {path: 'config',
     loadComponent: () => import('./features/settings/settings.component').then((m) => m.SettingsComponent),
     canActivate: [authGuard],
   },
