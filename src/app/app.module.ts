@@ -4,22 +4,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { HttpClientModule } from '@angular/common/http';
-import { SidebarComponent } from './core/sidebar/sidebar.component'
-
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authTokenInterceptor } from './auth-token.interceptor';
+import { NavComponent } from "./core/nav/nav.component";
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    SidebarComponent,
-    HttpClientModule
-  ],
-  providers: [
-    provideAnimationsAsync()
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    providers: [
+        provideHttpClient(withInterceptors([authTokenInterceptor])),
+        provideAnimationsAsync()
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        NavComponent
+    ]
 })
 export class AppModule { }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 
@@ -29,10 +29,6 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  isLoggedIn(){
-    return !!this.getToken();
-  }
-
   setUser(user: User){
     localStorage.setItem('user', JSON.stringify(user));
     this.userSubject.next(user);
@@ -42,11 +38,14 @@ export class AuthService {
     return JSON.parse(localStorage.getItem('user') || '{}');
   }
 
+  getAdmin(){
+    return JSON.parse(localStorage.getItem('user') || '{}').is_admin;
+  }
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.tokenSubject.next(null);
     this.userSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 }

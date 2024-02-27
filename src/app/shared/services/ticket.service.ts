@@ -13,17 +13,19 @@ import { User } from '../models/user.model';
 export class TicketService {
   currentUserSub: Subscription = new Subscription();
   currentUser: User | null = null;
+  usersTickets = new BehaviorSubject<Ticket[]>([]);
+
   constructor(private http: HttpClient, private authService: AuthService) {
     this.currentUserSub = this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
+      this.getUsersTickets().subscribe(tickets => {
+        this.usersTickets.next(tickets);
+      });
     });
   }
 
-  // getTickets(): Observable<Ticket[]> {
-  //   return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets`);
-  // }
+  getUsersTickets(){
 
-  usersTickets(){
     if (this.currentUser !== null) {
       return this.http.get<Ticket[]>(`${environment.apiUrl}/users/${this.currentUser.id}/tickets`);
     }

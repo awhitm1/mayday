@@ -5,21 +5,30 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      @if (authService.getToken()){
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Help Desk</a>
+          <a class="nav-link active" aria-current="page"  routerLink="/queue">Help Desk</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"  >Profile</a>
+          <a class="nav-link" routerLink="/profile">Profile</a>
         </li>
+        @if (authService.getAdmin()){
+        <li class="nav-item">
+          <a class="nav-link"  routerLink="/config">Config</a>
+        </li>
+      }
       </ul>
+    }
       <div class="d-flex">
-        @if (authService.isLoggedIn()){
+        @if (authService.getToken()){
           <button mat-raised-button (click)="logout()">Logout</button>
         } @else{
-        <button mat-raised-button routerLink="/login">Login</button>
+          <button mat-raised-button routerLink="/login">Login</button>
         }
       </div>
+
     </div>
   </div>
 </nav>

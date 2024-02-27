@@ -1,4 +1,4 @@
-import { AfterViewInit, OnInit, Component, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, OnInit, Component, ViewChild, OnDestroy } from '@angular/core';
 import { Ticket } from 'src/app/shared/models/ticket.model';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
@@ -8,6 +8,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { TicketService } from 'src/app/shared/services/ticket.service';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatButtonModule} from '@angular/material/button';
+import {FormsModule, FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
 
 export interface TicketData {
   id: number;
@@ -24,45 +30,48 @@ export interface TicketData {
 @Component({
   selector: 'app-queue',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatSidenavModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatCheckboxModule, MatToolbarModule, MatIconModule],
   templateUrl: './queue.component.html',
   styleUrl: './queue.component.css'
 })
-export class QueueComponent implements AfterViewInit, OnInit {
-  // @Input({required: true}) tickets: Ticket[] = [];
+export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
+  events: string[] = [];
+  // homeTickets: Ticket[] = [];
+  opened: boolean = true;
+  options = this._formBuilder.group({
+    bottom: 0,
+    fixed: false,
+    top: 0,
+  });
+
   tickets: Ticket[] = [];
   displayedColumns: string[] = ['created_at', 'user_id', 'title', 'description', 'status_id', 'group_id', 'assigned_tech', 'category_id', 'location_id'];
-  dataSource: MatTableDataSource<Ticket>;
+  dataSource: MatTableDataSource<Ticket> = new MatTableDataSource(this.tickets);
   currentUser = this.authService.getUser();
-
+  usersTicketsSub: Subscription = new Subscription();
+  usersTickets: Ticket[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private ticketService: TicketService, private authService: AuthService) {
-    console.log("Tickets: ", this.tickets);
-    this.dataSource = new MatTableDataSource(this.tickets);
-  }
+  constructor(private ticketService: TicketService, private authService: AuthService, private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.getCurrentUserTickets();
-    // this.ticket.getTickets().subscribe({
-    //   next: tickets => {
-    //     this.tickets = tickets;
-    //     this.dataSource = new MatTableDataSource(this.tickets);
-    //     this.dataSource.paginator = this.paginator;
-    //     this.dataSource.sort = this.sort;
-    //     console.log("Home Tickets: ", this.tickets);
-    //   },
-    //   error: err => {
-    //     console.error(err);
-    //   },
-    // });
+    this.usersTicketsSub = this.ticketService.usersTickets.subscribe(tickets => {
+      this.usersTickets = tickets;
+      this.dataSource = new MatTableDataSource(this.usersTickets);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   ngAfterViewInit() {
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnDestroy(): void {
+    this.usersTicketsSub.unsubscribe();
   }
 
   applyFilter(event: Event) {
@@ -74,21 +83,11 @@ export class QueueComponent implements AfterViewInit, OnInit {
     }
   }
 
-  getCurrentUserTickets() {
-    if (this.ticketService.usersTickets !== null) {
-      return this.ticketService.usersTickets().subscribe({
-        next: tickets => {
-          this.tickets = tickets;
-          this.dataSource = new MatTableDataSource(this.tickets);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          console.log("Home Tickets: ", this.tickets);
-        },
-        error: err => {
-          console.error(err);
-        },
-      });
-    }
-    return null; // Add this line to return a value if the condition is not met
+  getMyTickets(){
+    this.usersTickets = this.ticketService.usersTickets.value;
+    this.dataSource = new MatTableDataSource(this.usersTickets);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
+
 }

@@ -4,7 +4,13 @@ import { authGuard } from './auth.guard';
 import { noAuthGuard } from './no-auth.guard';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/login', pathMatch: 'full',},
+  {path: '', redirectTo: '/landing', pathMatch: 'full',},
+  
+  {path: 'landing',
+		loadComponent: () => import('./core/landing/landing.component').then((m) => m.LandingComponent),
+    canActivate: [noAuthGuard],
+  },
+
   {path: 'login',
 		loadComponent: () => import('./features/auth/auth.component').then((m) => m.AuthComponent),
     canActivate: [noAuthGuard],

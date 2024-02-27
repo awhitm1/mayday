@@ -6,7 +6,7 @@ export const noAuthGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isLoggedIn()) {
+  if (authService.getToken()) {
     router.navigate(['/queue']);
     return false;
   } else {
