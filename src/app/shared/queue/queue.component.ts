@@ -14,6 +14,7 @@ import {FormsModule, FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import { UserService } from '../services/user.service';
 
 export interface TicketData {
   id: number;
@@ -50,18 +51,46 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   currentUser = this.authService.getUser();
   usersTicketsSub: Subscription = new Subscription();
   usersTickets: Ticket[] = [];
+  isTechSub: Subscription = new Subscription();
+  isTech: boolean = false;
+  allTicketsSub: Subscription = new Subscription();
+  allTickets: Ticket[] = [];
+  assignedTicketsSub: Subscription = new Subscription();
+  assignedTickets: Ticket[] = [];
+  groupTicketsSub: Subscription = new Subscription();
+  groupTickets: Ticket[] = [];
+  currentView: string = 'Created:';
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private ticketService: TicketService, private authService: AuthService, private _formBuilder: FormBuilder) {}
+  constructor(private ticketService: TicketService, private authService: AuthService, private _formBuilder: FormBuilder, private userService: UserService) {}
 
   ngOnInit(): void {
+    this.isTechSub = this.userService.userIsTech.subscribe(tech => {
+      this.isTech = tech;
+      console.log('Is tech: ', this.isTech);
+    });
+
     this.usersTicketsSub = this.ticketService.usersTickets.subscribe(tickets => {
       this.usersTickets = tickets;
       this.dataSource = new MatTableDataSource(this.usersTickets);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+
+    this.allTicketsSub = this.ticketService.getAllTickets().subscribe(tickets => {
+      this.allTickets = tickets;
+    });
+
+    this.assignedTicketsSub = this.ticketService.getTechsTickets().subscribe(tickets => {
+      this.assignedTickets = tickets;
+    });
+
+    this.groupTicketsSub = this.ticketService.getGroupsTickets().subscribe(tickets => {
+      this.groupTickets = tickets;
+    });
+
   }
 
   ngAfterViewInit() {
@@ -72,6 +101,9 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.usersTicketsSub.unsubscribe();
+    this.isTechSub.unsubscribe();
+    this.allTicketsSub.unsubscribe();
+    this.assignedTicketsSub.unsubscribe();
   }
 
   applyFilter(event: Event) {
@@ -83,11 +115,33 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
+  switchToAllTickets(){
+    this.currentView = 'All Tickets:';
+      this.dataSource = new MatTableDataSource(this.allTickets);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+  }
+
+  switchToAssignedTickets(){
+    this.currentView = 'Assigned:';
+      this.dataSource = new MatTableDataSource(this.assignedTickets);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+  }
+
+  switchToGroupTickets(){
+    this.currentView = 'My Group Tickets:';
+      this.dataSource = new MatTableDataSource(this.groupTickets);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+  }
+
   getMyTickets(){
     this.usersTickets = this.ticketService.usersTickets.value;
     this.dataSource = new MatTableDataSource(this.usersTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
 
 }

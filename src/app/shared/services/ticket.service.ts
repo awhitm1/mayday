@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Ticket } from '../models/ticket.model';
 import { HttpClient } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { User } from '../models/user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class TicketService {
+export class TicketService implements OnDestroy {
   currentUserSub: Subscription = new Subscription();
   currentUser: User | null = null;
   usersTickets = new BehaviorSubject<Ticket[]>([]);
@@ -24,11 +24,51 @@ export class TicketService {
     });
   }
 
-  getUsersTickets(){
+  getAllTickets(){
+    return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets`);
+  }
 
-    if (this.currentUser !== null) {
-      return this.http.get<Ticket[]>(`${environment.apiUrl}/users/${this.currentUser.id}/tickets`);
-    }
+  getUsersTickets(){
+    if (this.authService.getToken()) {
+      return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets_created`);
+    } else {
     return new Observable<Ticket[]>();
+    }
+  }
+
+  getTicket(id: number){
+    return this.http.get<Ticket>(`${environment.apiUrl}/tickets/${id}`);
+  }
+
+  createTicket(ticket: Ticket){
+    return this.http.post<Ticket>(`${environment.apiUrl}/tickets`, ticket);
+  }
+
+  updateTicket(ticket: Ticket){
+    return this.http.put<Ticket>(`${environment.apiUrl}/tickets/${ticket.id}`, ticket);
+  }
+
+  deleteTicket(id: number){
+    return this.http.delete<Ticket>(`${environment.apiUrl}/tickets/${id}`);
+  }
+
+  getTechsTickets(){
+    return this.http.get<Ticket[]>(`${environment.apiUrl}/assigned_tickets`);
+  }
+
+  getGroupsTickets(){
+    return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets_by_group`);
+  }
+
+  getLocationsTickets(){
+    return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets_location`);
+  }
+
+  getCategoriesTickets(){
+    return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets_category`);
+  }
+
+  ngOnDestroy(): void {
+    this.currentUserSub.unsubscribe();
   }
 }
