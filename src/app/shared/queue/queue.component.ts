@@ -1,5 +1,9 @@
 import { AfterViewInit, OnInit, Component, ViewChild, OnDestroy } from '@angular/core';
 import { Ticket } from 'src/app/shared/models/ticket.model';
+import { Category } from 'src/app/shared/models/category.model';
+import { Group } from 'src/app/shared/models/group.model';
+import { Location } from 'src/app/shared/models/location.model';
+import { Status } from 'src/app/shared/models/status.model';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -59,6 +63,9 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   assignedTickets: Ticket[] = [];
   groupTicketsSub: Subscription = new Subscription();
   groupTickets: Ticket[] = [];
+  listsSub: Subscription = new Subscription();
+  // lists: {Group[], Location[], Category[], Status[]} = {Group[], Location[], Category[], Status};
+  lists: {groups: Group[], locations: Location[], categories: Category[], statuses: Status[]} = {groups: [], locations: [], categories: [], statuses: []};
   currentView: string = 'Created:';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -89,6 +96,14 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this.groupTicketsSub = this.ticketService.getGroupsTickets().subscribe(tickets => {
       this.groupTickets = tickets;
+    });
+
+    this.listsSub = this.ticketService.getLists().subscribe(lists => {
+      this.lists.groups = lists.Groups;
+      this.lists.locations = lists.Locations;
+      this.lists.categories = lists.Categories;
+      this.lists.statuses = lists.Statuses;
+      console.log('Lists: ', this.lists);
     });
 
   }
