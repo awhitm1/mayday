@@ -74,6 +74,14 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   constructor(private ticketService: TicketService, private authService: AuthService, private _formBuilder: FormBuilder, private userService: UserService) {}
 
   ngOnInit(): void {
+    this.listsSub = this.ticketService.getLists().subscribe(lists => {
+      this.lists.groups = lists.Groups;
+      this.lists.locations = lists.Locations;
+      this.lists.categories = lists.Categories;
+      this.lists.statuses = lists.Statuses;
+      console.log('Lists: ', this.lists);
+    });
+
     this.isTechSub = this.userService.userIsTech.subscribe(tech => {
       this.isTech = tech;
       console.log('Is tech: ', this.isTech);
@@ -97,19 +105,9 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
     this.groupTicketsSub = this.ticketService.getGroupsTickets().subscribe(tickets => {
       this.groupTickets = tickets;
     });
-
-    this.listsSub = this.ticketService.getLists().subscribe(lists => {
-      this.lists.groups = lists.Groups;
-      this.lists.locations = lists.Locations;
-      this.lists.categories = lists.Categories;
-      this.lists.statuses = lists.Statuses;
-      console.log('Lists: ', this.lists);
-    });
-
   }
 
   ngAfterViewInit() {
-
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
