@@ -42,7 +42,7 @@ export class TicketService implements OnDestroy {
     return this.http.get<Ticket>(`${environment.apiUrl}/tickets/${id}`);
   }
 
-  createTicket(ticket: Ticket){
+  createTicket(ticket: Ticket | any){
     return this.http.post<Ticket>(`${environment.apiUrl}/tickets`, ticket);
   }
 

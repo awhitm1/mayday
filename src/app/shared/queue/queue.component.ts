@@ -19,6 +19,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 export interface TicketData {
   id: number;
@@ -71,7 +72,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private ticketService: TicketService, private authService: AuthService, private _formBuilder: FormBuilder, private userService: UserService) {}
+  constructor(private ticketService: TicketService, private authService: AuthService, private _formBuilder: FormBuilder, private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.listsSub = this.ticketService.getLists().subscribe(lists => {
@@ -156,5 +157,8 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dataSource.sort = this.sort;
   }
 
+  newTicket(){
+    this.router.navigate(['/ticket/new']);
+  }
 
 }

@@ -3,7 +3,7 @@
   <mat-sidenav #sidenav mode="side" opened class="sidenav">
     <div>
       <h5>User:</h5>
-      <p><button class="button-sidenav" mat-raised-button>New Ticket</button></p>
+      <p><button class="button-sidenav" mat-raised-button (click)="newTicket()">New Ticket</button></p>
       <p><button class="button-sidenav" mat-raised-button (click)="getMyTickets()">My Tickets</button></p>
     </div>
     @if (this.isTech){
