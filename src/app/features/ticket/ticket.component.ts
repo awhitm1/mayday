@@ -77,7 +77,15 @@ export class TicketComponent implements OnInit, OnDestroy{
 
  }
 
- claimTicket(){
-
- }
+ claimTicket(id: number){
+    this.ticketService.claimTicket(id).subscribe({
+      next: (ticket: Ticket) => {
+        console.log('Ticket claimed: ', ticket);
+       this.router.navigate(['/queue']);
+      },
+    error: (error: any) => {
+      console.error('Error claiming ticket: ', error);
+      }
+    });
+  }
 }

@@ -45,6 +45,6 @@
       <button type="button" (click)="goBack()">Cancel</button>
       @if (isNewTicket){  <button type="submit" [disabled]="!ticketForm.valid">Submit</button> }
       @if (!isNewTicket && (this.selectedTicket.user_id === this.currentUser.id) ){  <button type="button" [disabled]="!ticketForm.valid" (click)="updateTicket()">Update</button> }
-      @if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null)){  <button type="button" (click)="claimTicket()">Claim</button> }
+      @if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null) && (this.selectedTicket.id !== undefined)){  <button type="button" (click)="claimTicket(this.selectedTicket.id)">Claim</button> }
     </form>
   </div>

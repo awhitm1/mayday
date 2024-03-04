@@ -50,6 +50,10 @@ export class TicketService implements OnDestroy {
     return this.http.put<Ticket>(`${environment.apiUrl}/tickets/${ticket.id}`, ticket);
   }
 
+  claimTicket(id: number){
+    return this.http.get<Ticket>(`${environment.apiUrl}/claim_ticket/${id}`);
+  }
+
   deleteTicket(id: number){
     return this.http.delete<Ticket>(`${environment.apiUrl}/tickets/${id}`);
   }
