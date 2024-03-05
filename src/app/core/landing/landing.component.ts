@@ -29,14 +29,6 @@ export class LandingComponent {
 
   constructor(private userService: UserService, private authService: AuthService, private router: Router) {}
   onSubmit(){
-    console.log('Form submitted: ', this.signUpForm.value);
-    const newUser = {
-      f_name: this.signUpForm.value.f_name,
-      l_name: this.signUpForm.value.l_name,
-      email: this.signUpForm.value.email,
-      password: this.signUpForm.value.password,
-      password_confirmation: this.signUpForm.value.password_confirmation
-    }
     if (!!this.signUpForm.value && this.signUpForm.value.password === this.signUpForm.value.password_confirmation && this.signUpForm.value.password !== null) {
 
       this.userService.createUser(this.signUpForm.value).subscribe({
@@ -45,8 +37,6 @@ export class LandingComponent {
           if (this.signUpForm.value.email !== undefined && this.signUpForm.value.email !== null && this.signUpForm.value.password !== undefined && this.signUpForm.value.password !== null) {
           this.authService.login(this.signUpForm.value.email, this.signUpForm.value.password).subscribe({
             next: (res) => {
-              console.log('Logged in with token: ', res.token);
-              console.log('User (from login): ', res.user);
               this.authService.setToken(res.token);
               this.authService.setUser(res.user);
               this.authService.currentUser.next(res.user);

@@ -29,8 +29,6 @@ export class UserService {
   }
 
   createUser(user: User | any){
-    console.log("f_name: ", user.f_name, "l_name: ", user.l_name, "email: ", user.email, "password: ", user.password, "password_confirmation: ", user.password_confirmation)
-    const newUser: newUser = {f_name: user.f_name, l_name: user.l_name, email: user.email, password: user.password, password_confirmation: user.password_confirmation};
     return this.http.post<User>(`${environment.apiUrl}/users`, user);
   }
 }
