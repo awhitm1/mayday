@@ -27,6 +27,7 @@ export class AuthService {
 
   getToken(){
     return localStorage.getItem('token');
+    console.log('Token: ', localStorage.getItem('token'));
   }
 
   setUser(user: User){
