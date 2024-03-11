@@ -22,7 +22,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class ConfigComponent implements OnInit, OnDestroy{
   listsSub: Subscription = new Subscription();
-  // lists: {Group[], Location[], Category[], Status[]} = {Group[], Location[], Category[], Status};
   lists: {groups: Group[], locations: Location[], categories: Category[], statuses: Status[]} = {groups: [], locations: [], categories: [], statuses: []};
   new_group: string = '';
 
