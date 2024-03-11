@@ -32,13 +32,13 @@ const routes: Routes = [
   },
 
   {path: 'config',
-    loadComponent: () => import('./features/settings/settings.component').then((m) => m.SettingsComponent),
+    loadComponent: () => import('./features/config/config.component').then((m) => m.ConfigComponent),
     canActivate: [authGuard],
   },
   {path: 'ticket/:id',
     loadComponent: () => import('./features/ticket/ticket.component').then((m) => m.TicketComponent),
     canActivate: [authGuard],},
-    
+
   {path: 'ticket/new',
     loadComponent: () => import('./features/ticket/ticket.component').then((m) => m.TicketComponent),
     canActivate: [authGuard],
