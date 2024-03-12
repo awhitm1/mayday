@@ -1,16 +1,11 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { environment } from "src/environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
-
-
-Injectable({
+@Injectable({
   providedIn: 'root'
 })
-export class ConfigService {
-  // configLists: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-
+export class ConfigurationService {
   constructor(private http: HttpClient) {}
 
   getLists(){
@@ -32,4 +27,5 @@ export class ConfigService {
   addCategory(name: string){
     return this.http.post<any>(`${environment.apiUrl}/config/add_category`, {name: name});
   }
+
 }

@@ -8,9 +8,9 @@ import { Group } from 'src/app/shared/models/group.model';
 import { Category } from 'src/app/shared/models/category.model';
 import { Status } from 'src/app/shared/models/status.model';
 import { Location } from 'src/app/shared/models/location.model';
-import { ConfigService } from 'src/app/shared/services/config.service';
 import { Ticket } from 'src/app/shared/models/ticket.model';
 import { FormsModule } from '@angular/forms';
+import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class ConfigComponent implements OnInit, OnDestroy{
   new_group: string = '';
 
 
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigurationService) {}
 
   ngOnInit(){
     this.listsSub = this.configService.getLists().subscribe(lists => {
