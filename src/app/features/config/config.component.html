@@ -1,16 +1,15 @@
-<p>Config Page</p>
+
 <mat-card class="config">
   <mat-card-header>
-    <mat-card-subtitle>Config</mat-card-subtitle>
     <mat-card-title>Groups</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <p>Available Groups:</p>
-      <ol>
+      <ul>
         @for (group of this.lists.groups; track $index){
-          <li>{{group}}</li>
+          <li>{{group.name}}</li>
         }
-      </ol>
+      </ul>
     <mat-divider></mat-divider>
   </mat-card-content>
   <mat-card-actions>
@@ -18,6 +17,98 @@
       <div class="input-group mb-3">
         <input type="text" #addgroup id="addgroup" name="addgroup" class="form-control" [(ngModel)]="new_group" placeholder="New group" aria-label="group" aria-describedby="basic-addon1">
         <span class="input-group-text" id="group" (click)="addGroup(new_group)"><i class="bi bi-plus-square-fill" ></i></span>
+      </div>
+    </form>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="config">
+  <mat-card-header>
+    <mat-card-title>Statuses</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Available Statuses:</p>
+      <ul>
+        @for (status of this.lists.statuses; track $index){
+          <li>{{status.name}}</li>
+        }
+      </ul>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <form (ngSubmit)="addStatus($event)">
+      <div class="input-status mb-3">
+        <input type="text" #addstatus id="addstatus" name="addstatus" class="form-control" [(ngModel)]="new_status" placeholder="New status" aria-label="status" aria-describedby="basic-addon1">
+        <span class="input-status-text" id="status" (click)="addStatus(new_status)"><i class="bi bi-plus-square-fill" ></i></span>
+      </div>
+    </form>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="config">
+  <mat-card-header>
+    <mat-card-title>Locations</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Available Locations:</p>
+      <ul>
+        @for (loc of this.lists.locations; track $index){
+          <li>{{loc.name}}</li>
+        }
+      </ul>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <form (ngSubmit)="addLocation($event)">
+      <div class="input-location mb-3">
+        <input type="text" #addlocation id="addlocation" name="addlocation" class="form-control" [(ngModel)]="new_location" placeholder="New location" aria-label="status" aria-describedby="basic-addon1">
+        <span class="input-location-text" id="location" (click)="addLocation(new_location)"><i class="bi bi-plus-square-fill" ></i></span>
+      </div>
+    </form>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="config">
+  <mat-card-header>
+    <mat-card-title>Statuses</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Available Statuses:</p>
+      <ul>
+        @for (status of this.lists.statuses; track $index){
+          <li>{{status.name}}</li>
+        }
+      </ul>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <form (ngSubmit)="addStatus($event)">
+      <div class="input-status mb-3">
+        <input type="text" #addstatus id="addstatus" name="addstatus" class="form-control" [(ngModel)]="new_status" placeholder="New status" aria-label="status" aria-describedby="basic-addon1">
+        <span class="input-status-text" id="status" (click)="addStatus(new_status)"><i class="bi bi-plus-square-fill" ></i></span>
+      </div>
+    </form>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="config">
+  <mat-card-header>
+    <mat-card-title>Categories</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Available Categories:</p>
+      <ul>
+        @for (cat of this.lists.categories; track $index){
+          <li>{{cat.name}}</li>
+        }
+      </ul>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <form (ngSubmit)="addCategory($event)">
+      <div class="input-category mb-3">
+        <input type="text" #addcategory id="addcategory" name="addcategory" class="form-control" [(ngModel)]="new_category" placeholder="New category" aria-label="category" aria-describedby="basic-addon1">
+        <span class="input-category-text" id="category" (click)="addCategory(new_category)"><i class="bi bi-plus-square-fill" ></i></span>
       </div>
     </form>
   </mat-card-actions>

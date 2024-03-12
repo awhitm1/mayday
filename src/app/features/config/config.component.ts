@@ -24,6 +24,9 @@ export class ConfigComponent implements OnInit, OnDestroy{
   listsSub: Subscription = new Subscription();
   lists: {groups: Group[], locations: Location[], categories: Category[], statuses: Status[]} = {groups: [], locations: [], categories: [], statuses: []};
   new_group: string = '';
+  new_status: string = '';
+  new_location: string = '';
+  new_category: string = '';
 
 
   constructor(private configService: ConfigurationService) {}
@@ -45,24 +48,28 @@ export class ConfigComponent implements OnInit, OnDestroy{
   addGroup(name: string){
     this.configService.addGroup(name).subscribe(group => {
       this.lists.groups.push(group);
+      this.new_group = '';
     });
   }
 
   addStatus(name: string){
     this.configService.addStatus(name).subscribe(status => {
       this.lists.statuses.push(status);
+      this.new_status = '';
     });
   }
 
   addLocation(name: string){
     this.configService.addLocation(name).subscribe(location => {
       this.lists.locations.push(location);
+      this.new_location = '';
     });
   }
 
   addCategory(name: string){
     this.configService.addCategory(name).subscribe(category => {
       this.lists.categories.push(category);
+      this.new_category = '';
     });
   }
 
