@@ -31,10 +31,10 @@ export class ConfigComponent implements OnInit, OnDestroy{
   ngOnInit(){
     this.listsSub = this.configService.getLists().subscribe(lists => {
       this.lists = lists;
-      this.lists.groups = lists.Groups;
-      this.lists.locations = lists.Locations;
-      this.lists.categories = lists.Categories;
-      this.lists.statuses = lists.Statuses;
+      // this.lists.groups = lists.Groups;
+      // this.lists.locations = lists.Locations;
+      // this.lists.categories = lists.Categories;
+      // this.lists.statuses = lists.Statuses;
     });
   }
 
