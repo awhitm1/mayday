@@ -41,7 +41,9 @@
     <form (ngSubmit)="addStatus($event)">
       <div class="input-group mb-3">
         <input type="text" #addstatus id="addstatus" name="addstatus" class="form-control" [(ngModel)]="new_status" placeholder="New status" aria-label="status" aria-describedby="basic-addon1">
-        <span class="input-group-text" id="status" (click)="addStatus(new_status)"><i class="bi bi-plus-square-fill" ></i></span>
+        <span class="input-group-text" id="status" (click)="addStatus(new_status)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg></span>
       </div>
     </form>
   </mat-card-actions>
@@ -64,7 +66,9 @@
     <form (ngSubmit)="addLocation($event)">
       <div class="input-group mb-3">
         <input type="text" #addlocation id="addlocation" name="addlocation" class="form-control" [(ngModel)]="new_location" placeholder="New location" aria-label="status" aria-describedby="basic-addon1">
-        <span class="input-group-text" id="location" (click)="addLocation(new_location)"><i class="bi bi-plus-square-fill" ></i></span>
+        <span class="input-group-text" id="location" (click)="addLocation(new_location)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg></span>
       </div>
     </form>
   </mat-card-actions>
@@ -87,7 +91,9 @@
     <form (ngSubmit)="addCategory($event)">
       <div class="input-group mb-3">
         <input type="text" #addcategory id="addcategory" name="addcategory" class="form-control" [(ngModel)]="new_category" placeholder="New category" aria-label="category" aria-describedby="basic-addon1">
-        <span class="input-group-text" id="category" (click)="addCategory(new_category)"><i class="bi bi-plus-square-fill" ></i></span>
+        <span class="input-group-text" id="category" (click)="addCategory(new_category)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+          
+        </svg></span>
       </div>
     </form>
   </mat-card-actions>
