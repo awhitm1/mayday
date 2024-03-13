@@ -4,13 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
 
-// export interface newUser {
-//   f_name: string;
-//   l_name: string;
-//   email: string;
-//   password: string;
-//   password_confirmation: string;
-// }
 
 @Injectable({
   providedIn: 'root'
