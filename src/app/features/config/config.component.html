@@ -16,7 +16,9 @@
     <form (ngSubmit)="addGroup($event)">
       <div class="input-group mb-3">
         <input type="text" #addgroup id="addgroup" name="addgroup" class="form-control" [(ngModel)]="new_group" placeholder="New group" aria-label="group" aria-describedby="basic-addon1">
-        <span class="input-group-text" id="group" (click)="addGroup(new_group)"><i class="bi bi-plus-square-fill" ></i></span>
+        <span class="input-group-text" id="group" (click)="addGroup(new_group)"><span class="material-symbols-outlined">
+          add
+          </span></span>
       </div>
     </form>
   </mat-card-actions>
