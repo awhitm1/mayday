@@ -92,9 +92,87 @@
       <div class="input-group mb-3">
         <input type="text" #addcategory id="addcategory" name="addcategory" class="form-control" [(ngModel)]="new_category" placeholder="New category" aria-label="category" aria-describedby="basic-addon1">
         <span class="input-group-text" id="category" (click)="addCategory(new_category)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-          
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
         </svg></span>
       </div>
     </form>
   </mat-card-actions>
 </mat-card>
+
+<div>
+<h3>User Management:</h3>
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" matSort>
+  <!-- Date Definition -->
+  <ng-container matColumnDef="created_at">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+    <td mat-cell *matCellDef="let row"> {{row.created_at}} </td>
+  </ng-container>
+
+  <!-- Created By Definition -->
+  <ng-container matColumnDef="user_id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created by </th>
+    <td mat-cell *matCellDef="let row"> {{row.user_id}} </td>
+  </ng-container>
+
+  <!-- Title Definition -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+    <td mat-cell *matCellDef="let row"> {{row.title}} </td>
+  </ng-container>
+
+  <!-- Desription Definition -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+    <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+  </ng-container>
+
+  <!-- Status Definition -->
+  <ng-container matColumnDef="status_id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+    <td mat-cell *matCellDef="let row"> {{this.lists.statuses[row.status_id-1].name}} </td>
+  </ng-container>
+
+  <!-- Group Definition -->
+  <ng-container matColumnDef="group_id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Group </th>
+    <td mat-cell *matCellDef="let row"> {{this.lists.groups[row.group_id-1].name}} </td>
+  </ng-container>
+
+  <!-- Assigned Tech Definition -->
+  <ng-container matColumnDef="assigned_tech">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tech </th>
+    <td mat-cell *matCellDef="let row"> {{row.assigned_tech_id}} </td>
+  </ng-container>
+
+  <!-- Category Definition -->
+  <ng-container matColumnDef="category_id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+    <td mat-cell *matCellDef="let row"> {{this.lists.categories[row.category_id].name}} </td>
+  </ng-container>
+
+  <!-- Location Definition -->
+  <ng-container matColumnDef="location_id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+    <td mat-cell *matCellDef="let row"> {{this.lists.locations[row.location_id-1].name}} </td>
+  </ng-container>
+
+  <!-- Header and Row Declarations -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  <!-- Row shown when there is no matching data. -->
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+  </tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of tickets"></mat-paginator>
+</div>
+</div>
+
+
