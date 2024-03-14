@@ -10,8 +10,7 @@ import { User } from '../models/user.model';
 })
 export class AuthService {
   public readonly tokenSubject = new BehaviorSubject<string | null>(null);
-  private readonly userSubject = new BehaviorSubject< User | null>(null);
-  currentUser = new BehaviorSubject<User | null>(null);
+  public readonly userSubject = new BehaviorSubject< User | null>(null);
 
   constructor(private http: HttpClient, private router: Router) {}
 

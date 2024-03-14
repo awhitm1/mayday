@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,10 +9,14 @@ import { User } from 'src/app/shared/models/user.model';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit{
   currentUser: User | null = null;
 
-  constructor() {
-    this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(){
+    this.authService.userSubject.subscribe(user => {
+      this.currentUser = user;
+    });
   }
 }
