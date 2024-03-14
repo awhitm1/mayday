@@ -67,7 +67,11 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   groupTickets: Ticket[] = [];
   listsSub: Subscription = new Subscription();
   // lists: {Group[], Location[], Category[], Status[]} = {Group[], Location[], Category[], Status};
-  lists: {groups: Group[], locations: Location[], categories: Category[], statuses: Status[]} = {groups: [], locations: [], categories: [], statuses: []};
+  // lists: {groups: Group[], locations: Location[], categories: Category[], statuses: Status[]} = {groups: [], locations: [], categories: [], statuses: []};
+  groupList: Group[] = [];
+  locationList: Location[] = [];
+  categoryList: Category[] = [];
+  statusList: Status[] = [];
   currentView: string = 'Created:';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -77,11 +81,11 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.listsSub = this.configService.getLists().subscribe(lists => {
-      this.lists.groups = lists.Groups;
-      this.lists.locations = lists.Locations;
-      this.lists.categories = lists.Categories;
-      this.lists.statuses = lists.Statuses;
-      console.log('Lists: ', this.lists);
+      this.groupList = lists.Groups;
+      this.locationList = lists.Locations;
+      this.categoryList = lists.Categories;
+      this.statusList = lists.Statuses;
+      console.log('Lists: ', this.groupList, this.locationList, this.categoryList, this.statusList);
     });
 
     this.isTechSub = this.userService.userIsTech.subscribe(tech => {
