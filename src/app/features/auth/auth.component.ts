@@ -33,7 +33,6 @@ export class AuthComponent {
         currentUser.token = res.token;
         this.authService.setToken(res.token);
         this.authService.setUser(res.user);
-        this.authService.currentUser.next(res.user);
         this.router.navigate(['/queue']);
       },
       error: err => {

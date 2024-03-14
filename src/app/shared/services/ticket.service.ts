@@ -14,11 +14,11 @@ export class TicketService implements OnDestroy {
   currentUserSub: Subscription = new Subscription();
   currentUser: User | null = null;
   usersTickets = new BehaviorSubject<Ticket[]>([]);
-  
+
 
 
   constructor(private http: HttpClient, private authService: AuthService) {
-    this.currentUserSub = this.authService.currentUser.subscribe(user => {
+    this.currentUserSub = this.authService.userSubject.subscribe(user => {
       this.currentUser = user;
       this.getUsersTickets().subscribe(tickets => {
         this.usersTickets.next(tickets);
