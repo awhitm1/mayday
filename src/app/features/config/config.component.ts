@@ -62,8 +62,8 @@ export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy{
       this.users = users;
       console.log('Users: ', this.users);
       this.dataSource = new MatTableDataSource(this.users);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
