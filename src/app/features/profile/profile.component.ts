@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit{
   constructor(private authService: AuthService) {}
 
   ngOnInit(){
+    this.currentUser = this.authService.userSubject.getValue();
     this.authService.userSubject.subscribe(user => {
       this.currentUser = user;
       console.log('Current User: ', this.currentUser);
