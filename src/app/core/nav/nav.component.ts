@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { User } from 'src/app/shared/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -10,9 +11,13 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
-export class NavComponent {
-
+export class NavComponent implements OnInit{
+  currentUser: User | null = null;
   constructor(public authService: AuthService) {}
+
+  ngOnInit(){
+    this.currentUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '{}') : null;
+  }
 
   logout() {
 		this.authService.logout();
