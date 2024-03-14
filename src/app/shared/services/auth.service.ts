@@ -48,4 +48,8 @@ export class AuthService {
     this.userSubject.next(null);
     this.router.navigate(['/']);
   }
+
+  getCurrentUser(){
+    return this.http.get<User>(`${environment.apiUrl}/current_user`);
+  }
 }
