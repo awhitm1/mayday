@@ -23,7 +23,7 @@
     }
       <div class="d-flex">
         @if (authService.getToken()){
-          <p>Hello, {{this.currentUser?.f_name}}</p>
+          <p class="p-5"> Hello, {{this.currentUser?.f_name}}</p>
           <button mat-raised-button (click)="logout()">Logout</button>
         } @else{
           <button mat-raised-button routerLink="/login">Login</button>
