@@ -23,6 +23,7 @@ import { ConfigDialogComponent } from './config-dialog/config-dialog.component';
 
 export interface DialogData {
   user: User;
+  groups: Group[];
 }
 
 @Component({
@@ -75,7 +76,8 @@ export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy{
   openDialog(user: User) {
     this.dialog.open(ConfigDialogComponent, {
       data: {
-        user
+        user: user,
+        groups: this.lists.groups
       },
     });
   }
