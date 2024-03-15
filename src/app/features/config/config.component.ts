@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatButtonModule} from '@angular/material/button';
+import { MatDialog} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -18,7 +19,11 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { User } from 'src/app/shared/models/user.model';
 import { UserService } from 'src/app/shared/services/user.service';
+import { ConfigDialogComponent } from './config-dialog/config-dialog.component';
 
+export interface DialogData {
+  user: User;
+}
 
 @Component({
   selector: 'app-config',
@@ -47,7 +52,7 @@ export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private configService: ConfigurationService, private userService: UserService) {}
+  constructor(private configService: ConfigurationService, private userService: UserService, public dialog: MatDialog) {}
 
   ngOnInit(){
     this.listsSub = this.configService.getLists().subscribe(lists => {
@@ -64,6 +69,14 @@ export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy{
       this.dataSource = new MatTableDataSource(this.users);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+    });
+  }
+
+  openDialog(user: User) {
+    this.dialog.open(ConfigDialogComponent, {
+      data: {
+        user
+      },
     });
   }
 
@@ -111,6 +124,15 @@ export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy{
     this.configService.addCategory(name).subscribe(category => {
       this.lists.categories.push(category);
       this.new_category = '';
+    });
+  }
+
+  delUser(id: number){
+    this.userService.delUser(id).subscribe(user => {
+      this.users = this.users.filter(u => u.id !== user.id);
+      this.dataSource = new MatTableDataSource(this.users);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 

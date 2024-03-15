@@ -28,4 +28,8 @@ export class UserService {
   getUsers(){
     return this.http.get<User[]>(`${environment.apiUrl}/users`);
   }
+
+  delUser(id: number){
+    return this.http.delete<User>(`${environment.apiUrl}/users/${id}`);
+  }
 }
