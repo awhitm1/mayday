@@ -1,38 +1,30 @@
 <h2 mat-dialog-title>User Config:</h2>
 <mat-dialog-content>
-  <ul>
-    <li>{{data.user.f_name}}</li>
-    <li>{{data.user.l_name}}</li>
-    <li>{{data.user.is_tech}}</li>
-    <li>{{data.user.is_admin}}</li>
-    <li>{{data.user.active}}</li>
-  </ul>
-
   <form [formGroup]="userConfigForm" (ngSubmit)="onSubmit()" class="form">
     <div>
       <h4>{{data.user.f_name}} {{data.user.l_name}}</h4>
     </div>
     <div>
-      <mat-form-field class="main">
+      <mat-form-field class="config">
         <mat-label floatLabel="is_tech">Tech</mat-label>
-        <mat-select matInput formControlName="is_tech" [value]="data.user.is_tech">
+        <mat-select matInput formControlName="is_tech" [(value)]="data.user.is_tech">
           <mat-option value="true">True</mat-option>
           <mat-option value="false">False</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div>
-      <mat-form-field class="details">
+      <mat-form-field class="config">
         <mat-label floatLabel="is_admin">Admin</mat-label>
-        <mat-select matInput formControlName="status_id" [value]="data.user.is_admin">
+        <mat-select matInput formControlName="status_id" [(value)]="data.user.is_admin">
           <mat-option value="true">True</mat-option>
           <mat-option value="false">False</mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="details">
+      <mat-form-field class="config">
         <mat-label floatLabel="active">Active</mat-label>
-        <mat-select matInput formControlName="status_id" [value]="data.user.active">
+        <mat-select matInput formControlName="status_id" [(value)]="data.user.active">
           <mat-option value="true">True</mat-option>
           <mat-option value="false">False</mat-option>
         </mat-select>
