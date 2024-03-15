@@ -43,6 +43,7 @@ export class ConfigDialogComponent {
   announcer = inject(LiveAnnouncer);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    console.log('Dialog Data: ', data);
     this.filteredGroups = this.groupCtrl.valueChanges.pipe(
       startWith(null),
       map((group: string | null) => (group ? this._filter(group) : this.allGroups.slice())),
