@@ -7,7 +7,8 @@
     <div>
       <mat-form-field class="config">
         <mat-label floatLabel="is_tech">Tech</mat-label>
-        <mat-select matInput formControlName="is_tech" placeholder=data.user.is_tech [(value)]=data.user.is_tech>
+        <mat-select matInput formControlName="is_tech" [(value)]="data.user.is_tech">
+          <mat-option [value]="data.user.is_tech">{{data.user.is_tech}}</mat-option>
           <mat-option value="true">True</mat-option>
           <mat-option value="false">False</mat-option>
         </mat-select>
