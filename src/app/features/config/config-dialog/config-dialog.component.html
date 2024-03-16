@@ -24,9 +24,9 @@
 
       <mat-form-field class="config">
         <mat-label floatLabel="active">Active</mat-label>
-        <mat-select matInput formControlName="active" value="false">
-          <mat-option value="true">True</mat-option>
-          <mat-option value="false">False</mat-option>
+        <mat-select matInput formControlName="active" [value]="false">
+          <mat-option [value]="true">True</mat-option>
+          <mat-option [value]="false">False</mat-option>
         </mat-select>
       </mat-form-field>
 
