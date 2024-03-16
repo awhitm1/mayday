@@ -23,11 +23,10 @@
       </mat-form-field>
 
       <mat-form-field class="config">
-        <mat-label floatLabel="active">Active</mat-label>
-        <mat-select formControlName="active" [(value)]="this.user.active">
-          @for (opt of optionsTF; track opt) { <mat-option [value]="opt">{{opt}}</mat-option> }
-
-        </mat-select>
+        <mat-slide-toggle>
+          <mat-label floatLabel="is_active">Active</mat-label>
+          <mat-slide-toggle formControlName="is_active" [(ngModel)]="this.user.active"></mat-slide-toggle>
+        </mat-slide-toggle>
       </mat-form-field>
 
       <mat-form-field class="group-list">
