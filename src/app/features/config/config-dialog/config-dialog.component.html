@@ -7,7 +7,7 @@
     <div>
       <mat-form-field class="config">
         <mat-label floatLabel="is_tech">Tech</mat-label>
-        <mat-select matInput formControlName="is_tech" [(ngModel)]="this.user.is_tech">
+        <mat-select matInput formControlName="is_tech" [(value)]="this.user.is_tech">
           <mat-option value=true>True</mat-option>
           <mat-option value=false>False</mat-option>
         </mat-select>
@@ -16,17 +16,21 @@
     <div>
       <mat-form-field class="config">
         <mat-label floatLabel="is_admin">Admin</mat-label>
-        <mat-select matInput formControlName="is_admin" [(ngModel)]="this.user.is_admin">
+        <mat-select matInput formControlName="is_admin" [(value)]="this.user.is_admin">
           <mat-option value="true">True</mat-option>
           <mat-option value="false">False</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field class="config">
-        <mat-slide-toggle formControlName="active" >Active</mat-slide-toggle>
+        <mat-label floatLabel="active">Active</mat-label>
+        <mat-select matInput formControlName="active" [(value)]="this.user.active">
+          <mat-option value="true">True</mat-option>
+          <mat-option value="false">False</mat-option>
+        </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="group-list">
+      <!-- <mat-form-field class="group-list">
         <mat-label floatLabel="groups">Groups</mat-label>
         <mat-chip-grid #chipGrid matInput formControlName="groups" aria-label="Group selection">
           @for (group of data.groups; track group){
@@ -44,7 +48,7 @@
             <mat-option [value]="group">{{group}}</mat-option>
           }
         </mat-autocomplete>
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
     <button type="button" (click)="closeDialog()">Cancel</button>
     <button type="submit" [disabled]="!userConfigForm.valid">Submit</button>
