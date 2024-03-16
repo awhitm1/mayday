@@ -27,6 +27,8 @@ import { User } from 'src/app/shared/models/user.model';
   styleUrl: './config-dialog.component.css'
 })
 export class ConfigDialogComponent {
+  optionsTF: string[] = ['true', 'false'];
+
   userConfigForm = new FormGroup({
     is_tech: new FormControl(''),
     is_admin: new FormControl(''),

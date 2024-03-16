@@ -24,9 +24,9 @@
 
       <mat-form-field class="config">
         <mat-label floatLabel="active">Active</mat-label>
-        <mat-select formControlName="active" [value]="this.user.active">
-          <mat-option [value]="true">True</mat-option>
-          <mat-option [value]="false">False</mat-option>
+        <mat-select formControlName="active" [(value)]="this.user.active">
+          @for (opt of optionsTF; track opt) { <mat-option [value]="opt">{{opt}}</mat-option> }
+
         </mat-select>
       </mat-form-field>
 
