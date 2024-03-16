@@ -16,6 +16,8 @@ import {MatAutocompleteSelectedEvent, MatAutocompleteModule} from '@angular/mate
 import { AsyncPipe } from '@angular/common';
 import { Observable, map, startWith } from 'rxjs';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Group } from 'src/app/shared/models/group.model';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-config-dialog',
@@ -35,7 +37,8 @@ export class ConfigDialogComponent {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   groupCtrl = new FormControl('');
   filteredGroups: Observable<string[]>;
-  groups: string[] = ['Lemon'];
+  groups: string[] = [];
+  user: User = new User();
   allGroups: string[] = this.data.groups.map(group => group.name);
 
   @ViewChild('groupInput') groupInput!: ElementRef<HTMLInputElement>;
@@ -44,6 +47,7 @@ export class ConfigDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
     console.log('Dialog Data: ', data);
+    this.user = data.user;
     this.filteredGroups = this.groupCtrl.valueChanges.pipe(
       startWith(null),
       map((group: string | null) => (group ? this._filter(group) : this.allGroups.slice())),
@@ -69,13 +73,13 @@ export class ConfigDialogComponent {
     this.groupCtrl.setValue(null);
   }
 
-  remove(fruit: string): void {
-    const index = this.groups.indexOf(fruit);
+  remove(group: string): void {
+    const index = this.groups.indexOf(group);
 
     if (index >= 0) {
       this.groups.splice(index, 1);
 
-      this.announcer.announce(`Removed ${fruit}`);
+      this.announcer.announce(`Removed ${group}`);
     }
   }
 
