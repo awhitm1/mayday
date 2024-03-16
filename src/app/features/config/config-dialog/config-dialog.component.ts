@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild, inject } from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {
   MAT_DIALOG_DATA,
@@ -6,7 +6,7 @@ import {
   MatDialogContent,
 } from '@angular/material/dialog';
 import { DialogData } from '../config.component';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
@@ -23,20 +23,20 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 @Component({
   selector: 'app-config-dialog',
   standalone: true,
-  imports: [MatDialogTitle, MatDialogContent, MatFormField, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatSelectModule, MatIconModule, MatChipsModule, MatAutocompleteModule, AsyncPipe, FormsModule, MatSlideToggleModule],
+  imports: [MatDialogTitle, MatDialogContent, MatFormField, MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MatChipsModule, MatAutocompleteModule, AsyncPipe, FormsModule, MatSlideToggleModule, ReactiveFormsModule],
   templateUrl: './config-dialog.component.html',
   styleUrl: './config-dialog.component.css'
 })
-export class ConfigDialogComponent {
+export class ConfigDialogComponent implements OnInit{
   optionsTF: string[] = ['true', 'false'];
 
-  userConfigForm = new FormGroup({
-    is_tech: new FormControl(''),
-    is_admin: new FormControl(''),
-    active: new FormControl(''),
-    groups: new FormControl('')
-  });
 
+  userConfigForm: FormGroup = new FormGroup({
+    is_tech: new FormControl<boolean>(false),
+    is_admin: new FormControl<boolean>(false),
+    active: new FormControl<boolean>(false),
+    groups: new FormControl<string[]>([])
+  });
   separatorKeysCodes: number[] = [ENTER, COMMA];
   groupCtrl = new FormControl('');
   filteredGroups: Observable<string[]>;
@@ -48,7 +48,7 @@ export class ConfigDialogComponent {
 
   announcer = inject(LiveAnnouncer);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder) {
     console.log('Dialog Data: ', data);
     this.user = data.user;
     this.filteredGroups = this.groupCtrl.valueChanges.pipe(
@@ -57,8 +57,20 @@ export class ConfigDialogComponent {
     );
   }
 
+  ngOnInit(){
+    this.initializeForm();
+  }
+
+  initializeForm() {
+    this.userConfigForm = this.formBuilder.group({
+      is_tech: [this.user.is_tech],
+      is_admin: [this.user.is_admin],
+      active: [this.user.active],
+      groups: [this.groups]
+    });
+  }
   closeDialog() {
-    this.userConfigForm.reset();
+
 
   }
 
