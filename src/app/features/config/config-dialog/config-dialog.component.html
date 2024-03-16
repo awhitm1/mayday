@@ -2,13 +2,12 @@
 <mat-dialog-content>
   <form [formGroup]="userConfigForm" (ngSubmit)="onSubmit()" class="form">
     <div>
-      <h4>{{data.user.f_name}} {{data.user.l_name}}</h4>
+      <h4>{{this.user.f_name}} {{this.user.l_name}}</h4>
     </div>
     <div>
       <mat-form-field class="config">
         <mat-label floatLabel="is_tech">Tech</mat-label>
-        <mat-select matInput formControlName="is_tech" [(value)]="data.user.is_tech">
-          <mat-option [value]="data.user.is_tech">{{data.user.is_tech}}</mat-option>
+        <mat-select matInput formControlName="is_tech" [(value)]="this.user.is_tech">
           <mat-option value=true>True</mat-option>
           <mat-option value=false>False</mat-option>
         </mat-select>
@@ -17,7 +16,7 @@
     <div>
       <mat-form-field class="config">
         <mat-label floatLabel="is_admin">Admin</mat-label>
-        <mat-select matInput formControlName="is_admin" value="false">
+        <mat-select matInput formControlName="is_admin" [(value)]="this.user.is_admin">
           <mat-option value="true">True</mat-option>
           <mat-option value="false">False</mat-option>
         </mat-select>
@@ -25,7 +24,7 @@
 
       <mat-form-field class="config">
         <mat-label floatLabel="active">Active</mat-label>
-        <mat-select matInput formControlName="active" [(value)]="data.user.active">
+        <mat-select matInput formControlName="active" [(value)]="this.user.active">
           <mat-option value="true">True</mat-option>
           <mat-option value="false">False</mat-option>
         </mat-select>
