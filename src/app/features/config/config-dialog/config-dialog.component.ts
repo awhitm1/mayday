@@ -43,9 +43,10 @@ export class ConfigDialogComponent implements OnInit{
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  groups: string[] = this.data.groups.map(group => group.name);
+  groupsList: string[] = this.data.groups.map(group => group.name);
 
-  user: User = new User();
+  user: User = this.data.user;
+  groups: Group[] = this.data.groups;
   allGroups: string[] = this.data.groups.map(group => group.name);
 
   // @ViewChild('groupInput') groupInput!: ElementRef<HTMLInputElement>;
@@ -54,7 +55,6 @@ export class ConfigDialogComponent implements OnInit{
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder) {
     console.log('Dialog Data: ', data);
-    this.user = data.user;
     // this.filteredGroups = this.groupCtrl.valueChanges.pipe(
     //   startWith(null),
     //   map((group: string | null) => (group ? this._filter(group) : this.allGroups.slice())),
@@ -70,7 +70,7 @@ export class ConfigDialogComponent implements OnInit{
       is_tech: [this.user.is_tech],
       is_admin: [this.user.is_admin],
       active: [this.user.active],
-      groups: [this.groups]
+      groups: [this.groupsList]
     });
   }
   closeDialog() {
@@ -83,7 +83,7 @@ export class ConfigDialogComponent implements OnInit{
 
     // Add our group
     if (value) {
-      this.groups.push(value);
+      this.groupsList.push(value);
     }
 
     // Clear the input value
@@ -92,29 +92,29 @@ export class ConfigDialogComponent implements OnInit{
     // this.groupCtrl.setValue(null);
   }
 
-  remove(group: string): void {
+  remove(group: Group): void {
     const index = this.groups.indexOf(group);
 
     if (index >= 0) {
       this.groups.splice(index, 1);
 
-      this.announcer.announce(`Removed ${group}`);
+      this.announcer.announce(`Removed ${group.name}`);
     }
   }
 
-  edit(group: string, event: MatChipEditedEvent) {
+  edit(group: Group, event: MatChipEditedEvent) {
     const value = event.value.trim();
 
-    // Remove fruit if it no longer has a name
+    // Remove group if it no longer has a name
     if (!value) {
       this.remove(group);
       return;
     }
 
-    // Edit existing fruit
+    // Edit existing group
     const index = this.groups.indexOf(group);
     if (index >= 0) {
-      this.groups[index] = value;
+      this.groups[index].name = value;
     }
   }
 

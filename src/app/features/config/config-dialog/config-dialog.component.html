@@ -58,14 +58,14 @@
               (removed)="remove(grp)"
               [editable]="true"
               (edited)="edit(grp, $event)"
-              [aria-description]="'press enter to edit ' + grp">
+              [aria-description]="'press enter to edit ' + grp.name">
               {{grp}}
-              <button matChipRemove [attr.aria-label]="'remove ' + grp">
+              <button matChipRemove [attr.aria-label]="'remove ' + grp.name">
                 <mat-icon>cancel</mat-icon>
               </button>
             </mat-chip-row>
           }
-          <input placeholder="New fruit..."
+          <input placeholder="Add group..."
                  [matChipInputFor]="chipGrid"
                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                  [matChipInputAddOnBlur]="addOnBlur"
