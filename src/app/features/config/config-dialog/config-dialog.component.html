@@ -59,7 +59,7 @@
               [editable]="true"
               (edited)="edit(grp, $event)"
               [aria-description]="'press enter to edit ' + grp.name">
-              {{grp}}
+              {{grp.name}}
               <button matChipRemove [attr.aria-label]="'remove ' + grp.name">
                 <mat-icon>cancel</mat-icon>
               </button>
