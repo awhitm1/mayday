@@ -53,7 +53,7 @@
       <mat-form-field class="example-chip-list">
         <mat-label>Groups:</mat-label>
         <mat-chip-grid #chipGrid aria-label="Enter groups">
-          @for (grp of groups; track grp) {
+          @for (grp of data.user.groups; track grp) {
             <mat-chip-row
               (removed)="remove(grp)"
               [editable]="true"
