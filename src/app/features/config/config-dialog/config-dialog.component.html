@@ -49,6 +49,29 @@
           }
         </mat-autocomplete>
       </mat-form-field> -->
+
+      <mat-form-field class="example-chip-list">
+        <mat-label>Groups:</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter groups">
+          @for (grp of groups; track grp) {
+            <mat-chip-row
+              (removed)="remove(grp)"
+              [editable]="true"
+              (edited)="edit(grp, $event)"
+              [aria-description]="'press enter to edit ' + grp">
+              {{grp}}
+              <button matChipRemove [attr.aria-label]="'remove ' + grp">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          }
+          <input placeholder="New fruit..."
+                 [matChipInputFor]="chipGrid"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)"/>
+        </mat-chip-grid>
+      </mat-form-field>
     </div>
     <button type="button" (click)="closeDialog()">Cancel</button>
     <button type="submit" [disabled]="!userConfigForm.valid">Submit</button>

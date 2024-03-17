@@ -11,7 +11,7 @@ import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
-import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
+import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteSelectedEvent, MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AsyncPipe } from '@angular/common';
 import { Observable, map, startWith } from 'rxjs';
@@ -37,24 +37,28 @@ export class ConfigDialogComponent implements OnInit{
     active: new FormControl<boolean>(false),
     groups: new FormControl<string[]>([])
   });
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  groupCtrl = new FormControl('');
-  filteredGroups: Observable<string[]>;
-  groups: string[] = [];
+  // separatorKeysCodes: number[] = [ENTER, COMMA];
+  // groupCtrl = new FormControl('');
+  // filteredGroups: Observable<string[]>;
+
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  groups: string[] = this.data.groups.map(group => group.name);
+
   user: User = new User();
   allGroups: string[] = this.data.groups.map(group => group.name);
 
-  @ViewChild('groupInput') groupInput!: ElementRef<HTMLInputElement>;
+  // @ViewChild('groupInput') groupInput!: ElementRef<HTMLInputElement>;
 
   announcer = inject(LiveAnnouncer);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder) {
     console.log('Dialog Data: ', data);
     this.user = data.user;
-    this.filteredGroups = this.groupCtrl.valueChanges.pipe(
-      startWith(null),
-      map((group: string | null) => (group ? this._filter(group) : this.allGroups.slice())),
-    );
+    // this.filteredGroups = this.groupCtrl.valueChanges.pipe(
+    //   startWith(null),
+    //   map((group: string | null) => (group ? this._filter(group) : this.allGroups.slice())),
+    // );
   }
 
   ngOnInit(){
@@ -85,7 +89,7 @@ export class ConfigDialogComponent implements OnInit{
     // Clear the input value
     event.chipInput!.clear();
 
-    this.groupCtrl.setValue(null);
+    // this.groupCtrl.setValue(null);
   }
 
   remove(group: string): void {
@@ -98,17 +102,33 @@ export class ConfigDialogComponent implements OnInit{
     }
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.groups.push(event.option.viewValue);
-    this.groupInput.nativeElement.value = '';
-    this.groupCtrl.setValue(null);
+  edit(group: string, event: MatChipEditedEvent) {
+    const value = event.value.trim();
+
+    // Remove fruit if it no longer has a name
+    if (!value) {
+      this.remove(group);
+      return;
+    }
+
+    // Edit existing fruit
+    const index = this.groups.indexOf(group);
+    if (index >= 0) {
+      this.groups[index] = value;
+    }
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  // selected(event: MatAutocompleteSelectedEvent): void {
+  //   this.groups.push(event.option.viewValue);
+  //   this.groupInput.nativeElement.value = '';
+  //   this.groupCtrl.setValue(null);
+  // }
 
-    return this.allGroups.filter(group => group.toLowerCase().includes(filterValue));
-  }
+  // private _filter(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
+
+  //   return this.allGroups.filter(group => group.toLowerCase().includes(filterValue));
+  // }
 
   onSubmit() {
     console.log('User Config Form: ', this.userConfigForm.value);
