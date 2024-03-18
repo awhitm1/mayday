@@ -3,7 +3,7 @@ import {COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
-  MatDialogContent,
+  MatDialogContent
 } from '@angular/material/dialog';
 import { DialogData } from '../config.component';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -120,6 +120,7 @@ export class ConfigDialogComponent implements OnInit{
 
   onSubmit() {
     console.log('User Config Form: ', this.userConfigForm.value);
+
   }
 
 }
