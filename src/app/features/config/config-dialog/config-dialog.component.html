@@ -33,7 +33,7 @@
       <mat-form-field class="config">
         <mat-label>Groups:</mat-label>
         <mat-chip-grid #chipGrid aria-label="Enter groups">
-          @for (grp of data.user.groups; track grp) {
+          @for (grp of groups; track grp) {
             <mat-chip-row
               (removed)="remove(grp)">
               {{grp.name}}
@@ -50,7 +50,7 @@
               (matChipInputTokenEnd)="add($event)"/>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
             @for (group of filteredGroups | async; track group) {
-            <mat-option [value]="group.name">{{group.name}}</mat-option>
+            <mat-option [value]="group">{{group.name}}</mat-option>
            }
         </mat-autocomplete>
       </mat-form-field>

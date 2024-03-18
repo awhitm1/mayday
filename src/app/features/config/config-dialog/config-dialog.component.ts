@@ -113,6 +113,7 @@ export class ConfigDialogComponent implements OnInit{
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.groups.push(event.option.value);
+    console.log('Selected: ', event.option.value);
     this.groupInput.nativeElement.value = '';
     this.groupCtrl.setValue(null);
   }
