@@ -58,6 +58,6 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button type="button" mat-button mat-dialog-close (click)="closeDialog()">Cancel</button>
-    <button type="submit" mat-button mat-dialog-close [disabled]="!userConfigForm.valid">Submit</button>
+  <button type="button" mat-button mat-dialog-close>Cancel</button>
+  <button type="submit" mat-button [disabled]="!userConfigForm.valid">Submit</button>
 </mat-dialog-actions>

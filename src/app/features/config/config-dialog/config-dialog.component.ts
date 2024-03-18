@@ -21,6 +21,7 @@ import { Group } from 'src/app/shared/models/group.model';
 import { User } from 'src/app/shared/models/user.model';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-config-dialog',
@@ -45,7 +46,6 @@ export class ConfigDialogComponent implements OnInit{
   filteredGroups: Observable<Group[]>;
 
   addOnBlur = true;
-  // readonly separatorKeysCodes = [ENTER, COMMA] as const;
   groupsList: string[] = this.data.groups.map(group => group.name);
 
   user: User = this.data.user;
@@ -56,7 +56,7 @@ export class ConfigDialogComponent implements OnInit{
 
   announcer = inject(LiveAnnouncer);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private userService: UserService) {
     console.log('Dialog Data: ', data);
     this.filteredGroups = this.groupCtrl.valueChanges.pipe(
       startWith(null),
@@ -83,18 +83,13 @@ export class ConfigDialogComponent implements OnInit{
     });
   }
 
-  closeDialog() {
-
-
-  }
-
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     // Add our group
     if (value) {
       this.groupsList.push(value);
-
+      this.announcer.announce(`Added ${value}`);
     }
 
     // Clear the input value
@@ -122,7 +117,7 @@ export class ConfigDialogComponent implements OnInit{
 
   onSubmit() {
     console.log('User Config Form: ', this.userConfigForm.value);
-
+    
   }
 
 }
