@@ -20,6 +20,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { User } from 'src/app/shared/models/user.model';
 import { UserService } from 'src/app/shared/services/user.service';
 import { ConfigDialogComponent } from './config-dialog/config-dialog.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 export interface DialogData {
   user: User;
@@ -29,7 +30,7 @@ export interface DialogData {
 @Component({
   selector: 'app-config',
   standalone: true,
-  imports: [MatCardModule, MatDividerModule, MatButtonModule, MatProgressBarModule, FormsModule, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [MatCardModule, MatDividerModule, MatButtonModule, MatProgressBarModule, FormsModule, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatChipsModule],
   templateUrl: './config.component.html',
   styleUrl: './config.component.css'
 })
@@ -41,7 +42,7 @@ export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy{
   lists: {groups: Group[], locations: Location[], categories: Category[], statuses: Status[]} = {groups: [], locations: [], categories: [], statuses: []};
 
   // Mat-table items
-  displayedColumns: string[] = ['f_name', 'l_name', 'is_tech', 'is_admin', 'active', 'actions'];
+  displayedColumns: string[] = ['f_name', 'l_name', 'is_tech', 'is_admin', 'active', 'groups', 'actions'];
   dataSource: MatTableDataSource<User> = new MatTableDataSource(this.users);
 
   // Input variables

@@ -144,6 +144,15 @@
     <td mat-cell *matCellDef="let row"> {{row.active}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="groups">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Groups </th>
+    <td mat-cell *matCellDef="let row">
+       @for(group of row.groups; track group){
+        <mat-chip> {{row.groups.name}}</mat-chip>
+       }
+    </td>
+  </ng-container>
+
   <!-- Actions -->
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
