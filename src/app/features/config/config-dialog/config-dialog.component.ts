@@ -20,11 +20,12 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Group } from 'src/app/shared/models/group.model';
 import { User } from 'src/app/shared/models/user.model';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-config-dialog',
   standalone: true,
-  imports: [MatDialogTitle, MatDialogContent, MatFormField, MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MatChipsModule, MatAutocompleteModule, AsyncPipe, FormsModule, MatSlideToggleModule, ReactiveFormsModule, MatDialogClose, MatDialogActions],
+  imports: [MatDialogTitle, MatDialogContent, MatFormField, MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MatChipsModule, MatAutocompleteModule, AsyncPipe, FormsModule, MatSlideToggleModule, ReactiveFormsModule, MatDialogClose, MatDialogActions, MatButtonModule],
   templateUrl: './config-dialog.component.html',
   styleUrl: './config-dialog.component.css'
 })
