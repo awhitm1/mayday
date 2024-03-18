@@ -3,7 +3,8 @@ import {COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
-  MatDialogContent
+  MatDialogContent,
+  MatDialogClose, MatDialogActions
 } from '@angular/material/dialog';
 import { DialogData } from '../config.component';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -23,7 +24,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 @Component({
   selector: 'app-config-dialog',
   standalone: true,
-  imports: [MatDialogTitle, MatDialogContent, MatFormField, MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MatChipsModule, MatAutocompleteModule, AsyncPipe, FormsModule, MatSlideToggleModule, ReactiveFormsModule],
+  imports: [MatDialogTitle, MatDialogContent, MatFormField, MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MatChipsModule, MatAutocompleteModule, AsyncPipe, FormsModule, MatSlideToggleModule, ReactiveFormsModule, MatDialogClose, MatDialogActions],
   templateUrl: './config-dialog.component.html',
   styleUrl: './config-dialog.component.css'
 })
