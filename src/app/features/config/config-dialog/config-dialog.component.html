@@ -30,47 +30,29 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- <mat-form-field class="group-list">
-        <mat-label floatLabel="groups">Groups</mat-label>
-        <mat-chip-grid #chipGrid matInput formControlName="groups" aria-label="Group selection">
-          @for (group of data.groups; track group){
-            <mat-chip-row (removed)="remove(group.name)">
-              {{group}}
-              <button matChipRemove [attr.aria-label]="'Remove ' + group">
-                <mat-icon>cancel</mat-icon>
-              </button>
-            </mat-chip-row>
-          }
-        </mat-chip-grid>
-        <input placeholder="New Group..." #groupInput [formControl]="groupCtrl" [matChipInputFor]="chipGrid" [matAutocomplete]="auto"  [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)"/>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-          @for (group of filteredGroups | async; track group) {
-            <mat-option [value]="group">{{group}}</mat-option>
-          }
-        </mat-autocomplete>
-      </mat-form-field> -->
-
-      <mat-form-field class="example-chip-list">
+      <mat-form-field class="config">
         <mat-label>Groups:</mat-label>
         <mat-chip-grid #chipGrid aria-label="Enter groups">
           @for (grp of data.user.groups; track grp) {
             <mat-chip-row
-              (removed)="remove(grp)"
-              [editable]="true"
-              (edited)="edit(grp, $event)"
-              [aria-description]="'press enter to edit ' + grp.name">
+              (removed)="remove(grp)">
               {{grp.name}}
               <button matChipRemove [attr.aria-label]="'remove ' + grp.name">
                 <mat-icon>cancel</mat-icon>
               </button>
             </mat-chip-row>
           }
-          <input placeholder="Add group..."
-                 [matChipInputFor]="chipGrid"
-                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                 [matChipInputAddOnBlur]="addOnBlur"
-                 (matChipInputTokenEnd)="add($event)"/>
         </mat-chip-grid>
+
+        <input placeholder="Add group..." #groupInput [formControl]="groupCtrl"
+              [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"/>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            @for (group of filteredGroups | async; track group) {
+            <mat-option [value]="group.name">{{group.name}}</mat-option>
+           }
+        </mat-autocomplete>
       </mat-form-field>
     </div>
     <button type="button" (click)="closeDialog()">Cancel</button>
