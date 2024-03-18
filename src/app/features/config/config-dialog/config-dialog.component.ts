@@ -47,7 +47,7 @@ export class ConfigDialogComponent implements OnInit{
   groupsList: string[] = this.data.groups.map(group => group.name);
 
   user: User = this.data.user;
-  groups: Group[] = this.data.groups;
+  groups: Group[] = this.data.user.groups || [];
   allGroups: Group[] = this.data.groups;
 
   @ViewChild('groupInput') groupInput!: ElementRef<HTMLInputElement>;
