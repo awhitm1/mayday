@@ -76,6 +76,7 @@ export class ConfigDialogComponent implements OnInit{
 
   initializeForm() {
     this.userConfigForm = this.formBuilder.group({
+      id: [this.user.id],
       is_tech: [this.user.is_tech],
       is_admin: [this.user.is_admin],
       active: [this.user.active],
@@ -117,7 +118,14 @@ export class ConfigDialogComponent implements OnInit{
 
   onSubmit() {
     console.log('User Config Form: ', this.userConfigForm.value);
-    
+    this.userService.updateUser(this.userConfigForm.value).subscribe({
+      next: (user: User) => {
+        console.log('User updated: ', user);
+      },
+      error: (error: any) => {
+        console.error('Error updating user: ', error);
+      }
+    });
   }
 
 }
