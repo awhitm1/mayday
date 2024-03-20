@@ -38,7 +38,7 @@ export class ConfigDialogComponent implements OnInit{
     is_tech: new FormControl<boolean>(false),
     is_admin: new FormControl<boolean>(false),
     active: new FormControl<boolean>(false),
-    groups: new FormControl<Group[]>([])
+    groups: new FormControl<number[]>([])
   });
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -47,6 +47,9 @@ export class ConfigDialogComponent implements OnInit{
 
   addOnBlur = true;
   groupsList: string[] = this.data.groups.map(group => group.name);
+
+  // making sure that user.groups is defined before trying to map it
+  groups_ids: number[] = this.data.user.groups ? this.data.user.groups.map(group => group.id) : [];
 
   user: User = this.data.user;
   groups: Group[] = this.data.user.groups || [];
@@ -65,9 +68,8 @@ export class ConfigDialogComponent implements OnInit{
   }
 
   private _filter(value: string): Group[] {
-    const filterValue = value;
-
-    return this.allGroups.filter(group => group.name.indexOf(filterValue) === 0);
+    const filterValue = value.toLowerCase();
+    return this.allGroups.filter(group => group.name.toLowerCase().indexOf(filterValue) !== -1);
   }
 
   ngOnInit(){
@@ -80,7 +82,7 @@ export class ConfigDialogComponent implements OnInit{
       is_tech: [this.user.is_tech],
       is_admin: [this.user.is_admin],
       active: [this.user.active],
-      groups: [this.user.groups]
+      groups: [this.groups_ids]
     });
   }
 
