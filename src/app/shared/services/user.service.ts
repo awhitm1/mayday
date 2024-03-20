@@ -34,6 +34,8 @@ export class UserService {
   }
 
   updateUser(user: User){
+    console.log('User: ', user)
+    
     const editedUser = {
       active: user.active || true,
       is_tech: user.is_tech || false,
