@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -34,6 +34,13 @@ export class UserService {
   }
 
   updateUser(user: User){
-    return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, user);
+    const editedUser = {
+      active: user.active,
+      is_tech: user.is_tech,
+      is_admin: user.is_admin,
+      groups: [user.groups?.map(group => group.id)]
+    }
+    console.log('Edited User groups: ', editedUser.groups)
+    return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, editedUser);
   }
 }

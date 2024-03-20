@@ -84,6 +84,7 @@ export class ConfigDialogComponent implements OnInit{
       active: [this.user.active],
       groups: [this.groups_ids]
     });
+    console.log('Groups_ids: ', this.groups_ids);
   }
 
   add(event: MatChipInputEvent): void {
