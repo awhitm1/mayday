@@ -38,7 +38,7 @@ export class ConfigDialogComponent implements OnInit{
     is_tech: new FormControl<boolean>(false),
     is_admin: new FormControl<boolean>(false),
     active: new FormControl<boolean>(false),
-    groups: new FormControl<number[]>([])
+    groups: new FormControl<Group[]>([])
   });
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -82,9 +82,9 @@ export class ConfigDialogComponent implements OnInit{
       is_tech: [this.user.is_tech],
       is_admin: [this.user.is_admin],
       active: [this.user.active],
-      groups: [this.groups_ids]
+      groups: [this.user.groups]
     });
-    console.log('Groups_ids: ', this.groups_ids);
+    
   }
 
   add(event: MatChipInputEvent): void {
