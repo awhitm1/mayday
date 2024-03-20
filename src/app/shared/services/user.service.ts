@@ -35,10 +35,10 @@ export class UserService {
 
   updateUser(user: User){
     const editedUser = {
-      active: user.active,
-      is_tech: user.is_tech,
-      is_admin: user.is_admin,
-      groups: [user.groups?.map(group => group.id)]
+      active: user.active || true,
+      is_tech: user.is_tech || false,
+      is_admin: user.is_admin || false,
+      groups: user.groups?.map(group => group.id) || []
     }
     console.log('Edited User groups: ', editedUser.groups)
     return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, editedUser);
