@@ -26,7 +26,7 @@ import { Location } from 'src/app/shared/models/location.model';
 export class TicketComponent implements OnInit{
   // ticketSub = new Subscription();
   selectedTicket: Ticket = this.data.ticket || new Ticket();
-  isNewTicket = this.data.isNew || true;
+  isNewTicket = this.data.isNew;
   locations: Location[] = this.data.locations || [];
   categories: Category[] = this.data.categories || [];
   statuses: Status[] = this.data.statuses || [];
