@@ -24,7 +24,7 @@ import { Location } from 'src/app/shared/models/location.model';
 })
 
 export class TicketComponent implements OnInit{
-  // ticketSub = new Subscription();
+  viewOnly: boolean = false;
   selectedTicket: Ticket = this.data.ticket || new Ticket();
   isNewTicket = this.data.isNew;
   locations: Location[] = this.data.locations || [];

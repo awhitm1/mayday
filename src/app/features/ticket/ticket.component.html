@@ -10,20 +10,20 @@
       <div>
         <mat-form-field class="main">
           <mat-label floatLabel="Title">Title</mat-label>
-          <input matInput formControlName="title" [value]="this.selectedTicket.title" required>
+          <input matInput formControlName="title" [value]="this.selectedTicket.title" [disabled]="viewOnly" required>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="main">
           <mat-label floatLabel="Description">Description</mat-label>
-          <textarea matInput formControlName="description" [value]="this.selectedTicket.description" required></textarea>
+          <textarea matInput formControlName="description" [value]="this.selectedTicket.description" [disabled]="viewOnly" required></textarea>
           <mat-hint>Be descriptive</mat-hint>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="details">
           <mat-label floatLabel="Status">Status</mat-label>
-          <mat-select matInput formControlName="status_id" [(value)]="this.selectedTicket.status_id" required>
+          <mat-select matInput formControlName="status_id" [(value)]="this.selectedTicket.status_id" [disabled]="viewOnly" required>
             <mat-option>None</mat-option>
             @for (status of statuses; track status) {
             <mat-option [value]="status.id">{{status.name}}</mat-option>
@@ -33,7 +33,7 @@
 
         <mat-form-field class="details">
           <mat-label floatLabel="Location">Location</mat-label>
-          <mat-select matInput formControlName="location_id" [(value)]="this.selectedTicket.location_id" required>
+          <mat-select matInput formControlName="location_id" [(value)]="this.selectedTicket.location_id" [disabled]="viewOnly" required>
             <mat-option>None</mat-option>
             @for (loc of locations; track loc) {
             <mat-option [value]="loc.id">{{loc.name}}</mat-option>
@@ -43,7 +43,7 @@
 
         <mat-form-field class="details">
           <mat-label floatLabel="Category">Category</mat-label>
-          <mat-select matInput formControlName="category_id" [(value)]="this.selectedTicket.category_id" required>
+          <mat-select matInput formControlName="category_id" [(value)]="this.selectedTicket.category_id" [disabled]="viewOnly" required>
             <mat-option>None</mat-option>
             @for (cat of categories; track cat) {
             <mat-option [value]="cat.id">{{cat.name}}</mat-option>
@@ -53,7 +53,7 @@
 
         <mat-form-field class="details">
           <mat-label floatLabel="Group">Group</mat-label>
-          <mat-select matInput formControlName="group_id" [(value)]="this.selectedTicket.group_id" required>
+          <mat-select matInput formControlName="group_id" [(value)]="this.selectedTicket.group_id" [disabled]="viewOnly" required>
             <mat-option>None</mat-option>
             @for (group of groups; track group) {
             <mat-option [value]="group.id">{{group.name}}</mat-option>
@@ -63,8 +63,8 @@
 
       </div>
       <button type="button" mat-dialog-close>Cancel</button>
-      @if (isNewTicket){  <button type="submit" [disabled]="!ticketForm.valid">Submit</button> }
-      @if (!isNewTicket && (this.selectedTicket.user_id === this.currentUser.id) ){  <button type="button" [disabled]="!ticketForm.valid" (click)="updateTicket()">Update</button> }
+      @if (isNewTicket){  <button type="submit" [disabled]="!ticketForm.valid || viewOnly">Submit</button> }
+      @if (!isNewTicket && (this.selectedTicket.user_id === this.currentUser.id) ){  <button type="button" [disabled]="!ticketForm.valid || viewOnly" (click)="updateTicket()">Update</button> }
       @if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null) && (this.selectedTicket.id !== undefined)){  <button type="button" (click)="claimTicket(this.selectedTicket.id)">Claim</button> }
     </form>
   </div>
