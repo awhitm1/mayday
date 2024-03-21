@@ -23,26 +23,46 @@
       <div>
         <mat-form-field class="details">
           <mat-label floatLabel="Status">Status</mat-label>
-          <input matInput formControlName="status_id" [value]="this.selectedTicket.status_id" required>
+          <mat-select matInput formControlName="status_id" [(value)]="this.selectedTicket.status_id" required>
+            <mat-option>None</mat-option>
+            @for (status of statuses; track status) {
+            <mat-option [value]="status.id">{{status.name}}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field class="details">
           <mat-label floatLabel="Location">Location</mat-label>
-          <input matInput formControlName="location_id" [value]="this.selectedTicket.location_id" required>
+          <mat-select matInput formControlName="location_id" [(value)]="this.selectedTicket.location_id" required>
+            <mat-option>None</mat-option>
+            @for (loc of locations; track loc) {
+            <mat-option [value]="loc.id">{{loc.name}}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field class="details">
           <mat-label floatLabel="Category">Category</mat-label>
-          <input matInput formControlName="category_id" [value]="this.selectedTicket.category_id"required>
+          <mat-select matInput formControlName="category_id" [(value)]="this.selectedTicket.category_id" required>
+            <mat-option>None</mat-option>
+            @for (cat of categories; track cat) {
+            <mat-option [value]="cat.id">{{cat.name}}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field class="details">
           <mat-label floatLabel="Group">Group</mat-label>
-          <input matInput formControlName="group_id" [value]="this.selectedTicket.group_id" required>
+          <mat-select matInput formControlName="group_id" [(value)]="this.selectedTicket.group_id" required>
+            <mat-option>None</mat-option>
+            @for (group of groups; track group) {
+            <mat-option [value]="group.id">{{group.name}}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
 
       </div>
-      <button type="button" (click)="goBack()">Cancel</button>
+      <button type="button" mat-dialog-close>Cancel</button>
       @if (isNewTicket){  <button type="submit" [disabled]="!ticketForm.valid">Submit</button> }
       @if (!isNewTicket && (this.selectedTicket.user_id === this.currentUser.id) ){  <button type="button" [disabled]="!ticketForm.valid" (click)="updateTicket()">Update</button> }
       @if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null) && (this.selectedTicket.id !== undefined)){  <button type="button" (click)="claimTicket(this.selectedTicket.id)">Claim</button> }

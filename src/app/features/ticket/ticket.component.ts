@@ -1,12 +1,12 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Ticket } from 'src/app/shared/models/ticket.model';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
-import { Subscription } from 'rxjs';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { TicketService } from 'src/app/shared/services/ticket.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user.model';
 import { DialogData } from '../config/config.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -18,7 +18,7 @@ import { Location } from 'src/app/shared/models/location.model';
 @Component({
   selector: 'app-ticket',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormField, MatInputModule],
+  imports: [ReactiveFormsModule, MatFormField, MatInputModule, MatSelectModule, MatFormFieldModule],
   templateUrl: './ticket.component.html',
   styleUrl: './ticket.component.css'
 })
@@ -74,11 +74,7 @@ export class TicketComponent implements OnInit{
   });
  }
 
- goBack(){
-    this.router.navigate(['/queue']);
- }
-
- updateTicket(){
+  updateTicket(){
 
  }
 
