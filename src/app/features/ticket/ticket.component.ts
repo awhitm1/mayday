@@ -1,13 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Ticket } from 'src/app/shared/models/ticket.model';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FloatLabelType } from '@angular/material/form-field';
+
 import { Subscription } from 'rxjs';
 import { TicketService } from 'src/app/shared/services/ticket.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user.model';
+import { DialogData } from '../config/config.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Category } from 'src/app/shared/models/category.model';
+import { Status } from 'src/app/shared/models/status.model';
+import { Group } from 'src/app/shared/models/group.model';
+import { Location } from 'src/app/shared/models/location.model';
 
 @Component({
   selector: 'app-ticket',
@@ -17,12 +23,16 @@ import { User } from 'src/app/shared/models/user.model';
   styleUrl: './ticket.component.css'
 })
 
-export class TicketComponent implements OnInit, OnDestroy{
-  ticketSub = new Subscription();
-  selectedTicket = new Ticket();
-  isNewTicket = true;
-  currentUser: User = new User();
-  ticketForm = new FormGroup({
+export class TicketComponent implements OnInit{
+  // ticketSub = new Subscription();
+  selectedTicket: Ticket = this.data.ticket || new Ticket();
+  isNewTicket = this.data.isNew || true;
+  locations: Location[] = this.data.locations || [];
+  categories: Category[] = this.data.categories || [];
+  statuses: Status[] = this.data.statuses || [];
+  groups: Group[] = this.data.groups || [];
+  currentUser: User = this.data.user;
+  ticketForm: FormGroup = new FormGroup({
     title: new FormControl(''),
     description: new FormControl(''),
     status_id: new FormControl(''),
@@ -32,29 +42,24 @@ export class TicketComponent implements OnInit, OnDestroy{
     group_id: new FormControl(''),
   });
 
-  constructor(private ticketService: TicketService, private router: Router, private route: ActivatedRoute) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private ticketService: TicketService, private router: Router, private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    if (this.route.snapshot.params['id'] !== 'new') {
-      console.log('Route: ', this.route.snapshot.params['id']);
-      this.ticketSub = this.ticketService.getTicket(this.route.snapshot.params['id']).subscribe({
-        next: (selectedTicket: Ticket) => {
-          this.selectedTicket = selectedTicket;
-          this.isNewTicket = false;
-          this.currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-          console.log('Selected Ticket: ', this.selectedTicket);
-        },
-        error: (error: any) => {
-          console.error('Error getting tickets: ', error);
-        }
-      });
-      console.log(localStorage.getItem('user'))
-    }
+    this.initializeForm();
 
   }
 
-  ngOnDestroy(): void {
-    this.ticketSub.unsubscribe();
+  initializeForm() {
+    this.ticketForm = this.formBuilder.group({
+      title: [this.selectedTicket.title, Validators.required],
+      description: [this.selectedTicket.description, Validators.required],
+      status_id: [this.selectedTicket.status_id, Validators.required],
+      location_id: [this.selectedTicket.location_id, Validators.required],
+      category_id: [this.selectedTicket.category_id, Validators.required],
+      user_id: [this.selectedTicket.user_id, Validators.required],
+      group_id: [this.selectedTicket.group_id, Validators.required],
+    });
+
   }
 
   onSubmit() {

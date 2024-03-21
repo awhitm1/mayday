@@ -21,6 +21,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
+import { MatDialog } from '@angular/material/dialog';
+import { TicketComponent } from 'src/app/features/ticket/ticket.component';
 
 export interface TicketData {
   id: number;
@@ -77,7 +79,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private ticketService: TicketService, private configService: ConfigurationService, private authService: AuthService, private _formBuilder: FormBuilder, private userService: UserService, private router: Router) {}
+  constructor(private ticketService: TicketService, private configService: ConfigurationService, private authService: AuthService, private _formBuilder: FormBuilder, private userService: UserService, private router: Router, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.listsSub = this.configService.getLists().subscribe(lists => {
@@ -163,7 +165,31 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   newTicket(){
-    this.router.navigate(['/ticket/new']);
+    this.dialog.open(TicketComponent, {
+      data: {
+        ticket: new Ticket(),
+        groups: this.groupList,
+        locations: this.locationList,
+        categories: this.categoryList,
+        statuses: this.statusList,
+        user: this.currentUser,
+        isNew: true
+      }
+    });
+  }
+
+  rowSelected(row: Ticket){
+    this.dialog.open(TicketComponent, {
+      data: {
+        ticket: row,
+        groups: this.groupList,
+        locations: this.locationList,
+        categories: this.categoryList,
+        statuses: this.statusList,
+        user: this.currentUser,
+        isNew: false
+      }
+    });
   }
 
 }

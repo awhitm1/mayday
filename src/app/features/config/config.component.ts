@@ -25,6 +25,12 @@ import { MatChipsModule } from '@angular/material/chips';
 export interface DialogData {
   user: User;
   groups: Group[];
+  ticket?: Ticket;
+  isNew?: boolean;
+  locations?: Location[];
+  categories?: Category[];
+  statuses?: Status[];
+
 }
 
 @Component({

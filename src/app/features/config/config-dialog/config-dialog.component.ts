@@ -32,7 +32,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class ConfigDialogComponent implements OnInit{
   optionsTF: string[] = ['true', 'false'];
-
+  
 
   userConfigForm: FormGroup = new FormGroup({
     is_tech: new FormControl<boolean>(false),
@@ -84,7 +84,7 @@ export class ConfigDialogComponent implements OnInit{
       active: [this.user.active],
       groups: [this.user.groups]
     });
-    
+
   }
 
   add(event: MatChipInputEvent): void {
