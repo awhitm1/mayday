@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TicketComponent } from 'src/app/features/ticket/ticket.component';
+import { DatePipe } from '@angular/common';
 
 export interface TicketData {
   id: number;
@@ -39,7 +40,8 @@ export interface TicketData {
 @Component({
   selector: 'app-queue',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatSidenavModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatCheckboxModule, MatToolbarModule, MatIconModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatSidenavModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatCheckboxModule, MatToolbarModule, MatIconModule, DatePipe],
+  providers: [DatePipe],
   templateUrl: './queue.component.html',
   styleUrl: './queue.component.css'
 })

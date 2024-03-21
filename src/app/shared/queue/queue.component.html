@@ -30,7 +30,7 @@
       <!-- Date Definition -->
       <ng-container matColumnDef="created_at">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-        <td mat-cell *matCellDef="let row"> {{row.created_at}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.created_at | date: 'medium'}} </td>
       </ng-container>
 
       <!-- Created By Definition -->

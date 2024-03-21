@@ -7,13 +7,18 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authTokenInterceptor } from './auth-token.interceptor';
 import { NavComponent } from "./core/nav/nav.component";
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 @NgModule({
     declarations: [
         AppComponent
     ],
     providers: [
         provideHttpClient(withInterceptors([authTokenInterceptor])),
-        provideAnimationsAsync()
+        provideAnimationsAsync(),
+        {
+          provide: DATE_PIPE_DEFAULT_OPTIONS,
+          useValue: { dateFormat: 'medium'}
+        }
     ],
     bootstrap: [AppComponent],
     imports: [
