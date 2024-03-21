@@ -9,6 +9,7 @@ table {
 
 .mat-mdc-row:hover .mat-mdc-cell {
   border-color: currentColor;
+  background-color: antiquewhite;
 }
 
 .mat-mdc-form-field {
