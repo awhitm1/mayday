@@ -99,6 +99,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
       this.usersTickets = tickets;
       console.log('Users Tickets: ', this.usersTickets);
       this.dataSource = new MatTableDataSource(this.usersTickets);
+      console.log('Data Source: ', this.dataSource);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
