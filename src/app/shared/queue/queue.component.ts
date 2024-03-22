@@ -14,6 +14,7 @@ import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {FormsModule, FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -24,6 +25,7 @@ import { ConfigurationService } from 'src/app/shared/services/configuration.serv
 import { MatDialog } from '@angular/material/dialog';
 import { TicketComponent } from 'src/app/features/ticket/ticket.component';
 import { DatePipe } from '@angular/common';
+
 
 export interface TicketData {
   id: number;
@@ -40,7 +42,7 @@ export interface TicketData {
 @Component({
   selector: 'app-queue',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatSidenavModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatCheckboxModule, MatToolbarModule, MatIconModule, DatePipe],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatSidenavModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatCheckboxModule, MatToolbarModule, MatIconModule, DatePipe, MatButtonToggleModule],
   providers: [DatePipe],
   templateUrl: './queue.component.html',
   styleUrl: './queue.component.css'
