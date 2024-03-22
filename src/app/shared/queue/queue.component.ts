@@ -124,6 +124,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
   filterTickets(){
     if (!this.viewClosed){
+      this.currentView = 'Open Tickets:';
       // Filter out closed tickets - check if status exists first
       this.filteredTickets = this.allTickets.filter(ticket => {
         const status = this.statusList.find(status => status.id === ticket.status_id);
@@ -135,6 +136,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
       this.dataSource.sort = this.sort;
     }
     else {
+      this.currentView = 'Closed Tickets:';
       // Filter for closed tickets - check if status exists first
       this.filteredTickets = this.allTickets.filter(ticket => {
         const status = this.statusList.find(status => status.id === ticket.status_id);
@@ -147,11 +149,6 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   switchToAllFilteredTickets(){
-    if (this.viewClosed){
-      this.currentView = 'All Closed Tickets:';
-    } else {
-    this.currentView = 'All OpenTickets:';
-    }
     this.filterTickets();
     this.dataSource = new MatTableDataSource(this.filteredTickets);
     this.dataSource.paginator = this.paginator;
