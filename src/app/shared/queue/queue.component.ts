@@ -92,7 +92,6 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this.isTechSub = this.userService.userIsTech.subscribe(tech => {
       this.isTech = tech;
-      console.log('Is tech: ', this.isTech);
     });
 
     this.allTicketsSub = this.ticketService.getAllTickets().subscribe(tickets => {
