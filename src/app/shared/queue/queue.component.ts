@@ -20,7 +20,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TicketComponent } from 'src/app/features/ticket/ticket.component';
@@ -48,9 +47,6 @@ export interface TicketData {
   styleUrl: './queue.component.css'
 })
 export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
-  events: string[] = [];
-  // homeTickets: Ticket[] = [];
-  opened: boolean = true;
   viewClosed: boolean = false;
   options = this._formBuilder.group({
     bottom: 0,
@@ -58,32 +54,30 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
     top: 0,
   });
 
-  tickets: Ticket[] = [];
+  // tickets: Ticket[] = [];
   displayedColumns: string[] = ['created_at', 'user_id', 'title', 'description', 'status_id', 'group_id', 'assigned_tech', 'category_id', 'location_id'];
-  dataSource: MatTableDataSource<Ticket> = new MatTableDataSource(this.tickets);
+  dataSource: MatTableDataSource<Ticket> = new MatTableDataSource();
   currentUser = this.authService.getUser();
-  usersTicketsSub: Subscription = new Subscription();
-  usersTickets: Ticket[] = [];
+
+  // Subscriptions
   isTechSub: Subscription = new Subscription();
   isTech: boolean = false;
   allTicketsSub: Subscription = new Subscription();
   allTickets: Ticket[] = [];
-  assignedTicketsSub: Subscription = new Subscription();
-  assignedTickets: Ticket[] = [];
-  groupTicketsSub: Subscription = new Subscription();
-  groupTickets: Ticket[] = [];
-  listsSub: Subscription = new Subscription();
 
+  // Get parameter lists
+  listsSub: Subscription = new Subscription();
   groupList: Group[] = [];
   locationList: Location[] = [];
   categoryList: Category[] = [];
   statusList: Status[] = [];
+
   currentView: string = 'Created:';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private ticketService: TicketService, private configService: ConfigurationService, private authService: AuthService, private _formBuilder: FormBuilder, private userService: UserService, private router: Router, private dialog: MatDialog) {}
+  constructor(private ticketService: TicketService, private configService: ConfigurationService, private authService: AuthService, private _formBuilder: FormBuilder, private userService: UserService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.listsSub = this.configService.getLists().subscribe(lists => {
@@ -97,15 +91,6 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
       this.isTech = tech;
       console.log('Is tech: ', this.isTech);
     });
-
-    // this.usersTicketsSub = this.ticketService.usersTickets.subscribe(tickets => {
-    //   this.usersTickets = tickets;
-    //   console.log('Users Tickets: ', this.usersTickets);
-    //   this.dataSource = new MatTableDataSource(this.usersTickets);
-    //   console.log('Data Source: ', this.dataSource);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort;
-    // });
 
     this.allTicketsSub = this.ticketService.getAllTickets().subscribe(tickets => {
       this.allTickets = tickets;
@@ -132,27 +117,17 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
       console.log('All Tickets: ', this.allTickets);
     });
-
-    // this.assignedTicketsSub = this.ticketService.getTechsTickets().subscribe(tickets => {
-    //   this.assignedTickets = tickets;
-    // });
-
-    // this.groupTicketsSub = this.ticketService.getGroupsTickets().subscribe(tickets => {
-    //   this.groupTickets = tickets;
-    //   console.log('Group Tickets: ', this.groupTickets);
-    // });
   }
 
   ngAfterViewInit() {
+    this.dataSource = new MatTableDataSource(this.allTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy(): void {
-    // this.usersTicketsSub.unsubscribe();
     this.isTechSub.unsubscribe();
     this.allTicketsSub.unsubscribe();
-    // this.assignedTicketsSub.unsubscribe();
   }
 
   applyFilter(event: Event) {
@@ -188,7 +163,6 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   getMyTickets(){
-    this.usersTickets = this.ticketService.usersTickets.value;
     this.allTickets = this.allTickets.filter(ticket => ticket.user_id === this.currentUser.id);
     this.dataSource = new MatTableDataSource(this.allTickets);
     this.dataSource.paginator = this.paginator;
