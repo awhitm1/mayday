@@ -34,6 +34,7 @@ export class TicketComponent implements OnInit{
   groups: Group[] = this.data.groups || [];
   currentUser: User = this.data.user;
   ticketForm: FormGroup = new FormGroup({
+    id: new FormControl(''),
     title: new FormControl(''),
     description: new FormControl(''),
     status_id: new FormControl(''),
@@ -54,6 +55,7 @@ export class TicketComponent implements OnInit{
 
   initializeForm() {
     this.ticketForm = this.formBuilder.group({
+      id: [this.selectedTicket.id],
       title: [this.selectedTicket.title, Validators.required],
       description: [this.selectedTicket.description, Validators.required],
       status_id: [this.selectedTicket.status_id, Validators.required],

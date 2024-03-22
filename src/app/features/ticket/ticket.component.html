@@ -8,6 +8,7 @@
 
     <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()" class="form">
       <div>
+        <h5>Ticket ID: {{this.selectedTicket.id}}</h5>
         <mat-form-field class="main">
           <mat-label floatLabel="Title">Title</mat-label>
           <input matInput formControlName="title" [value]="this.selectedTicket.title" [disabled]="viewOnly" required>
