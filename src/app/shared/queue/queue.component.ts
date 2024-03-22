@@ -131,9 +131,9 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
         return status ? status.name !== 'Closed' : false;
       });
 
-      // this.dataSource = new MatTableDataSource(this.filteredTickets);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
+      this.dataSource = new MatTableDataSource(this.filteredTickets);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
     else {
       this.currentView = 'Closed Tickets:';
@@ -142,9 +142,9 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
         const status = this.statusList.find(status => status.id === ticket.status_id);
         return status ? status.name === 'Closed' : true;
       });
-      // this.dataSource = new MatTableDataSource(this.filteredTickets);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
+      this.dataSource = new MatTableDataSource(this.filteredTickets);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 
