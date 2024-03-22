@@ -47,6 +47,7 @@ export class TicketService implements OnDestroy {
   }
 
   updateTicket(ticket: Ticket){
+    console.log('Updated Ticket: ', ticket)
     return this.http.put<Ticket>(`${environment.apiUrl}/tickets/${ticket.id}`, ticket);
   }
 
