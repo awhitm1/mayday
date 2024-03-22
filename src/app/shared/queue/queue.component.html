@@ -29,7 +29,7 @@
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Your keyword(s)" #input>
     </mat-form-field>
-    <mat-slide-toggle [(ngModel)]="viewClosed">
+    <mat-slide-toggle [(ngModel)]="viewClosed" (change)="this.filterTickets()" >
       View Closed Tickets
     </mat-slide-toggle>
 

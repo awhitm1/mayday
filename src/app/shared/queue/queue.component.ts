@@ -11,7 +11,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { TicketService } from 'src/app/shared/services/ticket.service';
 import { AuthService } from '../services/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -94,29 +94,9 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this.allTicketsSub = this.ticketService.getAllTickets().subscribe(tickets => {
       this.allTickets = tickets;
-      if (!this.viewClosed){
-        // Filter out closed tickets - check if status exists first
-        this.allTickets = this.allTickets.filter(ticket => {
-          const status = this.statusList.find(status => status.id === ticket.status_id);
-          return status ? status.name !== 'Closed' : false;
-        });
-        this.getMyTickets();
-        this.dataSource = new MatTableDataSource(this.allTickets);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }
-      else {
-        this.allTickets = this.allTickets.filter(ticket => {
-          const status = this.statusList.find(status => status.id === ticket.status_id);
-          return status ? status.name === 'Closed' : false;
-        });
-        this.dataSource = new MatTableDataSource(this.allTickets);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }
-
-      console.log('All Tickets: ', this.allTickets);
     });
+
+    this.filterTickets();
   }
 
   ngAfterViewInit() {
@@ -139,8 +119,34 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
+  filterTickets(){
+    if (!this.viewClosed){
+      // Filter out closed tickets - check if status exists first
+      this.allTickets = this.allTickets.filter(ticket => {
+        const status = this.statusList.find(status => status.id === ticket.status_id);
+        return status ? status.name !== 'Closed' : false;
+      });
+      this.getMyTickets();
+      this.dataSource = new MatTableDataSource(this.allTickets);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+    else {
+      this.allTickets = this.allTickets.filter(ticket => {
+        const status = this.statusList.find(status => status.id === ticket.status_id);
+        return status ? status.name === 'Closed' : true;
+      });
+      this.dataSource = new MatTableDataSource(this.allTickets);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
+    console.log('All Tickets: ', this.allTickets);
+  }
+
   switchToAllTickets(){
     this.currentView = 'All Tickets:';
+    this.filterTickets();
     this.dataSource = new MatTableDataSource(this.allTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -148,6 +154,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
   switchToAssignedTickets(){
     this.currentView = 'Assigned:';
+    this.filterTickets();
     this.allTickets = this.allTickets.filter(ticket => ticket.assigned_tech_id === this.currentUser.id);
     this.dataSource = new MatTableDataSource(this.allTickets);
     this.dataSource.paginator = this.paginator;
@@ -156,6 +163,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
   switchToGroupTickets(){
     this.currentView = 'My Group Tickets:';
+    this.filterTickets();
     this.allTickets = this.allTickets.filter(ticket => ticket.group_id === this.currentUser.group_id);
     this.dataSource = new MatTableDataSource(this.allTickets);
     this.dataSource.paginator = this.paginator;
@@ -163,6 +171,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   getMyTickets(){
+    this.filterTickets();
     this.allTickets = this.allTickets.filter(ticket => ticket.user_id === this.currentUser.id);
     this.dataSource = new MatTableDataSource(this.allTickets);
     this.dataSource.paginator = this.paginator;
