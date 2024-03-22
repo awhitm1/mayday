@@ -14,7 +14,7 @@ import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {FormsModule, FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -42,7 +42,7 @@ export interface TicketData {
 @Component({
   selector: 'app-queue',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatSidenavModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatCheckboxModule, MatToolbarModule, MatIconModule, DatePipe, MatButtonToggleModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatSidenavModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatCheckboxModule, MatToolbarModule, MatIconModule, DatePipe, MatSlideToggleModule],
   providers: [DatePipe],
   templateUrl: './queue.component.html',
   styleUrl: './queue.component.css'

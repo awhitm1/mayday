@@ -23,11 +23,9 @@
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Your keyword(s)" #input>
     </mat-form-field>
-    <mat-button-toggle-group name="filter" aria-label="filter view">
-      <mat-button-toggle value="open" checked="true">Open</mat-button-toggle>
-      <mat-button-toggle value="closed">Closed</mat-button-toggle>
-
-    </mat-button-toggle-group>
+    <mat-slide-toggle>
+      View Closed Tickets
+    </mat-slide-toggle>
 
     <div class="mat-elevation-z8">
       <h4>{{currentView}}</h4>
