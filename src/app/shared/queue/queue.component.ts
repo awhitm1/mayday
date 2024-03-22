@@ -65,6 +65,9 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   allTicketsSub: Subscription = new Subscription();
   allTickets: Ticket[] = [];
 
+  // Variable to store the current filtered ticket array
+  filteredTickets: Ticket[] = [];
+  
   // Get parameter lists
   listsSub: Subscription = new Subscription();
   groupList: Group[] = [];
@@ -96,7 +99,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
       this.allTickets = tickets;
     });
 
-    this.filterTickets();
+    this.getMyTickets();
   }
 
   ngAfterViewInit() {
@@ -122,32 +125,33 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   filterTickets(){
     if (!this.viewClosed){
       // Filter out closed tickets - check if status exists first
-      this.allTickets = this.allTickets.filter(ticket => {
+      this.filteredTickets = this.allTickets.filter(ticket => {
         const status = this.statusList.find(status => status.id === ticket.status_id);
         return status ? status.name !== 'Closed' : false;
       });
-      this.getMyTickets();
-      this.dataSource = new MatTableDataSource(this.allTickets);
+
+      this.dataSource = new MatTableDataSource(this.filteredTickets);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
     else {
-      this.allTickets = this.allTickets.filter(ticket => {
+      this.filteredTickets = this.allTickets.filter(ticket => {
         const status = this.statusList.find(status => status.id === ticket.status_id);
         return status ? status.name === 'Closed' : true;
       });
-      this.dataSource = new MatTableDataSource(this.allTickets);
+      this.dataSource = new MatTableDataSource(this.filteredTickets);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
 
     console.log('All Tickets: ', this.allTickets);
+    console.log('Filtered Tickets: ', this.filteredTickets);
   }
 
   switchToAllTickets(){
     this.currentView = 'All Tickets:';
     this.filterTickets();
-    this.dataSource = new MatTableDataSource(this.allTickets);
+    this.dataSource = new MatTableDataSource(this.filteredTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -155,8 +159,8 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   switchToAssignedTickets(){
     this.currentView = 'Assigned:';
     this.filterTickets();
-    this.allTickets = this.allTickets.filter(ticket => ticket.assigned_tech_id === this.currentUser.id);
-    this.dataSource = new MatTableDataSource(this.allTickets);
+    this.filteredTickets = this.filteredTickets.filter(ticket => ticket.assigned_tech_id === this.currentUser.id);
+    this.dataSource = new MatTableDataSource(this.filteredTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -164,16 +168,16 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   switchToGroupTickets(){
     this.currentView = 'My Group Tickets:';
     this.filterTickets();
-    this.allTickets = this.allTickets.filter(ticket => ticket.group_id === this.currentUser.group_id);
-    this.dataSource = new MatTableDataSource(this.allTickets);
+    this.filteredTickets = this.filteredTickets.filter(ticket => ticket.group_id === this.currentUser.group_id);
+    this.dataSource = new MatTableDataSource(this.filteredTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
   getMyTickets(){
     this.filterTickets();
-    this.allTickets = this.allTickets.filter(ticket => ticket.user_id === this.currentUser.id);
-    this.dataSource = new MatTableDataSource(this.allTickets);
+    this.filteredTickets = this.filteredTickets.filter(ticket => ticket.user_id === this.currentUser.id);
+    this.dataSource = new MatTableDataSource(this.filteredTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
