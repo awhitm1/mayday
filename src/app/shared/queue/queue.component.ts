@@ -70,8 +70,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   groupTicketsSub: Subscription = new Subscription();
   groupTickets: Ticket[] = [];
   listsSub: Subscription = new Subscription();
-  // lists: {Group[], Location[], Category[], Status[]} = {Group[], Location[], Category[], Status};
-  // lists: {groups: Group[], locations: Location[], categories: Category[], statuses: Status[]} = {groups: [], locations: [], categories: [], statuses: []};
+
   groupList: Group[] = [];
   locationList: Location[] = [];
   categoryList: Category[] = [];
@@ -89,7 +88,6 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
       this.locationList = lists.Locations;
       this.categoryList = lists.Categories;
       this.statusList = lists.Statuses;
-      console.log('Lists: ', this.groupList, this.locationList, this.categoryList, this.statusList);
     });
 
     this.isTechSub = this.userService.userIsTech.subscribe(tech => {
@@ -99,6 +97,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this.usersTicketsSub = this.ticketService.usersTickets.subscribe(tickets => {
       this.usersTickets = tickets;
+      console.log('Users Tickets: ', this.usersTickets);
       this.dataSource = new MatTableDataSource(this.usersTickets);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -106,6 +105,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this.allTicketsSub = this.ticketService.getAllTickets().subscribe(tickets => {
       this.allTickets = tickets;
+      console.log('All Tickets: ', this.allTickets);
     });
 
     this.assignedTicketsSub = this.ticketService.getTechsTickets().subscribe(tickets => {
@@ -114,6 +114,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this.groupTicketsSub = this.ticketService.getGroupsTickets().subscribe(tickets => {
       this.groupTickets = tickets;
+      console.log('Group Tickets: ', this.groupTickets);
     });
   }
 
