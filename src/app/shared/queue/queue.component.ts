@@ -67,7 +67,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
   // Variable to store the current filtered ticket array
   filteredTickets: Ticket[] = [];
-  
+
   // Get parameter lists
   listsSub: Subscription = new Subscription();
   groupList: Group[] = [];
@@ -135,6 +135,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
       this.dataSource.sort = this.sort;
     }
     else {
+      // Filter for closed tickets - check if status exists first
       this.filteredTickets = this.allTickets.filter(ticket => {
         const status = this.statusList.find(status => status.id === ticket.status_id);
         return status ? status.name === 'Closed' : true;
@@ -143,15 +144,23 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
+  }
 
-    console.log('All Tickets: ', this.allTickets);
-    console.log('Filtered Tickets: ', this.filteredTickets);
+  switchToAllFilteredTickets(){
+    if (this.viewClosed){
+      this.currentView = 'All Closed Tickets:';
+    } else {
+    this.currentView = 'All OpenTickets:';
+    }
+    this.filterTickets();
+    this.dataSource = new MatTableDataSource(this.filteredTickets);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   switchToAllTickets(){
     this.currentView = 'All Tickets:';
-    this.filterTickets();
-    this.dataSource = new MatTableDataSource(this.filteredTickets);
+    this.dataSource = new MatTableDataSource(this.allTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
