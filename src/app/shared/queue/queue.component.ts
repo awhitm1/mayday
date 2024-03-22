@@ -51,6 +51,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   events: string[] = [];
   // homeTickets: Ticket[] = [];
   opened: boolean = true;
+  viewClosed: boolean = false;
   options = this._formBuilder.group({
     bottom: 0,
     fixed: false,
@@ -97,28 +98,49 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
       console.log('Is tech: ', this.isTech);
     });
 
-    this.usersTicketsSub = this.ticketService.usersTickets.subscribe(tickets => {
-      this.usersTickets = tickets;
-      console.log('Users Tickets: ', this.usersTickets);
-      this.dataSource = new MatTableDataSource(this.usersTickets);
-      console.log('Data Source: ', this.dataSource);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    // this.usersTicketsSub = this.ticketService.usersTickets.subscribe(tickets => {
+    //   this.usersTickets = tickets;
+    //   console.log('Users Tickets: ', this.usersTickets);
+    //   this.dataSource = new MatTableDataSource(this.usersTickets);
+    //   console.log('Data Source: ', this.dataSource);
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort;
+    // });
 
     this.allTicketsSub = this.ticketService.getAllTickets().subscribe(tickets => {
       this.allTickets = tickets;
+      if (!this.viewClosed){
+        // Filter out closed tickets - check if status exists first
+        this.allTickets = this.allTickets.filter(ticket => {
+          const status = this.statusList.find(status => status.id === ticket.status_id);
+          return status ? status.name !== 'Closed' : false;
+        });
+        this.getMyTickets();
+        this.dataSource = new MatTableDataSource(this.allTickets);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+      else {
+        this.allTickets = this.allTickets.filter(ticket => {
+          const status = this.statusList.find(status => status.id === ticket.status_id);
+          return status ? status.name === 'Closed' : false;
+        });
+        this.dataSource = new MatTableDataSource(this.allTickets);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+
       console.log('All Tickets: ', this.allTickets);
     });
 
-    this.assignedTicketsSub = this.ticketService.getTechsTickets().subscribe(tickets => {
-      this.assignedTickets = tickets;
-    });
+    // this.assignedTicketsSub = this.ticketService.getTechsTickets().subscribe(tickets => {
+    //   this.assignedTickets = tickets;
+    // });
 
-    this.groupTicketsSub = this.ticketService.getGroupsTickets().subscribe(tickets => {
-      this.groupTickets = tickets;
-      console.log('Group Tickets: ', this.groupTickets);
-    });
+    // this.groupTicketsSub = this.ticketService.getGroupsTickets().subscribe(tickets => {
+    //   this.groupTickets = tickets;
+    //   console.log('Group Tickets: ', this.groupTickets);
+    // });
   }
 
   ngAfterViewInit() {
@@ -127,10 +149,10 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.usersTicketsSub.unsubscribe();
+    // this.usersTicketsSub.unsubscribe();
     this.isTechSub.unsubscribe();
     this.allTicketsSub.unsubscribe();
-    this.assignedTicketsSub.unsubscribe();
+    // this.assignedTicketsSub.unsubscribe();
   }
 
   applyFilter(event: Event) {
@@ -144,28 +166,31 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
 
   switchToAllTickets(){
     this.currentView = 'All Tickets:';
-      this.dataSource = new MatTableDataSource(this.allTickets);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.dataSource = new MatTableDataSource(this.allTickets);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   switchToAssignedTickets(){
     this.currentView = 'Assigned:';
-      this.dataSource = new MatTableDataSource(this.assignedTickets);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.allTickets = this.allTickets.filter(ticket => ticket.assigned_tech_id === this.currentUser.id);
+    this.dataSource = new MatTableDataSource(this.allTickets);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   switchToGroupTickets(){
     this.currentView = 'My Group Tickets:';
-      this.dataSource = new MatTableDataSource(this.groupTickets);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.allTickets = this.allTickets.filter(ticket => ticket.group_id === this.currentUser.group_id);
+    this.dataSource = new MatTableDataSource(this.allTickets);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   getMyTickets(){
     this.usersTickets = this.ticketService.usersTickets.value;
-    this.dataSource = new MatTableDataSource(this.usersTickets);
+    this.allTickets = this.allTickets.filter(ticket => ticket.user_id === this.currentUser.id);
+    this.dataSource = new MatTableDataSource(this.allTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

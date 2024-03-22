@@ -11,9 +11,15 @@
       <h5>Tech:</h5>
         <p><button class="button-sidenav" mat-raised-button (click)="switchToGroupTickets()">Claim Ticket</button></p>
         <p><button class="button-sidenav" mat-raised-button (click)="switchToAssignedTickets()">My Queue</button></p>
-        <p><button class="button-sidenav" mat-raised-button (click)="switchToAllTickets()">All Tickets</button></p>
+
     </div>
-  }
+    }
+    @if (this.currentUser.is_admin){
+      <div>
+        <h5>Admin:</h5>
+        <p><button class="button-sidenav" mat-raised-button (click)="switchToAllTickets()">All Tickets</button></p>
+      </div>
+    }
   </mat-sidenav>
   <mat-sidenav-content>
     <button mat-icon-button color="primary" aria-label="menu icon" (click)="sidenav.toggle()">
@@ -23,7 +29,7 @@
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Your keyword(s)" #input>
     </mat-form-field>
-    <mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]="viewClosed">
       View Closed Tickets
     </mat-slide-toggle>
 
