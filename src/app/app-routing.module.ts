@@ -16,6 +16,11 @@ const routes: Routes = [
     canActivate: [noAuthGuard],
   },
 
+  {path: 'signup',
+		loadComponent: () => import('./core/signup/signup.component').then((m) => m.SignupComponent),
+    canActivate: [noAuthGuard],
+  },
+
   {path: 'queue',
     loadComponent: () => import('./shared/queue/queue.component').then((m) => m.QueueComponent),
     canActivate: [authGuard],
