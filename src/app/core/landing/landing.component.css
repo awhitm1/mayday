@@ -1,3 +1,45 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+.hero-image {
+  background-image: url('../../../assets/AdobeStock_145229318-e1544738931377.jpeg'); /* Replace 'path/to/your/hero-image.jpg' with the actual path to your image */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+}
+.hero-text {
+  max-width: 800px;
+  padding: 20px;
+}
+.hero-text h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+.hero-text p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.btn:hover {
+  background-color: #45a049;
+}
+
 mat-form-field {
   display: inline-block;
   padding: 5px;
