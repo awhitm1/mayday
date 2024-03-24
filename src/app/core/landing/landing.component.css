@@ -1,7 +1,7 @@
-body {
+/* body {
   margin: 0;
   font-family: Arial, sans-serif;
-}
+} */
 /* Basic styling */
 .hero {
   position: relative;
@@ -46,11 +46,11 @@ body {
   background-color: #45a049;
 }
 
-mat-form-field {
+/* mat-form-field {
   display: inline-block;
   padding: 5px;
 }
 button {
   padding: 5px;
   margin: 5px;
-}
+} */
