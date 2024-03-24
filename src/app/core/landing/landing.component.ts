@@ -9,7 +9,7 @@ import { Component, ElementRef, HostListener } from '@angular/core';
   styleUrl: './landing.component.css'
 })
 export class LandingComponent {
-  heroImages = ['../../assets/1.jpeg ', '../../assets/2.jpg', '../../assets/3.jpg'];
+  heroImages = ['../../../assets/1.jpeg ', '../../../assets/2.jpg', '../../../assets/3.jpg'];
   scrollPosition = 0;
   heroHeights = [0, 0, 0];
 
