@@ -11,6 +11,7 @@ import { Component, HostListener } from '@angular/core';
 export class LandingComponent {
   heroImage1 = '../../../assets/1.jpeg';
   heroImage2 = '../../../assets/2.jpg';
+  heroImage3 = '../../../assets/3.jpg';
   scrollPosition = 0;
   heroHeight = 0;
 
