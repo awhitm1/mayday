@@ -1,14 +1,16 @@
 <div class="container">
-  <div>
-    <div class="hero-image">
-      <div class="hero-text">
-          <h1>Welcome to Mayday Help Desk</h1>
-          <p>Streamline Your Organization's Support System</p>
-          <a class="btn" routerLink="/signup">Get Started</a>
-      </div>
+  <div class="hero" id="hero1" (window:scroll)="scrollHandler($event)">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImage1 + ')'" [style.transform]="'translateY(-' + scrollPosition + 'px)'"></div>
+    <div class="hero-text">
+      <h1>Welcome to Mayday Help Desk</h1>
+      <p>Streamline Your Organization's Support System</p>
+      <a href="#" class="btn">Get Started</a>
+    </div>
   </div>
+
+  <div class="hero" id="hero2">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImage2 + ')'"></div>
   </div>
-</div>
 <div>
 
 [Image or Illustration showcasing a team collaborating on solving technical issues]
@@ -20,13 +22,11 @@ Streamline Your Organization's Support System with Mayday Help Desk
 Key Features
 
 Ticket Management System
-Knowledge Base Integration
 User Management
 Reporting and Analytics
 How Mayday Works for Your Organization
 
 Employees Submit Tickets: Easily report technical issues.
-Efficient Ticket Routing: Tickets are automatically assigned to the right team.
 Timely Resolution: Our team ensures swift resolution to minimize downtime.
 Why Choose Mayday Help Desk
 

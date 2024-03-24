@@ -2,29 +2,34 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
+/* Basic styling */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .hero-image {
-  background-image: url('../../../assets/AdobeStock_145229318-e1544738931377.jpeg'); /* Replace 'path/to/your/hero-image.jpg' with the actual path to your image */
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 1s ease;
 }
+
 .hero-text {
-  max-width: 800px;
-  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+  color: #fff;
 }
-.hero-text h1 {
-  font-size: 3em;
-  margin-bottom: 20px;
-}
-.hero-text p {
-  font-size: 1.2em;
-  margin-bottom: 20px;
-}
+
 .btn {
   background-color: #4CAF50;
   color: white;
@@ -36,6 +41,7 @@ body {
   font-weight: bold;
   transition: background-color 0.3s ease;
 }
+
 .btn:hover {
   background-color: #45a049;
 }
