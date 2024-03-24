@@ -19,7 +19,7 @@ export class LandingComponent {
     for (let i = 0; i < this.heroHeights.length; i++) {
       const heroElement = document.getElementById('hero' + (i + 1));
       if (heroElement) {
-        this.heroHeights[i] = heroElement.clientHeight;
+        this.heroHeights[i] = heroElement.offsetTop;
       }
     }
   }
