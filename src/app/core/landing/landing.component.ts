@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 
 
 @Component({
@@ -13,14 +13,12 @@ export class LandingComponent {
   scrollPosition = 0;
   heroHeights = [0,0,0];
 
+  constructor(private el: ElementRef) { }
   @HostListener('window:scroll', ['$event'])
-  scrollHandler(event: any) {
+  scrollHandler() {
     this.scrollPosition = window.scrollY;
     for (let i = 0; i < this.heroHeights.length; i++) {
-      const heroElement = document.getElementById('hero' + (i + 1));
-      if (heroElement) {
-        this.heroHeights[i] = heroElement.offsetTop;
-      }
+      this.heroHeights[i] = this.el.nativeElement.querySelector(`#hero${i + 1}`).offsetTop;
     }
   }
 
