@@ -52,30 +52,25 @@
     </div>
   </div> -->
 
-  <section class="sticky-hero">
-    <div class="sticky-hero__media1" aria-hidden="true"></div>
-
-    <div class="sticky-hero__content">
+  <div class="hero" id="hero1">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[0] + ')'" [style.transform]="scrollPosition < heroHeights[0] ? 'translateY(-' + scrollPosition + 'px)' : 'translateY(-100%)'"></div>
+    <div class="hero-text" [style.opacity]="scrollPosition < heroHeights[0] ? 1 : 0">
       <h1>Welcome to Mayday Help Desk</h1>
       <p>Streamline Your Organization's Support System</p>
-      <a class="btn" routerLink="/signup">Get Started</a>
+      <a href="#" class="btn">Get Started</a>
     </div>
-  </section>
-  <section class="sticky-hero">
-    <div class="sticky-hero__media2" aria-hidden="true"></div>
+  </div>
 
-    <div class="sticky-hero__content">
-      <h1>Welcome to Mayday Help Desk</h1>
-      <p>Streamline Your Organization's Support System</p>
-      <a class="btn" routerLink="/signup">Get Started</a>
+  <div class="hero" id="hero2">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[1] + ')'" [style.transform]="scrollPosition >= heroHeights[0] && scrollPosition < heroHeights[1] ? 'translateY(-' + (scrollPosition - heroHeights[0]) + 'px)' : 'translateY(-100%)'"></div>
+    <div class="hero-text" [style.opacity]="scrollPosition >= heroHeights[0] && scrollPosition < heroHeights[1] ? 1 : 0">
+      <!-- Content for second hero section -->
     </div>
-  </section>
-  <section class="sticky-hero">
-    <div class="sticky-hero__media" aria-hidden="true"></div>
+  </div>
 
-    <div class="sticky-hero__content3">
-      <h1>Welcome to Mayday Help Desk</h1>
-      <p>Streamline Your Organization's Support System</p>
-      <a class="btn" routerLink="/signup">Get Started</a>
+  <div class="hero" id="hero3">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[2] + ')'" [style.transform]="scrollPosition >= heroHeights[1] ? 'translateY(-' + (scrollPosition - heroHeights[1]) + 'px)' : 'translateY(-100%)'"></div>
+    <div class="hero-text" [style.opacity]="scrollPosition >= heroHeights[1] ? 1 : 0">
+      <!-- Content for third hero section -->
     </div>
-  </section>
+  </div>
