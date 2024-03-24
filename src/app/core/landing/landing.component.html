@@ -1,7 +1,7 @@
 <div class="container">
   <div class="hero" id="hero1" (window:scroll)="scrollHandler($event)">
-    <div class="hero-image" [style.backgroundImage]="'url(' + heroImage1 + ')'" [style.transform]="'translateY(-' + scrollPosition + 'px)'"></div>
-    <div class="hero-text">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[0] + ')'" [style.transform]="scrollPosition < heroHeights[0] ? 'translateY(-' + scrollPosition + 'px)' : 'translateY(-' + heroHeights[0] + 'px)'"></div>
+    <div class="hero-text" [style.opacity]="scrollPosition < heroHeights[0] ? 1 : 0">
       <h1>Welcome to Mayday Help Desk</h1>
       <p>Streamline Your Organization's Support System</p>
       <a class="btn" routerLink="/signup">Get Started</a>
@@ -9,9 +9,9 @@
   </div>
 
   <div class="hero" id="hero2">
-    <div class="hero-image" [style.backgroundImage]="'url(' + heroImage2 + ')'" [style.transform]="'translateY(-' + scrollPosition + 'px)'"></div>
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[1] + ')'" [style.transform]="scrollPosition >= heroHeights[0] && scrollPosition < (heroHeights[0] + heroHeights[1]) ? 'translateY(-' + (scrollPosition - heroHeights[0]) + 'px)' : 'translateY(-' + heroHeights[1] + 'px)'"></div>
     <h1>Key Features</h1>
-    <div class="hero-text">
+    <div class="hero-text" [style.opacity]="scrollPosition >= heroHeights[0] && scrollPosition < (heroHeights[0] + heroHeights[1]) ? 1 : 0">
       <div class="feature">
         <h1>Ticket Management System</h1>
         <p>Track and manage all support tickets in one place.</p>
@@ -29,8 +29,8 @@
   </div>
 
   <div class="hero" id="hero3">
-    <div class="hero-image" [style.backgroundImage]="'url(' + heroImage3 + ')'"></div>
-    <div class="hero-text">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[2] + ')'" [style.transform]="scrollPosition >= (heroHeights[0] + heroHeights[1]) ? 'translateY(-' + (scrollPosition - (heroHeights[0] + heroHeights[1])) + 'px)' : 'translateY(-' + heroHeights[2] + 'px)'"></div>
+    <div class="hero-text" [style.opacity]="scrollPosition >= (heroHeights[0] + heroHeights[1]) ? 1 : 0">
       <h1>Why Choose Mayday Help Desk</h1>
       <div class="feature">
         <h2>Customizable to Your Organization's Needs</h2>

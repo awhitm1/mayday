@@ -9,18 +9,18 @@ import { Component, HostListener } from '@angular/core';
   styleUrl: './landing.component.css'
 })
 export class LandingComponent {
-  heroImage1 = '../../../assets/1.jpeg';
-  heroImage2 = '../../../assets/2.jpg';
-  heroImage3 = '../../../assets/3.jpg';
+  heroImages = ['../../../assets/1.jpeg', '../../../assets/2.jpg', '../../../assets/3.jpg']
   scrollPosition = 0;
-  heroHeight = 0;
+  heroHeights = [0,0,0];
 
   @HostListener('window:scroll', ['$event'])
   scrollHandler(event: any) {
     this.scrollPosition = window.scrollY;
-    let hero1 = document.getElementById('hero1');
-    if (hero1) {
-      this.heroHeight = hero1.clientHeight;
+    for (let i = 0; i < this.heroHeights.length; i++) {
+      const heroElement = document.getElementById('hero' + (i + 1));
+      if (heroElement) {
+        this.heroHeights[i] = heroElement.clientHeight;
+      }
     }
   }
 
