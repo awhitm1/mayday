@@ -14,6 +14,7 @@ export class LandingComponent {
   heroHeights = [0,0,0];
 
   constructor(private el: ElementRef) { }
+
   @HostListener('window:scroll', ['$event'])
   scrollHandler() {
     this.scrollPosition = window.scrollY;
