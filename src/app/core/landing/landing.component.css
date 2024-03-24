@@ -3,7 +3,7 @@
   font-family: Arial, sans-serif;
 } */
 /* Basic styling */
-.hero {
+/* .hero {
   position: relative;
   height: 100vh;
   overflow: hidden;
@@ -28,6 +28,28 @@
   text-align: center;
   z-index: 1;
   color: #fff;
+} */
+
+.sticky-hero__media1 {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: url(../../../assets/1.jpeg) no-repeat center center;
+  background-size: cover;
+}
+.sticky-hero__media2 {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: url(../../../assets/2.jpg) no-repeat center center;
+  background-size: cover;
+}
+.sticky-hero__media3 {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: url(../../../assets/3.jpg) no-repeat center center;
+  background-size: cover;
 }
 
 .btn {

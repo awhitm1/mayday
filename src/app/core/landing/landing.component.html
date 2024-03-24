@@ -52,29 +52,30 @@
     </div>
   </div> -->
 
-  <div class="hero" id="hero1">
-    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[0] + ')'" [style.transform]="scrollPosition < heroHeights[0] ? 'translateY(-' + scrollPosition + 'px)' : 'translateY(-100%)'"></div>
-    <div class="hero-text" [style.opacity]="scrollPosition < heroHeights[0] ? 1 : 0">
-      <h1>Welcome to Mayday Help Desk</h1>
-      <p>Streamline Your Organization's Support System</p>
-      <a href="#" class="btn">Get Started</a>
-    </div>
-  </div>
+  <section class="sticky-hero1">
+    <div class="sticky-hero__media" aria-hidden="true"></div>
 
-  <div class="hero" id="hero2">
-    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[1] + ')'" [style.transform]="scrollPosition >= heroHeights[0] && scrollPosition < heroHeights[1] ? 'translateY(-' + (scrollPosition - heroHeights[0]) + 'px)' : 'translateY(-100%)'"></div>
-    <div class="hero-text" [style.opacity]="scrollPosition >= heroHeights[0] && scrollPosition < heroHeights[1] ? 1 : 0">
+    <div class="sticky-hero__content">
       <h1>Welcome to Mayday Help Desk</h1>
       <p>Streamline Your Organization's Support System</p>
-      <a href="#" class="btn">Get Started</a>
+      <a class="btn" routerLink="/signup">Get Started</a>
     </div>
-  </div>
+  </section>
+  <section class="sticky-hero2">
+    <div class="sticky-hero__media" aria-hidden="true"></div>
 
-  <div class="hero" id="hero3">
-    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[2] + ')'" [style.transform]="scrollPosition >= heroHeights[1] ? 'translateY(-' + (scrollPosition - heroHeights[1]) + 'px)' : 'translateY(-100%)'"></div>
-    <div class="hero-text" [style.opacity]="scrollPosition >= heroHeights[1] ? 1 : 0">
+    <div class="sticky-hero__content">
       <h1>Welcome to Mayday Help Desk</h1>
       <p>Streamline Your Organization's Support System</p>
-      <a href="#" class="btn">Get Started</a>
+      <a class="btn" routerLink="/signup">Get Started</a>
     </div>
-  </div>
+  </section>
+  <section class="sticky-hero3">
+    <div class="sticky-hero__media" aria-hidden="true"></div>
+
+    <div class="sticky-hero__content">
+      <h1>Welcome to Mayday Help Desk</h1>
+      <p>Streamline Your Organization's Support System</p>
+      <a class="btn" routerLink="/signup">Get Started</a>
+    </div>
+  </section>
