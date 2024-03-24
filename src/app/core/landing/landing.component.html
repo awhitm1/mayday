@@ -9,7 +9,7 @@
   </div>
 
   <div class="hero" id="hero2">
-    <div class="hero-image" [style.backgroundImage]="'url(' + heroImage2 + ')'"></div>
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImage2 + ')'" [style.transform]="'translateY(-' + scrollPosition + 'px)'"></div>
     <h1>Key Features</h1>
     <div class="hero-text">
       <div class="feature">
@@ -25,7 +25,9 @@
         <p>Gain insights into your organization's support system.</p>
       </div>
       <a class="btn" routerLink="/signup">Get Started</a>
+    </div>
   </div>
+
   <div class="hero" id="hero3">
     <div class="hero-image" [style.backgroundImage]="'url(' + heroImage3 + ')'"></div>
     <div class="hero-text">
@@ -47,6 +49,7 @@
         <p>Rest assured that your data is safe and secure.</p>
       </div>
       <a class="btn" routerLink="/signup">Get Started Today!</a>
+    </div>
   </div>
 <div>
 
