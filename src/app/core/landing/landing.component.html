@@ -53,8 +53,8 @@
   </div> -->
 
   <div class="hero" id="hero1">
-    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[0] + ')'" [style.transform]="scrollPosition < heroHeights[0] ? 'translateY(-' + scrollPosition + 'px)' : 'translateY(-100%)'"></div>
-    <div class="hero-text" [style.opacity]="scrollPosition < heroHeights[0] ? 1 : 0">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[0] + ')'"></div>
+    <div class="hero-text" [style.opacity]="scrollPosition > heroTops[0] - windowHeight ? 1 : 0">
       <h1>Welcome to Mayday Help Desk</h1>
       <p>Streamline Your Organization's Support System</p>
       <a href="#" class="btn">Get Started</a>
@@ -62,8 +62,8 @@
   </div>
 
   <div class="hero" id="hero2">
-    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[1] + ')'" [style.transform]="scrollPosition >= heroHeights[0] && scrollPosition < heroHeights[1] ? 'translateY(-' + (scrollPosition - heroHeights[0]) + 'px)' : 'translateY(-100%)'"></div>
-    <div class="hero-text" [style.opacity]="scrollPosition >= heroHeights[0] && scrollPosition < heroHeights[1] ? 1 : 0">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[1] + ')'"></div>
+    <div class="hero-text" [style.opacity]="scrollPosition > heroTops[1] - windowHeight ? 1 : 0">
       <h1>Welcome to Mayday Help Desk</h1>
       <p>Streamline Your Organization's Support System</p>
       <a href="#" class="btn">Get Started</a>
@@ -71,8 +71,8 @@
   </div>
 
   <div class="hero" id="hero3">
-    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[2] + ')'" [style.transform]="scrollPosition >= heroHeights[1] ? 'translateY(-' + (scrollPosition - heroHeights[1]) + 'px)' : 'translateY(-100%)'"></div>
-    <div class="hero-text" [style.opacity]="scrollPosition >= heroHeights[1] ? 1 : 0">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[2] + ')'"></div>
+    <div class="hero-text" [style.opacity]="scrollPosition > heroTops[2] - windowHeight ? 1 : 0">
       <h1>Welcome to Mayday Help Desk</h1>
       <p>Streamline Your Organization's Support System</p>
       <a href="#" class="btn">Get Started</a>
