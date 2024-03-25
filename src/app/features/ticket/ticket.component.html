@@ -9,6 +9,9 @@
     <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()" class="form">
       <div>
         <h5>Ticket ID: {{this.selectedTicket.id}}</h5>
+        <p>Created by: {{ findItemById(this.selectedTicket.user_id, this.users).f_name }} {{ findItemById(this.selectedTicket.user_id, this.users).l_name }}</p>
+        @if (this.selectedTicket.assigned_tech_id){<p>Claimed by: {{ findItemById(this.selectedTicket.assigned_tech_id, this.users).f_name }} {{ findItemById(this.selectedTicket.assigned_tech_id, this.users).l_name }}</p>}
+        @if (!this.selectedTicket.assigned_tech_id){ <p>Unclaimed</p> }
         <mat-form-field class="main">
           <mat-label floatLabel="Title">Title</mat-label>
           <input matInput formControlName="title" [value]="this.selectedTicket.title" [disabled]="viewOnly" required>

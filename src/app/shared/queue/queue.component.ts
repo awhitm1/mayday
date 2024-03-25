@@ -218,7 +218,8 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
         categories: this.categoryList,
         statuses: this.statusList,
         user: this.currentUser,
-        isNew: false
+        isNew: false,
+        users: this.users
       }
     });
   }

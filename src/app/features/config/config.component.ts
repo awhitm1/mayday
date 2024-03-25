@@ -30,7 +30,7 @@ export interface DialogData {
   locations?: Location[];
   categories?: Category[];
   statuses?: Status[];
-
+  users?: User[];
 }
 
 @Component({

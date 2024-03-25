@@ -33,6 +33,7 @@ export class TicketComponent implements OnInit{
   statuses: Status[] = this.data.statuses || [];
   groups: Group[] = this.data.groups || [];
   currentUser: User = this.data.user;
+  users: User[] = this.data.users || [];
   ticketForm: FormGroup = new FormGroup({
     id: new FormControl(''),
     title: new FormControl(''),
@@ -107,4 +108,7 @@ export class TicketComponent implements OnInit{
     this.dialogRef.close();
   }
 
+  findItemById(id: number, list: any[]){
+    return list.find(item => item.id === id);
+  }
 }
