@@ -24,6 +24,7 @@ import { ConfigurationService } from 'src/app/shared/services/configuration.serv
 import { MatDialog } from '@angular/material/dialog';
 import { TicketComponent } from 'src/app/features/ticket/ticket.component';
 import { DatePipe } from '@angular/common';
+import { User } from '../models/user.model';
 
 
 export interface TicketData {
@@ -69,6 +70,8 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   filteredTickets: Ticket[] = [];
 
   // Get parameter lists
+  userSub: Subscription = new Subscription();
+  users: User[] = [];
   listsSub: Subscription = new Subscription();
   groupList: Group[] = [];
   locationList: Location[] = [];
@@ -98,6 +101,10 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
       this.allTickets = tickets;
     });
 
+    this.userSub = this.userService.getUsers().subscribe(users => {
+      this.users = users;
+    });
+
     this.getMyTickets();
   }
 
@@ -110,6 +117,7 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.isTechSub.unsubscribe();
     this.allTicketsSub.unsubscribe();
+    this.userSub.unsubscribe();
   }
 
   applyFilter(event: Event) {
@@ -214,5 +222,26 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
       }
     });
   }
+
+  findUser(id: number){
+    return this.users.find(user => user.id === id);
+  }
+
+  findGroup(id: number){
+    return this.groupList.find(group => group.id === id);
+  }
+
+  findLocation(id: number){
+    return this.locationList.find(location => location.id === id);
+  }
+
+  findCategory(id: number){
+    return this.categoryList.find(category => category.id === id);
+  }
+
+  findStatus(id: number){
+    return this.statusList.find(status => status.id === id);
+  }
+
 
 }
