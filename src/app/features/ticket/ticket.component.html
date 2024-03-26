@@ -1,8 +1,8 @@
 <div class="container">
   @if (isNewTicket){<h1 style="align-items: center; color: #545454">New Ticket</h1>}
 
-  @else if (!isNewTicket && (this.selectedTicket.user_id == this.currentUser.id) && (this.selectedTicket.assigned_tech_id == null)){<h1 style="align-items: center; color: #545454">Update | Claim Ticket</h1>}
-  @else if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null)){<h1 style="align-items: center; color: #545454">Claim Ticket</h1>}
+  @else if (!isNewTicket && (this.selectedTicket.user_id == this.currentUser.id) && (this.selectedTicket.assigned_tech_id == null) && (this.currentUser.is_tech)){<h1 style="align-items: center; color: #545454">Update | Claim Ticket</h1>}
+  @else if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null) && (this.currentUser.is_tech)) {<h1 style="align-items: center; color: #545454">Claim Ticket</h1>}
   @else if (!isNewTicket && (this.selectedTicket.user_id == this.currentUser.id) && (this.selectedTicket.assigned_tech_id !== null)){<h1 style="align-items: center; color: #545454">Update Ticket</h1>}
   @else {<h1 style="align-items: center; color: #545454">View Ticket</h1>}
 
@@ -69,6 +69,6 @@
       <button type="button" (click)="closeDialog()">Cancel</button>
       @if (isNewTicket){  <button type="submit" [disabled]="!ticketForm.valid || viewOnly">Submit</button> }
       @if (!isNewTicket && (this.selectedTicket.user_id === this.currentUser.id) ){  <button type="button" [disabled]="!ticketForm.valid || viewOnly" (click)="updateTicket()">Update</button> }
-      @if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null) && (this.selectedTicket.id !== undefined)){  <button type="button" (click)="claimTicket(this.selectedTicket.id)">Claim</button> }
+      @if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null) && (this.selectedTicket.id !== undefined) && (this.currentUser.is_tech)){  <button type="button" (click)="claimTicket(this.selectedTicket.id)">Claim</button> }
     </form>
   </div>
