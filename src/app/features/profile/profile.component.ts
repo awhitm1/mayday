@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/shared/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -10,9 +12,14 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent implements OnInit{
-  currentUser = this.authService.getUser();
+  currentUserSub: Subscription = new Subscription();
+  currentUser: User = new User();
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.currentUserSub = this.authService.getCurrentUser().subscribe(user => {
+      this.currentUser = user;
+    });
+  }
 
   ngOnInit(){
     console.log('Current User: ', this.currentUser);

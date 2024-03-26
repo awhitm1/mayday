@@ -29,13 +29,17 @@ export class UserService {
     return this.http.get<User[]>(`${environment.apiUrl}/users`);
   }
 
+  showUser(id: number){
+    return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
+  }
+
   delUser(id: number){
     return this.http.delete<User>(`${environment.apiUrl}/users/${id}`);
   }
 
   updateUser(user: User){
     console.log('User: ', user)
-    
+
     const editedUser = {
       active: user.active || true,
       is_tech: user.is_tech || false,
