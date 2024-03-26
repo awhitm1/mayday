@@ -1,4 +1,5 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,18 +11,10 @@ import { Component, ElementRef, HostListener } from '@angular/core';
 })
 export class LandingComponent {
   heroImages = ['../../assets/1.jpeg', '../../assets/2.jpg', '../../assets/3.jpg'];
-  // scrollPosition = 0;
-  // windowHeight = window.innerHeight;
-  // heroTops = [0, 0, 0];
 
-  // constructor(private el: ElementRef) {}
+  constructor(private router: Router) { }
 
-  // @HostListener('window:scroll', ['$event'])
-  // scrollHandler() {
-  //   this.scrollPosition = window.scrollY;
-  //   for (let i = 0; i < this.heroTops.length; i++) {
-  //     this.heroTops[i] = this.el.nativeElement.querySelector(`#hero${i + 1}`).getBoundingClientRect().top + window.scrollY;
-  //   }
-  // }
-
+  goToSignup() {
+    this.router.navigate(['/signup']);
+  }
 }
