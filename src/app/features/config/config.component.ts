@@ -48,7 +48,7 @@ export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy{
   lists: {groups: Group[], locations: Location[], categories: Category[], statuses: Status[]} = {groups: [], locations: [], categories: [], statuses: []};
 
   // Mat-table items
-  displayedColumns: string[] = ['f_name', 'l_name', 'is_tech', 'is_admin', 'active', 'groups', 'actions'];
+  displayedColumns: string[] = ['f_name', 'l_name', 'email', 'is_tech', 'is_admin', 'active', 'groups', 'actions'];
   dataSource: MatTableDataSource<User> = new MatTableDataSource(this.users);
 
   // Input variables
