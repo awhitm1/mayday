@@ -15,6 +15,8 @@ export class ProfileComponent{
   currentUserSub: Subscription = new Subscription();
   currentUser: User = new User();
 
+  imageRootUrl = 'https://maydayhelpdeskapi.onrender.com'
+
   constructor(private authService: AuthService) {
     this.currentUserSub = this.authService.getCurrentUser().subscribe(user => {
       this.currentUser = user;
