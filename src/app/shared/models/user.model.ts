@@ -10,4 +10,5 @@ export class User {
   is_tech?: boolean = false;
   token?: string;
   groups?: Group[] = [];
+  profile_image_url?: string;
 }
