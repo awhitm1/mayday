@@ -24,14 +24,14 @@
             </div>
       </div>
       <div class="col-md-5 border-right">
-        <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()" class="form">
+        <form #editProfileForm="ngForm" (ngSubmit)="onSubmit(editProfileForm)" class="form">
           <div class="p-3 py-5">
               <div class="d-flex justify-content-between align-items-center mb-3">
                   <h4 class="text-right">Profile Settings</h4>
               </div>
               <div class="row mt-2">
-                  <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" placeholder="first name" [value]="this.currentUser.f_name"></div>
-                  <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control" [value]="this.currentUser.l_name" placeholder="surname"></div>
+                  <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" placeholder="first name" [(ngModel)]="this.currentUser.f_name" name="f_name"></div>
+                  <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control" [(ngModel)]="this.currentUser.l_name" placeholder="surname" name="l_name"></div>
               </div>
               <div class="row mt-3">
                   <!-- <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter phone number" value=""></div>
@@ -40,7 +40,7 @@
                   <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
                   <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
                   <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div> -->
-                  <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email" [value]="this.currentUser.email"></div>
+                  <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email" [(ngModel)]="this.currentUser.email" name="email"></div>
                   <!-- <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div> -->
               </div>
               <div class="row mt-3 ml-5">

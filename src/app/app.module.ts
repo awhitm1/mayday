@@ -8,9 +8,12 @@ import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/
 import { authTokenInterceptor } from './auth-token.interceptor';
 import { NavComponent } from "./core/nav/nav.component";
 import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
+import { ProfileComponent } from './features/profile/profile.component';
+
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+
     ],
     providers: [
         provideHttpClient(withInterceptors([authTokenInterceptor])),
@@ -25,7 +28,7 @@ import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        NavComponent
+        NavComponent, ProfileComponent
     ]
 })
 export class AppModule { }
