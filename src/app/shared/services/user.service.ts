@@ -52,7 +52,7 @@ export class UserService {
 
   updateProfileUser(user: FormData){
     console.log('User: ', user);
-    return this.http.put<User>(`${environment.apiUrl}/users/{{user.id}}/upload_image`, user);
+    return this.http.put<User>(`${environment.apiUrl}/users/{{user.id}}`, user);
   }
 
   uploadProfileImage(image: File, id: number){
