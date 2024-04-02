@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,11 +11,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [MatChipsModule, MatExpansionModule],
+  imports: [MatChipsModule, MatExpansionModule, ReactiveFormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent{
+export class ProfileComponent implements OnInit{
   panelOpenState = false;
 
   currentUserSub: Subscription = new Subscription();
@@ -28,12 +28,26 @@ export class ProfileComponent{
     f_name: new FormControl('', [Validators.required]),
     l_name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    id: new FormControl('', [Validators.required])
+
   });
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) {
+  constructor(private authService: AuthService, private userService: UserService, private router: Router, private formBuilder: FormBuilder) {
     this.currentUserSub = this.authService.getCurrentUser().subscribe(user => {
       this.currentUser = user;
+    });
+  }
+
+  ngOnInit() {
+    this.initializeForm();
+
+  }
+
+  initializeForm() {
+    this.editProfileForm = this.formBuilder.group({
+
+      f_name: [this.currentUser.f_name, Validators.required],
+      l_name: [this.currentUser.l_name, Validators.required],
+      email: [this.currentUser.email, [Validators.required, Validators.email]]
     });
   }
 
