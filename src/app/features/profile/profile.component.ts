@@ -40,16 +40,6 @@ export class ProfileComponent{
   onFileSelected(event: any) {
     if (event.target.files && event.target.files[0]) {
       this.selectedFile = event.target.files[0];
-      if (this.selectedFile) {this.userService.uploadProfileImage(this.selectedFile, this.currentUser.id).subscribe({
-        next: (res: any) => {
-          console.log('Image Uploaded', res);
-          this.currentUser.profile_image_url = res.profile_image_url;
-        },
-        error: (error: any) => {
-          console.error('Error uploading image', error);
-        },
-      })};
-      this.panelOpenState = false;
     }
   }
 
@@ -60,11 +50,16 @@ export class ProfileComponent{
       formData.append('l_name', this.editProfileForm.get('l_name')!.value!);
       formData.append('email', this.editProfileForm.get('email')!.value!);
       formData.append('id', String(this.currentUser.id));
+      formData.append('groups', JSON.stringify(this.currentUser.groups));
+      formData.append('is_tech', String(this.currentUser.is_tech));
+      formData.append('is_admin', String(this.currentUser.is_admin));
+      formData.append('active', String(this.currentUser.active));
       formData.append('profile_image', this.selectedFile, this.selectedFile.name);
 
       this.userService.updateProfileUser(formData).subscribe({
         next: (user: User) => {
           console.log('User Updated', user);
+          this.panelOpenState = false;
           // this.router.navigate(['/']);
         },
         error: (error: any) => {
