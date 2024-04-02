@@ -59,6 +59,7 @@ export class ProfileComponent implements OnInit{
 
   onSubmit() {
     if (this.editProfileForm.valid && this.selectedFile) {
+      console.log('Form Submitted', this.editProfileForm.value);
       const formData = new FormData();
       formData.append('f_name', this.editProfileForm.get('f_name')!.value!);
       formData.append('l_name', this.editProfileForm.get('l_name')!.value!);
