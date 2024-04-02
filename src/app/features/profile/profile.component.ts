@@ -25,9 +25,9 @@ export class ProfileComponent implements OnInit{
   selectedFile: File | null = null;
 
   editProfileForm = new FormGroup({
-    f_name: new FormControl('', [Validators.required]),
-    l_name: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    f_name: new FormControl(''),
+    l_name: new FormControl(''),
+    email: new FormControl('', [Validators.email]),
 
   });
 
