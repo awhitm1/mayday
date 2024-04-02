@@ -49,4 +49,15 @@ export class UserService {
     console.log('Edited User groups: ', editedUser.groups)
     return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, editedUser);
   }
+
+  updateProfileUser(user: FormData){
+    console.log('User: ', user);
+    return this.http.put<User>(`${environment.apiUrl}/users/{{user.id}}/upload_image`, user);
+  }
+
+  uploadProfileImage(image: File, id: number){
+    const formData = new FormData();
+    formData.append('profile_image', image);
+    return this.http.post<User>(`${environment.apiUrl}/users/${id}/upload_image`, formData);
+  }
 }
