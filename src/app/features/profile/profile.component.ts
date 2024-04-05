@@ -50,20 +50,9 @@ export class ProfileComponent{
   }
 
   onSubmit() {
+    console.log('Submitting user', this.currentUser);
 
-      console.log('Form Submitted', this.currentUser);
-      // console.log('Form', form.value);
-      // const formData = new FormData();
-      // formData.append('f_name', form.value.f_name);
-      // formData.append('l_name', form.value.l_name);
-      // formData.append('email', form.value.email);
-      // formData.append('id', String(this.currentUser.id));
-      // formData.append('groups', JSON.stringify(this.currentUser.groups));
-      // formData.append('is_tech', String(this.currentUser.is_tech));
-      // formData.append('is_admin', String(this.currentUser.is_admin));
-      // formData.append('active', String(this.currentUser.active));
-
-      this.userService.updateProfileUser(this.currentUser).subscribe({
+      this.userService.updateUser(this.currentUser).subscribe({
         next: (user: User) => {
           console.log('User Updated', user);
         },

@@ -18,23 +18,23 @@ export class UserService {
    }
 
   isTech(){
-    return this.http.get<boolean>(`${environment.apiUrl}/users_is_tech`);
+    return this.http.get<boolean>(`${environment.apiUrl}users_is_tech`);
   }
 
   createUser(user: User | any){
-    return this.http.post<User>(`${environment.apiUrl}/users`, user);
+    return this.http.post<User>(`${environment.apiUrl}users`, user);
   }
 
   getUsers(){
-    return this.http.get<User[]>(`${environment.apiUrl}/users`);
+    return this.http.get<User[]>(`${environment.apiUrl}users`);
   }
 
   showUser(id: number){
-    return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
+    return this.http.get<User>(`${environment.apiUrl}users/${id}`);
   }
 
   delUser(id: number){
-    return this.http.delete<User>(`${environment.apiUrl}/users/${id}`);
+    return this.http.delete<User>(`${environment.apiUrl}users/${id}`);
   }
 
   updateUser(user: User){
@@ -47,17 +47,19 @@ export class UserService {
       groups: user.groups?.map(group => group.id) || []
     }
     console.log('Edited User groups: ', editedUser.groups)
-    return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, editedUser);
+    return this.http.put<User>(`${environment.apiUrl}users/${user.id}`, editedUser);
   }
 
-  updateProfileUser(user: User){
-    console.log('User: ', user);
-    return this.http.put<User>(`${environment.apiUrl}/users/{{user.id}}`, user);
-  }
+  // updateProfileUser(user: User){
+  //   console.log('User: ', user);
+  //   console.log('User ID: ', user.id);
+  //   console.log('ApiURL: ', `${environment.apiUrl}`)
+  //   return this.http.put<User>(`${environment.apiUrl}users/{{user.id}}`, user);
+  // }
 
   uploadProfileImage(image: File, id: number){
     const formData = new FormData();
     formData.append('profile_image', image);
-    return this.http.post<User>(`${environment.apiUrl}/users/${id}/upload_image`, formData);
+    return this.http.post<User>(`${environment.apiUrl}users/${id}/upload_image`, formData);
   }
 }
