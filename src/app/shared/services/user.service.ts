@@ -50,7 +50,7 @@ export class UserService {
     return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, editedUser);
   }
 
-  updateProfileUser(user: FormData){
+  updateProfileUser(user: User){
     console.log('User: ', user);
     return this.http.put<User>(`${environment.apiUrl}/users/{{user.id}}`, user);
   }
