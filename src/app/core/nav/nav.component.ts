@@ -11,16 +11,23 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
+
 export class NavComponent implements OnInit{
   currentUser: User | null = null;
+
   constructor(public authService: AuthService) {}
 
   ngOnInit(){
-    const user = localStorage.getItem('user');
-    if (user !== null) {
-      this.currentUser = JSON.parse(user);
-    }
-    console.log('Current User (nav): ', this.currentUser);
+    this.authService.userSubject.subscribe(user => {
+      this.currentUser = user;
+      console.log('Current User (nav): ', this.currentUser);
+    });
+
+    // const user = localStorage.getItem('user');
+    // if (user !== null) {
+    //   this.currentUser = JSON.parse(user);
+    // }
+
   }
 
   logout() {
