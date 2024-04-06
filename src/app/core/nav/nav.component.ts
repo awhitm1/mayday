@@ -17,6 +17,7 @@ export class NavComponent implements OnInit{
 
   ngOnInit(){
     this.currentUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '{}') : null;
+    console.log('Current User (nav): ', this.currentUser);
   }
 
   logout() {
