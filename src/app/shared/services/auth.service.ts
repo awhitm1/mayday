@@ -29,8 +29,8 @@ export class AuthService {
     console.log('Token: ', localStorage.getItem('token'));
   }
 
-  setUser(user: User){
-    localStorage.setItem('user', JSON.stringify(user));
+  setUser(user: any){
+    localStorage.setItem('user', user);
     this.userSubject.next(user);
   }
 
@@ -41,6 +41,7 @@ export class AuthService {
   getAdmin(){
     return JSON.parse(localStorage.getItem('user') || '{}').is_admin;
   }
+  
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('user');
