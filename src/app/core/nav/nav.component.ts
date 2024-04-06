@@ -21,6 +21,7 @@ export class NavComponent implements OnInit{
     this.authService.userSubject.subscribe(user => {
       this.currentUser = user;
       console.log('Current User (nav): ', this.currentUser);
+      console.log('CurrentUser first name (nav): ', this.currentUser?.f_name);
     });
 
     // const user = localStorage.getItem('user');
