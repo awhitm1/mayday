@@ -26,12 +26,11 @@ export class AuthService {
 
   getToken(){
     return localStorage.getItem('token');
-    console.log('Token: ', localStorage.getItem('token'));
   }
 
   setUser(user: any){
     localStorage.setItem('user', user);
-    this.userSubject.next(user);
+    this.userSubject.next(JSON.parse(user));
   }
 
   getUser(){
@@ -41,7 +40,7 @@ export class AuthService {
   getAdmin(){
     return JSON.parse(localStorage.getItem('user') || '{}').is_admin;
   }
-  
+
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('user');
