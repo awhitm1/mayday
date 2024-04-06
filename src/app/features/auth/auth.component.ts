@@ -31,6 +31,7 @@ export class AuthComponent {
         currentUser.is_admin = res.user.is_admin;
         currentUser.is_tech = res.user.is_tech;
         currentUser.token = res.token;
+        console.log('User (from currentUser): ', currentUser);
         this.authService.setToken(res.token);
         this.authService.setUser(res.user);
         this.router.navigate(['/queue']);
