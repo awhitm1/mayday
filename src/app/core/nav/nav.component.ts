@@ -16,7 +16,10 @@ export class NavComponent implements OnInit{
   constructor(public authService: AuthService) {}
 
   ngOnInit(){
-    this.currentUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '{}') : null;
+    const user = localStorage.getItem('user');
+    if (user !== null) {
+      this.currentUser = JSON.parse(user);
+    }
     console.log('Current User (nav): ', this.currentUser);
   }
 
