@@ -53,13 +53,6 @@ export class UserService {
     return this.http.put<User>(`${environment.apiUrl}users/${user.id}`, editedUser);
   }
 
-  // updateProfileUser(user: User){
-  //   console.log('User: ', user);
-  //   console.log('User ID: ', user.id);
-  //   console.log('ApiURL: ', `${environment.apiUrl}`)
-  //   return this.http.put<User>(`${environment.apiUrl}users/{{user.id}}`, user);
-  // }
-
   uploadProfileImage(image: File, id: number){
     const formData = new FormData();
     formData.append('profile_image', image);
