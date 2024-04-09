@@ -46,3 +46,7 @@
 li {
   padding-top: 3px;
 }
+
+mat-accordion {
+  width: 80%;
+}
