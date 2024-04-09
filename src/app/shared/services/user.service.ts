@@ -41,6 +41,9 @@ export class UserService {
     console.log('User: ', user)
 
     const editedUser = {
+      f_name: user.f_name,
+      l_name: user.l_name,
+      email: user.email,
       active: user.active || true,
       is_tech: user.is_tech || false,
       is_admin: user.is_admin || false,
