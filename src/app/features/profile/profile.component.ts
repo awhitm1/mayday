@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent{
+export class ProfileComponent implements OnInit{
   panelOpenState = false;
 
   currentUserSub: Subscription = new Subscription();
@@ -25,12 +25,16 @@ export class ProfileComponent{
 
 
 
-  constructor(private authService: AuthService, private userService: UserService) {
-    this.currentUserSub = this.authService.getCurrentUser().subscribe(user => {
-      this.currentUser = user;
+  constructor(private authService: AuthService, private userService: UserService) {}
+
+  ngOnInit(){
+    this.authService.userSubject.subscribe(user => {
+      if (user){
+        this.currentUser = user;
+      }
     });
   }
-
+  
   onFileSelected(event: any) {
     if (event.target.files && event.target.files[0]) {
       this.selectedFile = event.target.files[0];
