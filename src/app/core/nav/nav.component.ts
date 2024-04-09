@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 
 export class NavComponent implements OnInit{
   currentUser: User | null = null;
+  imageRootUrl = 'https://maydayhelpdeskapi.onrender.com';
 
   constructor(public authService: AuthService) {}
 
