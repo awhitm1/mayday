@@ -50,3 +50,7 @@ li {
 mat-accordion {
   width: 80%;
 }
+
+.image_upload {
+  width: 75%;
+}
