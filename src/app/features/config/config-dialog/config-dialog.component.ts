@@ -22,6 +22,7 @@ import { User } from 'src/app/shared/models/user.model';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { UserService } from 'src/app/shared/services/user.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-config-dialog',
@@ -32,7 +33,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class ConfigDialogComponent implements OnInit{
   optionsTF: string[] = ['true', 'false'];
-  
+
 
   userConfigForm: FormGroup = new FormGroup({
     is_tech: new FormControl<boolean>(false),
@@ -60,7 +61,6 @@ export class ConfigDialogComponent implements OnInit{
   announcer = inject(LiveAnnouncer);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private userService: UserService) {
-    console.log('Dialog Data: ', data);
     this.filteredGroups = this.groupCtrl.valueChanges.pipe(
       startWith(null),
       map((group: string | null) => group ? this._filter(group) : this.allGroups.slice())
@@ -114,7 +114,6 @@ export class ConfigDialogComponent implements OnInit{
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.groups.push(event.option.value);
-    console.log('Selected: ', event.option.value);
     this.groupInput.nativeElement.value = '';
     this.groupCtrl.setValue(null);
   }

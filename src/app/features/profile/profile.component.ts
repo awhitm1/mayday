@@ -40,7 +40,7 @@ export class ProfileComponent{
       this.userService.uploadProfileImage(this.selectedFile, this.currentUser.id).subscribe({
         next: (user: User) => {
           console.log('Profile Image Updated', user);
-          this.currentUser = user;
+          this.authService.userSubject.next(user);
           this.panelOpenState = false;
         },
         error: (error: any) => {
@@ -57,6 +57,7 @@ export class ProfileComponent{
       this.userService.updateUser(this.currentUser).subscribe({
         next: (user: User) => {
           console.log('User Updated', user);
+          this.authService.userSubject.next(user);
         },
         error: (error: any) => {
           console.error('Error updating user', error);
