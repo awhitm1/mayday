@@ -9,12 +9,13 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class AuthService implements OnInit{
-  public readonly tokenSubject = new BehaviorSubject<string | null>(null);
-  public readonly userSubject = new BehaviorSubject< User | null>(null);
+  tokenSubject = new BehaviorSubject<string | null>(null);
+  userSubject = new BehaviorSubject< User | null>(null);
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(){
+    console.log('Auth Service Initialized');
     if (this.getToken() && this.getUser()) {
       this.tokenSubject.next(this.getToken());
       this.userSubject.next(this.getUser());
