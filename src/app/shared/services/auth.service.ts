@@ -16,7 +16,7 @@ export class AuthService {
 
   login(email: string, password:string){
     console.log('Logging in with username: ', email, ' and password: ', password);
-    return this.http.post<{token: string, user: User}>(`${environment.apiUrl}/login`, {email, password});
+    return this.http.post<{token: string, user: User}>(`${environment.apiUrl}login`, {email, password});
   }
 
   setToken(token: string){
@@ -50,6 +50,6 @@ export class AuthService {
   }
 
   getCurrentUser(){
-    return this.http.get<User>(`${environment.apiUrl}/current_user`);
+    return this.http.get<User>(`${environment.apiUrl}current_user`);
   }
 }
