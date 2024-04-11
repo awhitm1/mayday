@@ -27,52 +27,52 @@ export class TicketService implements OnDestroy {
   }
 
   getAllTickets(){
-    return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets`);
+    return this.http.get<Ticket[]>(`${environment.apiUrl}tickets`);
   }
 
   getUsersTickets(){
     if (this.authService.getToken()) {
-      return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets_created`);
+      return this.http.get<Ticket[]>(`${environment.apiUrl}tickets_created`);
     } else {
     return new Observable<Ticket[]>();
     }
   }
 
   getTicket(id: number){
-    return this.http.get<Ticket>(`${environment.apiUrl}/tickets/${id}`);
+    return this.http.get<Ticket>(`${environment.apiUrl}tickets/${id}`);
   }
 
   createTicket(ticket: Ticket | any){
-    return this.http.post<Ticket>(`${environment.apiUrl}/tickets`, ticket);
+    return this.http.post<Ticket>(`${environment.apiUrl}tickets`, ticket);
   }
 
   updateTicket(ticket: Ticket){
     console.log('Updated Ticket: ', ticket)
-    return this.http.put<Ticket>(`${environment.apiUrl}/tickets/${ticket.id}`, ticket);
+    return this.http.put<Ticket>(`${environment.apiUrl}tickets/${ticket.id}`, ticket);
   }
 
   claimTicket(id: number){
-    return this.http.get<Ticket>(`${environment.apiUrl}/claim_ticket/${id}`);
+    return this.http.get<Ticket>(`${environment.apiUrl}claim_ticket/${id}`);
   }
 
   deleteTicket(id: number){
-    return this.http.delete<Ticket>(`${environment.apiUrl}/tickets/${id}`);
+    return this.http.delete<Ticket>(`${environment.apiUrl}tickets/${id}`);
   }
 
   getTechsTickets(){
-    return this.http.get<Ticket[]>(`${environment.apiUrl}/assigned_tickets`);
+    return this.http.get<Ticket[]>(`${environment.apiUrl}assigned_tickets`);
   }
 
   getGroupsTickets(){
-    return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets_by_group`);
+    return this.http.get<Ticket[]>(`${environment.apiUrl}tickets_by_group`);
   }
 
   getLocationsTickets(){
-    return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets_location`);
+    return this.http.get<Ticket[]>(`${environment.apiUrl}tickets_location`);
   }
 
   getCategoriesTickets(){
-    return this.http.get<Ticket[]>(`${environment.apiUrl}/tickets_category`);
+    return this.http.get<Ticket[]>(`${environment.apiUrl}tickets_category`);
   }
 
 
