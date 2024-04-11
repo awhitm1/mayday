@@ -11,6 +11,10 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page"  routerLink="/queue">Help Desk</a>
         </li>
+        @if (this.currentUser?.is_tech){
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/kanban">Kan-ban</a>
+        }
         <li class="nav-item">
           <a class="nav-link" routerLink="/profile">Profile</a>
         </li>
