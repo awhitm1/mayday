@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
@@ -8,19 +8,18 @@ import { User } from '../models/user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnInit{
+export class AuthService {
   tokenSubject = new BehaviorSubject<string | null>(null);
   userSubject = new BehaviorSubject< User | null>(null);
 
-  constructor(private http: HttpClient, private router: Router) {}
-
-  ngOnInit(){
+  constructor(private http: HttpClient, private router: Router) {
     console.log('Auth Service Initialized');
     if (this.getToken() && this.getUser()) {
       this.tokenSubject.next(this.getToken());
       this.userSubject.next(this.getUser());
     }
   }
+
 
   login(email: string, password:string){
     console.log('Logging in with username: ', email, ' and password: ', password);
