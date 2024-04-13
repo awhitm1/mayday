@@ -1,1 +1,210 @@
-<p>kanban works!</p>
+<div cdkDropListGroup>
+  @for (status of this.lists.statuses; track $index){
+  <div class="container">
+    <div class="d-flex flex-row justify-content-between">
+      <h2>To Do</h2>
+    </div>
+
+    <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="this.filterTickets(status.id)"
+        class="list" (cdkDropListDropped)="drop($event, 'To-Do')">
+      <div class="list-item" *ngFor="let item of this.filterTickets(status.id), index as i" cdkDrag style="text-align: center;">
+        <mat-card class="task-card">
+          <mat-card-header>
+            <div class="container">
+              <div class="row justify-content-between">
+                <div class="column">
+                 <mat-card-title>{{item.title}}</mat-card-title>
+                </div>
+                <div class="column">
+                      <form>
+                        <div class="form-group dropBoxStyle" >
+                        <select [(ngModel)]="item.status_id" name="choose-status" >
+                          <option value="To-Do">To-Do</option>
+                          <option value="In Progress">In Progress</option>
+                          <option value="Done">Done</option>
+                        </select>
+                        </div>
+                      </form>
+                </div>
+              </div>
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <mat-card-subtitle>
+
+              <div class="d-flex row">
+                <form>
+                  <div class="form-group dropBoxStyle">
+                    <label>Priority: </label>
+                    <select >
+                      <option value="High">High</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Low">Low</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+            </mat-card-subtitle>
+          <mat-divider></mat-divider>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <div class="d-flex flex-grow-1 justify-content-between">
+              <div>
+                <button class="bi bi-pencil-square" mat-button (click)="ticketSelected(item)"></button>
+              </div>
+            <div>
+              <button class="bi bi-trash" mat-button></button>
+            </div>
+            </div>
+          </mat-card-actions>
+
+          <mat-card-footer>
+            
+          </mat-card-footer>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  }
+  <!-- <div class="container">
+    <div class="d-flex flex-row justify-content-between">
+      <h2>In Progress</h2>
+      <h2><i class="bi bi-plus-square" (click)="onModal()"></i></h2>
+    </div>
+
+    <div cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="kanBanTasksInProgress"
+        class="list" (cdkDropListDropped)="drop($event, 'In Progress')">
+      <div class="list-item" *ngFor="let item of kanBanTasksInProgress, index as i" cdkDrag style="text-align: center;">
+        <mat-card class="task-card">
+          <mat-card-header [ngClass]="{'priorityHigh': item.priority === 'High', 'priorityMedium': item.priority === 'Medium', 'priorityLow': item.priority === 'Low'}">
+            <div class="container">
+              <div class="row justify-content-between">
+                <div class="column">
+                 <mat-card-title>{{item.title}}</mat-card-title>
+                </div>
+                <div class="column">
+                      <form>
+                        <div class="form-group dropBoxStyle" >
+                        <select [(ngModel)]="item.status" name="choose-status" (change)="onUpdateTask(item.taskID, 'edit', item)">
+                          <option value="To-Do">To-Do</option>
+                          <option value="In Progress">In Progress</option>
+                          <option value="Done">Done</option>
+                        </select>
+                        </div>
+                      </form>
+                </div>
+              </div>
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <mat-card-subtitle>
+              <div class="d-flex row">Due Date: {{item.dueDate | date }}</div>
+              <div class="d-flex row">
+                <form>
+                  <div class="form-group dropBoxStyle">
+                    <label>Priority: </label>
+                    <select [(ngModel)]="item.priority" name="task-priority" (change)="onUpdateTask(item.taskID, 'edit', item)">
+                      <option value="High">High</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Low">Low</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+            </mat-card-subtitle>
+          <mat-divider></mat-divider>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <div class="d-flex flex-grow-1 justify-content-between">
+              <div>
+                <button class="bi bi-pencil-square" mat-button (click)="onModal(item.taskID)"></button>
+              </div>
+            <div>
+              <button class="bi bi-trash" mat-button (click)="onUpdateTask(item.taskID, 'del')"></button>
+            </div>
+            </div>
+          </mat-card-actions>
+
+          <mat-card-footer>
+            <mat-progress-bar mode="indeterminate" [color]="color"></mat-progress-bar>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="d-flex flex-row justify-content-between">
+      <h2>Done</h2>
+      <h2><i class="bi bi-plus-square" (click)="onModal()"></i></h2>
+    </div>
+    <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="kanBanTasksDone" class="list" (cdkDropListDropped)="drop($event, 'Done')">
+      <div class="list-item" *ngFor="let item of kanBanTasksDone, index as i" cdkDrag style="text-align: center;">
+        <div class="custom-placeholder" *cdkDragPlaceholder></div>
+        <mat-card class="task-card">
+          <mat-card-header [ngClass]="{'priorityHigh': item.priority === 'High', 'priorityMedium': item.priority === 'Medium', 'priorityLow': item.priority === 'Low'}">
+            <div class="container">
+              <div class="row justify-content-between">
+                <div class="column">
+                 <mat-card-title>{{item.title}}</mat-card-title>
+                </div>
+                <div class="column">
+                      <form>
+                        <div class="form-group dropBoxStyle">
+                        <select [(ngModel)]="item.status" name="choose-status" (change)="onUpdateTask(item.taskID, 'edit', item)">
+                          <option value="To-Do">To-Do</option>
+                          <option value="In Progress">In Progress</option>
+                          <option value="Done">Done</option>
+                        </select>
+                        </div>
+                      </form>
+                </div>
+              </div>
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <mat-card-subtitle>
+              <div class="d-flex row">
+                Due Date: {{item.dueDate | date}}
+              </div>
+              <div class="d-flex row">
+                <form>
+                  <div class="form-group dropBoxStyle">
+                    <label>Priority: </label>
+                    <select [(ngModel)]="item.priority" name="task-priority" (change)="onUpdateTask(item.taskID, 'edit', item)">
+                      <option value="High">High</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Low">Low</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+            </mat-card-subtitle>
+
+            <mat-divider></mat-divider>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="d-flex flex-grow-1 justify-content-between">
+              <div>
+                <button class="bi bi-pencil-square" mat-button (click)="onModal(item.taskID)"></button>
+              </div>
+
+              <div>
+                <button class="bi bi-trash" mat-button (click)=""></button>
+              </div>
+            </div>
+          </mat-card-actions>
+          <mat-card-footer>
+            <mat-progress-bar mode="determinate" [value]=100 [color]="color"></mat-progress-bar>
+          </mat-card-footer>
+        </mat-card>
+
+      </div>
+    </div>
+  </div> -->
+</div>

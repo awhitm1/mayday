@@ -34,6 +34,7 @@ export class TicketComponent implements OnInit{
   groups: Group[] = this.data.groups || [];
   currentUser: User = this.data.user;
   users: User[] = this.data.users || [];
+
   ticketForm: FormGroup = new FormGroup({
     id: new FormControl(''),
     title: new FormControl(''),
@@ -51,7 +52,6 @@ export class TicketComponent implements OnInit{
 
   ngOnInit(): void {
     this.initializeForm();
-
   }
 
   initializeForm() {
