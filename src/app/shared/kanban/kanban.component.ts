@@ -93,6 +93,18 @@ export class KanbanComponent implements OnInit{
     return this.myTickets.filter(ticket => ticket.status_id === statusID);
   }
 
+  // Sort statuses so that Open is first and Closed is last
+  sortStatuses(statuses: Status[]){
+    return statuses.sort((a, b) => {
+      if (a.name === 'Open') return -1;
+      if (b.name === 'Open') return 1;
+      if (a.name === 'Closed') return 1;
+      if (b.name === 'Closed') return -1;
+      return a.name.localeCompare(b.name);
+    }
+    );
+  }
+
   // Methods to translate the id number to the name of the group, location, category, or status - used in the html
   findGroup(id: number){
     return this.lists.groups.find(group => group.id === id);

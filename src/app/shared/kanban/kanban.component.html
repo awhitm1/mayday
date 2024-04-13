@@ -1,5 +1,5 @@
 <div cdkDropListGroup>
-  @for (status of this.lists.statuses; track $index){
+  @for (status of this.sortStatuses(this.lists.statuses); track $index){
   <div class="container">
     <div class="d-flex flex-row justify-content-between">
       <h2>{{this.findStatus(status.id)?.name}}</h2>
