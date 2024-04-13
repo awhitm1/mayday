@@ -2,7 +2,7 @@
   @for (status of this.lists.statuses; track $index){
   <div class="container">
     <div class="d-flex flex-row justify-content-between">
-      <h2>{{this.findStatus(status.id)}}</h2>
+      <h2>{{this.findStatus(status.id)?.name}}</h2>
     </div>
 
     <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="this.filterTickets(status.id)"
@@ -13,7 +13,7 @@
             <div class="container">
               <div class="row justify-content-between">
                 <div class="column">
-                 <mat-card-title>{{item.title}}</mat-card-title>
+                 <mat-card-title>{{item?.title}}</mat-card-title>
                 </div>
                 <div class="column">
                       <form>
@@ -34,11 +34,11 @@
             <mat-card-subtitle>
 
               <div class="d-flex row">
-                Location: {{this.findLocation(item.location_id)}} | Category: {{this.findCategory(item.category_id)}}
+                Location: {{this.findLocation(item.location_id)?.name}} | Category: {{this.findCategory(item.category_id)?.name}}
               </div>
             </mat-card-subtitle>
           <mat-divider></mat-divider>
-            <div>{{item.description}}</div>
+            <div>{{item?.description}}</div>
           </mat-card-content>
 
           <mat-card-actions>
