@@ -74,7 +74,7 @@ export class KanbanComponent implements OnInit{
           event.container.data,
           event.previousIndex,
           event.currentIndex);
-          // event.container.data[event.currentIndex].status=ticketStatus
+          event.container.data[event.currentIndex].status_id = +ticketStatus
       }
 
       // this.kanBanEditedTasks = this.kanBanTasksDone.concat(this.kanBanTasksInProgress, this.kanBanTasksToDo);
