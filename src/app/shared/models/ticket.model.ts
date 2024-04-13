@@ -8,6 +8,9 @@ export class Ticket {
   group_id!: number;
   assigned_tech_id?: number;
   id?: number;
+  created_at?: string;
+  updated_at?: string;
+  deleted_at?: string;
 
   // constructor(title: string, description: string, status_id: number, location_id: number, category_id: number, user_id: number, group_id: number){
   //   this.title = title;

@@ -17,6 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { TicketComponent } from 'src/app/features/ticket/ticket.component';
 import { User } from '../models/user.model';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-kanban',
@@ -29,10 +30,12 @@ export class KanbanComponent implements OnInit{
   myTickets: Ticket[] = [];
   listsSub: Subscription = new Subscription();
   lists: {groups: Group[], locations: Location[], categories: Category[], statuses: Status[]} = {groups: [], locations: [], categories: [], statuses: []};
+  userSub: Subscription = new Subscription();
+  users: User[] = [];
 
   currentUser: User = new User();
 
-  constructor(private ticketService: TicketService, private authService: AuthService, private configService: ConfigurationService, public dialog: MatDialog ) {}
+  constructor(private ticketService: TicketService, private authService: AuthService, private configService: ConfigurationService, public dialog: MatDialog, private userService: UserService ) {}
 
   ngOnInit(){
     // Set up subscriptions to the ticket service and configuration service
@@ -55,6 +58,11 @@ export class KanbanComponent implements OnInit{
       if (user){
         this.currentUser = user;
       }
+    });
+
+    // Get all users
+    this.userSub = this.userService.getUsers().subscribe(users => {
+      this.users = users;
     });
   }
   // Angular Material Drag and Drop functions
@@ -83,7 +91,8 @@ export class KanbanComponent implements OnInit{
         categories: this.lists.categories,
         statuses: this.lists.statuses,
         user: this.currentUser,
-        isNew: false
+        isNew: false,
+        users: this.users
       }
     });
   }
@@ -120,6 +129,10 @@ export class KanbanComponent implements OnInit{
 
   findStatus(id: number){
     return this.lists.statuses.find(status => status.id === id);
+  }
+
+  findUser(id: number){
+    return this.users.find(user => user.id === id);
   }
 }
 

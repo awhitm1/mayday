@@ -11,6 +11,14 @@
         <mat-card class="task-card">
           <mat-card-header>
             <div class="container">
+              <div class="row justify-left">
+                <div class="column">
+                  <p>ID:{{item.id}}</p>
+                </div>
+                <div class="column">
+                  <p>Created by: {{this.findUser(item.user_id)?.f_name}} {{this.findUser(item.user_id)?.l_name}}</p>
+                </div>
+              </div>
               <div class="row justify-content-between">
                 <div class="column">
                  <mat-card-title>{{item?.title}}</mat-card-title>
@@ -46,9 +54,12 @@
               <div>
                 <button class="bi bi-pencil-square" mat-button (click)="ticketSelected(item)"></button>
               </div>
-            <div>
-              <button class="bi bi-trash" mat-button></button>
-            </div>
+              <div>
+                <small>{{item.created_at | date: 'medium'}}</small>
+              </div>
+              <div>
+                <button class="bi bi-trash" mat-button></button>
+              </div>
             </div>
           </mat-card-actions>
 
