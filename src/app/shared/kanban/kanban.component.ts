@@ -66,7 +66,7 @@ export class KanbanComponent implements OnInit{
     });
   }
   // Angular Material Drag and Drop functions
-  drop(event: CdkDragDrop<Ticket[]>, ticketStatus: string): void {
+  drop(event: CdkDragDrop<Ticket[]>, ticketStatus: number): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       } else {
@@ -74,7 +74,7 @@ export class KanbanComponent implements OnInit{
           event.container.data,
           event.previousIndex,
           event.currentIndex);
-          event.container.data[event.currentIndex].status_id = +ticketStatus
+          event.container.data[event.currentIndex].status_id = ticketStatus
       }
       console.log(ticketStatus);
       console.log(event.container.data[event.currentIndex]);
