@@ -2,7 +2,7 @@
   @for (status of this.lists.statuses; track $index){
   <div class="container">
     <div class="d-flex flex-row justify-content-between">
-      <h2>To Do</h2>
+      <h2>{{this.findStatus(status.id)}}</h2>
     </div>
 
     <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="this.filterTickets(status.id)"
@@ -19,9 +19,9 @@
                       <form>
                         <div class="form-group dropBoxStyle" >
                         <select [(ngModel)]="item.status_id" name="choose-status" >
-                          <option value="To-Do">To-Do</option>
-                          <option value="In Progress">In Progress</option>
-                          <option value="Done">Done</option>
+                          @for (st of this.lists.statuses; track $index){
+                          <option value="{{st.id}}">{{st.name}}</option>
+                          }
                         </select>
                         </div>
                       </form>
@@ -34,19 +34,11 @@
             <mat-card-subtitle>
 
               <div class="d-flex row">
-                <form>
-                  <div class="form-group dropBoxStyle">
-                    <label>Priority: </label>
-                    <select >
-                      <option value="High">High</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Low">Low</option>
-                    </select>
-                  </div>
-                </form>
+                Location: {{this.findLocation(item.location_id)}} | Category: {{this.findCategory(item.category_id)}}
               </div>
             </mat-card-subtitle>
           <mat-divider></mat-divider>
+            <div>{{item.description}}</div>
           </mat-card-content>
 
           <mat-card-actions>
@@ -61,7 +53,7 @@
           </mat-card-actions>
 
           <mat-card-footer>
-            
+
           </mat-card-footer>
         </mat-card>
       </div>
