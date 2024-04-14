@@ -76,11 +76,10 @@ export class KanbanComponent implements OnInit{
           event.currentIndex);
           event.container.data[event.currentIndex].status_id = ticketStatus
       }
-      console.log(ticketStatus);
-      console.log(event.container.data[event.currentIndex]);
-      // this.kanBanEditedTasks = this.kanBanTasksDone.concat(this.kanBanTasksInProgress, this.kanBanTasksToDo);
-      // this.refreshList();
-      // this.tasksService.updateAllTasks(this.kanBanEditedTasks);
+
+      // Update the ticket in the database
+      this.updateTicket(event.container.data[event.currentIndex]);
+      
   }
 
   ticketSelected(row: Ticket){
@@ -113,6 +112,18 @@ export class KanbanComponent implements OnInit{
       return a.name.localeCompare(b.name);
     }
     );
+  }
+
+  // Update ticket
+  updateTicket(item: Ticket){
+    this.ticketService.updateTicket(item).subscribe({
+      next: (ticket: Ticket) => {
+        console.log('Ticket updated: ', ticket);
+      },
+      error: (error: any) => {
+        console.error('Error updating ticket', error);
+      },
+    });
   }
 
   // Methods to translate the id number to the name of the group, location, category, or status - used in the html
