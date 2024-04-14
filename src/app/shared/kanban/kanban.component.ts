@@ -135,17 +135,5 @@ export class KanbanComponent implements OnInit{
   findUser(id: number){
     return this.users.find(user => user.id === id);
   }
-
-  statusChanged(item: Ticket){
-    // this.ticketService.updateTicket(item).subscribe({
-    //   next: (ticket: Ticket) => {
-    //     console.log('Ticket updated: ', ticket);
-    //   },
-    //   error: (error: any) => {
-    //     console.error('Error updating ticket: ', error);
-    //   }
-    // });
-    console.log('Status changed: ', item);
-  }
 }
 
