@@ -28,7 +28,7 @@
                         <div class="form-group dropBoxStyle" >
                         <select [(ngModel)]="item.status_id" name="choose-status" >
                           @for (st of this.lists.statuses; track $index){
-                          <option value=st.id>{{st.name}}</option>
+                          <option value="st.id">{{st.name}}</option>
                           }
                         </select>
                         </div>
