@@ -25,6 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TicketComponent } from 'src/app/features/ticket/ticket.component';
 import { DatePipe } from '@angular/common';
 import { User } from '../models/user.model';
+import { group } from '@angular/animations';
 
 
 export interface TicketData {
@@ -58,7 +59,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   // tickets: Ticket[] = [];
   displayedColumns: string[] = ['created_at', 'user_id', 'title', 'description', 'status_id', 'group_id', 'assigned_tech', 'category_id', 'location_id'];
   dataSource: MatTableDataSource<Ticket> = new MatTableDataSource();
-  currentUser = this.authService.getUser();
+  currentUser = new User();
 
   // Subscriptions
   isTechSub: Subscription = new Subscription();
@@ -103,6 +104,12 @@ export class QueueComponent implements OnInit, OnDestroy {
 
     this.userSub = this.userService.getUsers().subscribe(users => {
       this.users = users;
+    });
+
+    this.authService.userSubject.subscribe(user => {
+      if (user){
+        this.currentUser = user;
+      }
     });
 
     this.getMyTickets();
@@ -170,8 +177,9 @@ export class QueueComponent implements OnInit, OnDestroy {
   }
 
   switchToAssignedTickets(){
-    this.currentView = 'Assigned:';
     this.filterTickets();
+    this.currentView = 'Assigned:';
+
     this.filteredTickets = this.filteredTickets.filter(ticket => ticket.assigned_tech_id === this.currentUser.id);
     this.dataSource = new MatTableDataSource(this.filteredTickets);
     this.dataSource.paginator = this.paginator;
@@ -179,9 +187,12 @@ export class QueueComponent implements OnInit, OnDestroy {
   }
 
   switchToGroupTickets(){
-    this.currentView = 'My Group Tickets:';
     this.filterTickets();
-    this.filteredTickets = this.filteredTickets.filter(ticket => ticket.group_id === this.currentUser.group_id);
+    this.currentView = 'My Group Tickets:';
+
+    if (this.currentUser?.groups){
+    this.filteredTickets = this.filteredTickets.filter(ticket => this.currentUser?.groups?.some(group => group.id === ticket.group_id));
+    }
     this.dataSource = new MatTableDataSource(this.filteredTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
