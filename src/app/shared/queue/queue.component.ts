@@ -200,6 +200,7 @@ export class QueueComponent implements OnInit, OnDestroy {
 
   getMyTickets(){
     this.filterTickets();
+    this.currentView = 'My Tickets:';
     this.filteredTickets = this.filteredTickets.filter(ticket => ticket.user_id === this.currentUser.id);
     this.dataSource = new MatTableDataSource(this.filteredTickets);
     this.dataSource.paginator = this.paginator;
