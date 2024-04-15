@@ -65,7 +65,7 @@ export class TicketComponent implements OnInit{
       status_id: [this.selectedTicket.status_id, Validators.required],
       location_id: [this.selectedTicket.location_id, Validators.required],
       category_id: [this.selectedTicket.category_id, Validators.required],
-      user_id: [this.selectedTicket.user_id, Validators.required],
+      user_id: [this.selectedTicket.user_id],
       group_id: [this.selectedTicket.group_id, Validators.required],
       comment_content: [this.newComment]
     });
