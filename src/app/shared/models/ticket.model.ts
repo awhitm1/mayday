@@ -11,6 +11,7 @@ export class Ticket {
   created_at?: string;
   updated_at?: string;
   deleted_at?: string;
+  comments: any[] = [];
 
   // constructor(title: string, description: string, status_id: number, location_id: number, category_id: number, user_id: number, group_id: number){
   //   this.title = title;

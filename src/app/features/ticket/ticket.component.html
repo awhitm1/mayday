@@ -66,6 +66,21 @@
         </mat-form-field>
 
       </div>
+      <div>
+        <mat-form-field class="main">
+          <mat-label floatLabel="Comments">Add Comment</mat-label>
+          <textarea matInput formControlName="comment_content" [value]="this.newComment" [disabled]="viewOnly">
+          </textarea>
+        </mat-form-field>
+      </div>
+      <div>
+        @for (comment of this.selectedTicket.comments; track comment) {
+        <div class="comment">
+          <p>{{ findItemById(comment.user_id, this.users).f_name }} {{ findItemById(comment.user_id, this.users).l_name }}: {{comment.comment}}</p>
+          <small>{{comment.created_at | date: 'medium'}}</small>
+        </div>
+        }
+      </div>
       <button type="button" (click)="closeDialog()">Cancel</button>
       @if (isNewTicket){  <button type="submit" [disabled]="!ticketForm.valid || viewOnly">Submit</button> }
       @if (!isNewTicket && (this.selectedTicket.user_id === this.currentUser.id) || (this.currentUser.is_admin) ){  <button type="button" [disabled]="!ticketForm.valid || viewOnly" (click)="updateTicket()">Update</button> }

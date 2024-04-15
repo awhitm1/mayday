@@ -14,11 +14,12 @@ import { Category } from 'src/app/shared/models/category.model';
 import { Status } from 'src/app/shared/models/status.model';
 import { Group } from 'src/app/shared/models/group.model';
 import { Location } from 'src/app/shared/models/location.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-ticket',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormField, MatInputModule, MatSelectModule, MatFormFieldModule],
+  imports: [ReactiveFormsModule, MatFormField, MatInputModule, MatSelectModule, MatFormFieldModule, DatePipe],
   templateUrl: './ticket.component.html',
   styleUrl: './ticket.component.css'
 })
@@ -34,6 +35,7 @@ export class TicketComponent implements OnInit{
   groups: Group[] = this.data.groups || [];
   currentUser: User = this.data.user;
   users: User[] = this.data.users || [];
+  newComment: string = '';
 
   ticketForm: FormGroup = new FormGroup({
     id: new FormControl(''),
@@ -44,6 +46,7 @@ export class TicketComponent implements OnInit{
     category_id: new FormControl(''),
     user_id: new FormControl(''),
     group_id: new FormControl(''),
+    comment_content: new FormControl('')
   });
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private ticketService: TicketService, private router: Router, private formBuilder: FormBuilder, dialogRef: MatDialogRef<TicketComponent>) {
@@ -64,6 +67,7 @@ export class TicketComponent implements OnInit{
       category_id: [this.selectedTicket.category_id, Validators.required],
       user_id: [this.selectedTicket.user_id, Validators.required],
       group_id: [this.selectedTicket.group_id, Validators.required],
+      comment_content: [this.newComment]
     });
 
   }
