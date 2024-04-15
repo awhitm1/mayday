@@ -164,6 +164,7 @@ export class QueueComponent implements OnInit, OnDestroy {
 
   switchToAllFilteredTickets(){
     this.filterTickets();
+    
     this.dataSource = new MatTableDataSource(this.filteredTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
