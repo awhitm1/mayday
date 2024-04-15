@@ -21,7 +21,7 @@
   border-bottom: solid 1px #ccc;
   box-sizing: border-box;
   cursor: move;
-  background: white;
+  background: rgba(253, 186, 98, 0.808);
   color: black;
   font-size: 14px;
 }
