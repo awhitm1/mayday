@@ -11,15 +11,22 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { TicketService } from 'src/app/shared/services/ticket.service';
 import { AuthService } from '../services/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {FormsModule, FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
+import { ConfigurationService } from 'src/app/shared/services/configuration.service';
+import { MatDialog } from '@angular/material/dialog';
+import { TicketComponent } from 'src/app/features/ticket/ticket.component';
+import { DatePipe } from '@angular/common';
+import { User } from '../models/user.model';
+import { group } from '@angular/animations';
+
 
 export interface TicketData {
   id: number;
@@ -36,88 +43,88 @@ export interface TicketData {
 @Component({
   selector: 'app-queue',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatSidenavModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatCheckboxModule, MatToolbarModule, MatIconModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatSidenavModule, MatButtonModule, FormsModule, ReactiveFormsModule, MatCheckboxModule, MatToolbarModule, MatIconModule, DatePipe, MatSlideToggleModule],
+  providers: [DatePipe],
   templateUrl: './queue.component.html',
   styleUrl: './queue.component.css'
 })
-export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
-  events: string[] = [];
-  // homeTickets: Ticket[] = [];
-  opened: boolean = true;
+export class QueueComponent implements OnInit, OnDestroy {
+  viewClosed: boolean = false;
   options = this._formBuilder.group({
     bottom: 0,
     fixed: false,
     top: 0,
   });
 
-  tickets: Ticket[] = [];
+  // tickets: Ticket[] = [];
   displayedColumns: string[] = ['created_at', 'user_id', 'title', 'description', 'status_id', 'group_id', 'assigned_tech', 'category_id', 'location_id'];
-  dataSource: MatTableDataSource<Ticket> = new MatTableDataSource(this.tickets);
-  currentUser = this.authService.getUser();
-  usersTicketsSub: Subscription = new Subscription();
-  usersTickets: Ticket[] = [];
+  dataSource: MatTableDataSource<Ticket> = new MatTableDataSource();
+  currentUser = new User();
+
+  // Subscriptions
   isTechSub: Subscription = new Subscription();
   isTech: boolean = false;
   allTicketsSub: Subscription = new Subscription();
   allTickets: Ticket[] = [];
-  assignedTicketsSub: Subscription = new Subscription();
-  assignedTickets: Ticket[] = [];
-  groupTicketsSub: Subscription = new Subscription();
-  groupTickets: Ticket[] = [];
+
+  // Variable to store the current filtered ticket array
+  filteredTickets: Ticket[] = [];
+
+  // Get parameter lists
+  userSub: Subscription = new Subscription();
+  users: User[] = [];
   listsSub: Subscription = new Subscription();
-  // lists: {Group[], Location[], Category[], Status[]} = {Group[], Location[], Category[], Status};
-  lists: {groups: Group[], locations: Location[], categories: Category[], statuses: Status[]} = {groups: [], locations: [], categories: [], statuses: []};
+  groupList: Group[] = [];
+  locationList: Location[] = [];
+  categoryList: Category[] = [];
+  statusList: Status[] = [];
+
   currentView: string = 'Created:';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private ticketService: TicketService, private authService: AuthService, private _formBuilder: FormBuilder, private userService: UserService, private router: Router) {}
+  constructor(private ticketService: TicketService, private configService: ConfigurationService, private authService: AuthService, private _formBuilder: FormBuilder, private userService: UserService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.listsSub = this.ticketService.getLists().subscribe(lists => {
-      this.lists.groups = lists.Groups;
-      this.lists.locations = lists.Locations;
-      this.lists.categories = lists.Categories;
-      this.lists.statuses = lists.Statuses;
-      console.log('Lists: ', this.lists);
+    this.listsSub = this.configService.getLists().subscribe(lists => {
+      this.groupList = lists.Groups;
+      this.locationList = lists.Locations;
+      this.categoryList = lists.Categories;
+      this.statusList = lists.Statuses;
     });
 
     this.isTechSub = this.userService.userIsTech.subscribe(tech => {
       this.isTech = tech;
-      console.log('Is tech: ', this.isTech);
-    });
-
-    this.usersTicketsSub = this.ticketService.usersTickets.subscribe(tickets => {
-      this.usersTickets = tickets;
-      this.dataSource = new MatTableDataSource(this.usersTickets);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
     });
 
     this.allTicketsSub = this.ticketService.getAllTickets().subscribe(tickets => {
       this.allTickets = tickets;
     });
 
-    this.assignedTicketsSub = this.ticketService.getTechsTickets().subscribe(tickets => {
-      this.assignedTickets = tickets;
+    this.userSub = this.userService.getUsers().subscribe(users => {
+      this.users = users;
     });
 
-    this.groupTicketsSub = this.ticketService.getGroupsTickets().subscribe(tickets => {
-      this.groupTickets = tickets;
+    this.authService.userSubject.subscribe(user => {
+      if (user){
+        this.currentUser = user;
+      }
     });
+
+    this.getMyTickets();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource = new MatTableDataSource(this.allTickets);
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  // }
 
   ngOnDestroy(): void {
-    this.usersTicketsSub.unsubscribe();
     this.isTechSub.unsubscribe();
     this.allTicketsSub.unsubscribe();
-    this.assignedTicketsSub.unsubscribe();
+    this.userSub.unsubscribe();
   }
 
   applyFilter(event: Event) {
@@ -129,36 +136,126 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
     }
   }
 
-  switchToAllTickets(){
-    this.currentView = 'All Tickets:';
-      this.dataSource = new MatTableDataSource(this.allTickets);
+  filterTickets(){
+    if (!this.viewClosed){
+      this.currentView = 'Open Tickets:';
+      // Filter out closed tickets - check if status exists first
+      this.filteredTickets = this.allTickets.filter(ticket => {
+        const status = this.statusList.find(status => status.id === ticket.status_id);
+        return status ? status.name !== 'Closed' : false;
+      });
+
+      this.dataSource = new MatTableDataSource(this.filteredTickets);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+    }
+    else {
+      this.currentView = 'Closed Tickets:';
+      // Filter for closed tickets - check if status exists first
+      this.filteredTickets = this.allTickets.filter(ticket => {
+        const status = this.statusList.find(status => status.id === ticket.status_id);
+        return status ? status.name === 'Closed' : true;
+      });
+      this.dataSource = new MatTableDataSource(this.filteredTickets);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+  switchToAllFilteredTickets(){
+    this.filterTickets();
+    
+    this.dataSource = new MatTableDataSource(this.filteredTickets);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  switchToAllTickets(){
+    this.currentView = 'All Tickets:';
+    this.dataSource = new MatTableDataSource(this.allTickets);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   switchToAssignedTickets(){
+    this.filterTickets();
     this.currentView = 'Assigned:';
-      this.dataSource = new MatTableDataSource(this.assignedTickets);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+
+    this.filteredTickets = this.filteredTickets.filter(ticket => ticket.assigned_tech_id === this.currentUser.id);
+    this.dataSource = new MatTableDataSource(this.filteredTickets);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   switchToGroupTickets(){
+    this.filterTickets();
     this.currentView = 'My Group Tickets:';
-      this.dataSource = new MatTableDataSource(this.groupTickets);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+
+    if (this.currentUser?.groups){
+    this.filteredTickets = this.filteredTickets.filter(ticket => this.currentUser?.groups?.some(group => group.id === ticket.group_id));
+    }
+    this.dataSource = new MatTableDataSource(this.filteredTickets);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   getMyTickets(){
-    this.usersTickets = this.ticketService.usersTickets.value;
-    this.dataSource = new MatTableDataSource(this.usersTickets);
+    this.filterTickets();
+    this.currentView = 'My Tickets:';
+    this.filteredTickets = this.filteredTickets.filter(ticket => ticket.user_id === this.currentUser.id);
+    this.dataSource = new MatTableDataSource(this.filteredTickets);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
   newTicket(){
-    this.router.navigate(['/ticket/new']);
+    this.dialog.open(TicketComponent, {
+      data: {
+        ticket: new Ticket(),
+        groups: this.groupList,
+        locations: this.locationList,
+        categories: this.categoryList,
+        statuses: this.statusList,
+        user: this.currentUser,
+        isNew: true
+      }
+    });
   }
+
+  rowSelected(row: Ticket){
+    this.dialog.open(TicketComponent, {
+      data: {
+        ticket: row,
+        groups: this.groupList,
+        locations: this.locationList,
+        categories: this.categoryList,
+        statuses: this.statusList,
+        user: this.currentUser,
+        isNew: false,
+        users: this.users
+      }
+    });
+  }
+
+  findUser(id: number){
+    return this.users.find(user => user.id === id);
+  }
+
+  findGroup(id: number){
+    return this.groupList.find(group => group.id === id);
+  }
+
+  findLocation(id: number){
+    return this.locationList.find(location => location.id === id);
+  }
+
+  findCategory(id: number){
+    return this.categoryList.find(category => category.id === id);
+  }
+
+  findStatus(id: number){
+    return this.statusList.find(status => status.id === id);
+  }
+
 
 }

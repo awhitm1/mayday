@@ -11,9 +11,15 @@
       <h5>Tech:</h5>
         <p><button class="button-sidenav" mat-raised-button (click)="switchToGroupTickets()">Claim Ticket</button></p>
         <p><button class="button-sidenav" mat-raised-button (click)="switchToAssignedTickets()">My Queue</button></p>
-        <p><button class="button-sidenav" mat-raised-button (click)="switchToAllTickets()">All Tickets</button></p>
+
     </div>
-  }
+    }
+    @if (this.currentUser.is_admin){
+      <div>
+        <h5>Admin:</h5>
+        <p><button class="button-sidenav" mat-raised-button (click)="switchToAllFilteredTickets()">All Open Tickets</button></p>
+      </div>
+    }
   </mat-sidenav>
   <mat-sidenav-content>
     <button mat-icon-button color="primary" aria-label="menu icon" (click)="sidenav.toggle()">
@@ -23,6 +29,9 @@
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Your keyword(s)" #input>
     </mat-form-field>
+    <mat-slide-toggle [(ngModel)]="viewClosed" (change)="this.filterTickets()" >
+      View Closed Tickets
+    </mat-slide-toggle>
 
     <div class="mat-elevation-z8">
       <h4>{{currentView}}</h4>
@@ -30,13 +39,13 @@
       <!-- Date Definition -->
       <ng-container matColumnDef="created_at">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-        <td mat-cell *matCellDef="let row"> {{row.created_at}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.created_at | date: 'medium'}} </td>
       </ng-container>
 
       <!-- Created By Definition -->
       <ng-container matColumnDef="user_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Created by </th>
-        <td mat-cell *matCellDef="let row"> {{row.user_id}} </td>
+        <td mat-cell *matCellDef="let row"> {{findUser(row.user_id)?.f_name}} {{findUser(row.user_id)?.l_name}}</td>
       </ng-container>
 
       <!-- Title Definition -->
@@ -54,36 +63,36 @@
       <!-- Status Definition -->
       <ng-container matColumnDef="status_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let row"> {{this.lists.statuses[row.status_id-1].name}} </td>
+        <td mat-cell *matCellDef="let row"> {{findStatus(row.status_id)?.name}} </td>
       </ng-container>
 
       <!-- Group Definition -->
       <ng-container matColumnDef="group_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Group </th>
-        <td mat-cell *matCellDef="let row"> {{this.lists.groups[row.group_id-1].name}} </td>
+        <td mat-cell *matCellDef="let row"> {{findGroup(row.group_id)?.name}} </td>
       </ng-container>
 
       <!-- Assigned Tech Definition -->
       <ng-container matColumnDef="assigned_tech">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Tech </th>
-        <td mat-cell *matCellDef="let row"> {{row.assigned_tech_id}} </td>
+        <td mat-cell *matCellDef="let row"> {{findUser(row.assigned_tech_id)?.f_name}} {{findUser(row.assigned_tech_id)?.l_name}} </td>
       </ng-container>
 
       <!-- Category Definition -->
       <ng-container matColumnDef="category_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
-        <td mat-cell *matCellDef="let row"> {{this.lists.categories[row.category_id].name}} </td>
+        <td mat-cell *matCellDef="let row"> {{findCategory(row.category_id)?.name}} </td>
       </ng-container>
 
       <!-- Location Definition -->
       <ng-container matColumnDef="location_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
-        <td mat-cell *matCellDef="let row"> {{this.lists.locations[row.location_id-1].name}} </td>
+        <td mat-cell *matCellDef="let row"> {{findLocation(row.location_id)?.name}} </td>
       </ng-container>
 
       <!-- Header and Row Declarations -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr mat-row (click)="rowSelected(row)"  *matRowDef="let row; columns: displayedColumns"></tr>
 
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row" *matNoDataRow>
@@ -98,6 +107,7 @@
 </mat-sidenav-container>
 <mat-toolbar class="footer">
   <p>All Rights Reserved. &copy; Aaron Whitmer, 2024</p>
+  <p> Contact Us: <span><i class="bi bi-envelope"></i><i class="bi bi-facebook"></i><i class="bi bi-instagram"></i><i class="bi bi-twitter-x"></i></span></p>
 </mat-toolbar>
 
 

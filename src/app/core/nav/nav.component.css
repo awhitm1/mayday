@@ -31,3 +31,15 @@ mat-sidenav {
   left: 0;
   right: 0;
 }
+
+button {
+  padding: 5px;
+  margin: 10px;
+}
+
+.nav-img {
+  width: 25px;
+  height: 25px;
+  margin-top: 10px;
+  border-radius: 75%;
+}

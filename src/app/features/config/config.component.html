@@ -1,0 +1,188 @@
+
+<mat-card class="config">
+  <mat-card-header>
+    <mat-card-title>Groups</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Available Groups:</p>
+      <ul>
+        @for (group of this.lists.groups; track $index){
+          <li>{{group.name}}</li>
+        }
+      </ul>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <form (ngSubmit)="addGroup($event)">
+      <div class="input-group mb-3">
+        <input type="text" #addgroup id="addgroup" name="addgroup" class="form-control" [(ngModel)]="new_group" placeholder="New group" aria-label="group" aria-describedby="basic-addon1">
+        <span class="input-group-text" id="group" (click)="addGroup(new_group)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg></span>
+      </div>
+    </form>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="config">
+  <mat-card-header>
+    <mat-card-title>Statuses</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Available Statuses:</p>
+      <ul>
+        @for (status of this.lists.statuses; track $index){
+          <li>{{status.name}}</li>
+        }
+      </ul>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <form (ngSubmit)="addStatus($event)">
+      <div class="input-group mb-3">
+        <input type="text" #addstatus id="addstatus" name="addstatus" class="form-control" [(ngModel)]="new_status" placeholder="New status" aria-label="status" aria-describedby="basic-addon1">
+        <span class="input-group-text" id="status" (click)="addStatus(new_status)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg></span>
+      </div>
+    </form>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="config">
+  <mat-card-header>
+    <mat-card-title>Locations</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Available Locations:</p>
+      <ul>
+        @for (loc of this.lists.locations; track $index){
+          <li>{{loc.name}}</li>
+        }
+      </ul>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <form (ngSubmit)="addLocation($event)">
+      <div class="input-group mb-3">
+        <input type="text" #addlocation id="addlocation" name="addlocation" class="form-control" [(ngModel)]="new_location" placeholder="New location" aria-label="status" aria-describedby="basic-addon1">
+        <span class="input-group-text" id="location" (click)="addLocation(new_location)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg></span>
+      </div>
+    </form>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="config">
+  <mat-card-header>
+    <mat-card-title>Categories</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Available Categories:</p>
+      <ul>
+        @for (cat of this.lists.categories; track $index){
+          <li>{{cat.name}}</li>
+        }
+      </ul>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <form (ngSubmit)="addCategory($event)">
+      <div class="input-group mb-3">
+        <input type="text" #addcategory id="addcategory" name="addcategory" class="form-control" [(ngModel)]="new_category" placeholder="New category" aria-label="category" aria-describedby="basic-addon1">
+        <span class="input-group-text" id="category" (click)="addCategory(new_category)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg></span>
+      </div>
+    </form>
+  </mat-card-actions>
+</mat-card>
+
+<div class="p-3">
+<h3>User Management:</h3>
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" matSort>
+  <!-- First Name -->
+  <ng-container matColumnDef="f_name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+    <td mat-cell *matCellDef="let row"> {{row.f_name}} </td>
+  </ng-container>
+
+  <!-- Last Name -->
+  <ng-container matColumnDef="l_name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+    <td mat-cell *matCellDef="let row"> {{row.l_name}} </td>
+  </ng-container>
+
+  <!-- Email -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+    <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+  </ng-container>
+
+  <!-- Is Tech -->
+  <ng-container matColumnDef="is_tech">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tech </th>
+    <td mat-cell *matCellDef="let row"> {{row.is_tech}} </td>
+  </ng-container>
+
+  <!-- Is Admin -->
+  <ng-container matColumnDef="is_admin">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Admin </th>
+    <td mat-cell *matCellDef="let row"> {{row.is_admin}} </td>
+  </ng-container>
+
+  <!-- Is Active -->
+  <ng-container matColumnDef="active">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Active </th>
+    <td mat-cell *matCellDef="let row"> {{row.active}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="groups">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Groups </th>
+    <td mat-cell *matCellDef="let row">
+       @for(group of row.groups; track group){
+        <mat-chip> {{group.name}}</mat-chip>
+       }
+    </td>
+  </ng-container>
+
+  <!-- Actions -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+    <td mat-cell *matCellDef="let row">
+      <span (click)="openDialog(row)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+        </svg>
+      </span>
+      <span (click)="delUser(row.id)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+          <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+        </svg>
+      </span>
+    </td>
+  </ng-container>
+
+  <!-- Header and Row Declarations -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  <!-- Row shown when there is no matching data. -->
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+  </tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+</div>
+
+

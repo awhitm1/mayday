@@ -20,8 +20,6 @@ export class AuthComponent {
   login(){
     this.authService.login(this.username, this.password).subscribe({
       next: res => {
-        console.log('Logged in with token: ', res.token);
-        console.log('User (from login): ', res.user);
         const currentUser: User = new User();
         currentUser.id = res.user.id;
         currentUser.email = res.user.email;
@@ -33,7 +31,6 @@ export class AuthComponent {
         currentUser.token = res.token;
         this.authService.setToken(res.token);
         this.authService.setUser(res.user);
-        this.authService.currentUser.next(res.user);
         this.router.navigate(['/queue']);
       },
       error: err => {

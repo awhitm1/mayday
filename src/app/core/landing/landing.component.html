@@ -1,43 +1,54 @@
-<!-- sign up -->
-<h1 style="align-items: center; color: #545454">Sign Up</h1>
-<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="form">
-  <div>
-    <mat-form-field>
-      <mat-label floatLabel="First Name">First Name</mat-label>
-      <input matInput formControlName="f_name" required>
-    </mat-form-field>
 
-    <mat-form-field>
-      <mat-label floatLabel="Last Name">Last Name</mat-label>
-      <input matInput formControlName="l_name" required>
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field>
-      <mat-label floatLabel="E-mail">E-mail</mat-label>
-      <input matInput formControlName="email" required>
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field>
-      <mat-label floatLabel="Password">Password</mat-label>
-      <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label floatLabel="Password Confirmation">Password Confirmation</mat-label>
-      <input matInput formControlName="password_confirmation" [type]="hide ? 'password' : 'text'" required>
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field>
-
-
-
+<div class="hero" id="hero1">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[0] + ')'"></div>
+    <div class="hero-text">
+      <h1>Welcome to Mayday Help Desk</h1>
+      <p>Streamline Your Organization's Support System</p>
+      <a class="btn" (click)="goToSignup()">Get Started</a>
+    </div>
   </div>
 
-  <button type="submit" [disabled]="!signUpForm.valid">Submit</button>
-  @for (error of errors; track $index){
-    <p>{{error}}</p>
-  }
-</form>
+  <div class="hero" id="hero2">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[1] + ')'"></div>
+    <div class="hero-text">
+      <h1>Key Features</h1>
+      <div class="feature">
+        <h1>Ticket Management System</h1>
+        <p>Track and manage all support tickets in one place.</p>
+      </div>
+      <div class="feature">
+        <h2>User Management</h2>
+        <p>Manage user accounts and permissions with ease.</p>
+      </div>
+      <div class="feature">
+        <h2>Reporting and Analytics</h2>
+        <p>Gain insights into your organization's support system.</p>
+      </div>
+      <a class="btn" (click)="goToSignup()">Get Started</a>
+    </div>
+  </div>
+
+  <div class="hero" id="hero3">
+    <div class="hero-image" [style.backgroundImage]="'url(' + heroImages[2] + ')'"></div>
+    <div class="hero-text">
+      <h1>Why Choose Mayday Help Desk</h1>
+      <div class="feature">
+        <h2>Customizable to Your Organization's Needs</h2>
+        <p>Adapt the system to fit your organization's unique requirements.</p>
+      </div>
+      <div class="feature">
+        <h2>Scalable Solution for Growing Teams</h2>
+        <p>Grow your team without worrying about outgrowing your support system.</p>
+      </div>
+      <div class="feature">
+        <h2>Streamlined Communication Channels</h2>
+        <p>Communicate with your team and users efficiently.</p>
+      </div>
+      <div class="feature">
+        <h2>Secure Data Handling</h2>
+        <p>Rest assured that your data is safe and secure.</p>
+      </div>
+      <a class="btn" (click)="goToSignup()">Get Started Today!</a>
+    </div>
+  </div>
+

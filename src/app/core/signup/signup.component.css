@@ -1,18 +1,5 @@
-mat-form-field.main {
-  display: block;}
-
-mat-form-field.details {
-  display: inline-block;
-  width: 25%;
-  padding: 5px;
-}
-button {
-  padding: 5px;
-  margin: 5px;
-}
-
 form {
-	max-width: 800px;
+	max-width: 400px;
 	margin: 2rem auto;
 	padding: 2rem;
 	background-color: #f9f9f9;
@@ -55,5 +42,3 @@ button[type='submit'] {
 button[type='submit']:hover {
 	background-color: #0056b3; /* Darker blue on hover */
 }
-
-

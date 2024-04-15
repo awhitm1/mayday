@@ -11,6 +11,10 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page"  routerLink="/queue">Help Desk</a>
         </li>
+        @if (this.currentUser?.is_tech){
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/kanban">Kan-ban</a>
+        }
         <li class="nav-item">
           <a class="nav-link" routerLink="/profile">Profile</a>
         </li>
@@ -23,8 +27,11 @@
     }
       <div class="d-flex">
         @if (authService.getToken()){
+          <img class="nav-img" src="{{imageRootUrl}}{{this.currentUser?.profile_image_url}}">
+          <p class="p-2"> Hello, {{this.currentUser?.f_name}}</p>
           <button mat-raised-button (click)="logout()">Logout</button>
         } @else{
+          <button mat-raised-button routerLink="/signup">Sign Up</button>
           <button mat-raised-button routerLink="/login">Login</button>
         }
       </div>

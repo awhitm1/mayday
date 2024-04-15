@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>User Config:</h2>
+<form [formGroup]="userConfigForm" (ngSubmit)="onSubmit()" class="form">
+<mat-dialog-content>
+    <div>
+      <h4>{{this.user.f_name}} {{this.user.l_name}}</h4>
+      <h5><a href="mailto: {{this.user.email}}">{{this.user.email}}</a></h5>
+    </div>
+    <div>
+      <mat-form-field class="config">
+        <mat-label floatLabel="is_tech">Tech</mat-label>
+        <mat-select matInput formControlName="is_tech" [(value)]="this.user.is_tech">
+          <mat-option [value]=true>True</mat-option>
+          <mat-option [value]=false>False</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="config">
+        <mat-label floatLabel="is_admin">Admin</mat-label>
+        <mat-select matInput formControlName="is_admin" [(value)]="this.user.is_admin">
+          <mat-option [value]="true">True</mat-option>
+          <mat-option [value]="false">False</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="config">
+        <mat-label floatLabel="active">Active</mat-label>
+        <mat-select matInput formControlName="active" [(value)]="this.user.active">
+          <mat-option [value]="true">True</mat-option>
+          <mat-option [value]="false">False</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="config">
+        <mat-label>Groups:</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter groups">
+          @for (grp of groups; track grp) {
+            <mat-chip-row
+              (removed)="remove(grp)">
+              {{grp.name}}
+              <button matChipRemove [attr.aria-label]="'remove ' + grp.name">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          }
+        </mat-chip-grid>
+
+        <input placeholder="Add group..." #groupInput [formControl]="groupCtrl"
+              [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"/>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            @for (group of filteredGroups | async; track group) {
+            <mat-option [value]="group">{{group.name}}</mat-option>
+           }
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" mat-button mat-dialog-close>Cancel</button>
+  <button type="submit" mat-button [disabled]="!userConfigForm.valid">Submit</button>
+</mat-dialog-actions>
+</form>

@@ -1,50 +1,89 @@
 <div class="container">
   @if (isNewTicket){<h1 style="align-items: center; color: #545454">New Ticket</h1>}
 
-  @else if (!isNewTicket && (this.selectedTicket.user_id == this.currentUser.id) && (this.selectedTicket.assigned_tech_id == null)){<h1 style="align-items: center; color: #545454">Update | Claim Ticket</h1>}
-  @else if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null)){<h1 style="align-items: center; color: #545454">Claim Ticket</h1>}
+  @else if (!isNewTicket && (this.selectedTicket.user_id == this.currentUser.id) && (this.selectedTicket.assigned_tech_id == null) && (this.currentUser.is_tech)){<h1 style="align-items: center; color: #545454">Update | Claim Ticket</h1>}
+  @else if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null) && (this.currentUser.is_tech)) {<h1 style="align-items: center; color: #545454">Claim Ticket</h1>}
   @else if (!isNewTicket && (this.selectedTicket.user_id == this.currentUser.id) && (this.selectedTicket.assigned_tech_id !== null)){<h1 style="align-items: center; color: #545454">Update Ticket</h1>}
   @else {<h1 style="align-items: center; color: #545454">View Ticket</h1>}
 
     <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()" class="form">
       <div>
+        @if (!isNewTicket){<h5>Ticket ID: {{this.selectedTicket.id}}</h5>
+        <p>Created by: {{ findItemById(this.selectedTicket.user_id, this.users).f_name }} {{ findItemById(this.selectedTicket.user_id, this.users).l_name }}</p>}
+        @if (this.selectedTicket.assigned_tech_id){<p>Claimed by: {{ findItemById(this.selectedTicket.assigned_tech_id, this.users).f_name }} {{ findItemById(this.selectedTicket.assigned_tech_id, this.users).l_name }}</p>}
+        @if (!this.selectedTicket.assigned_tech_id){ <p>Unclaimed</p> }
         <mat-form-field class="main">
           <mat-label floatLabel="Title">Title</mat-label>
-          <input matInput formControlName="title" [value]="this.selectedTicket.title" required>
+          <input matInput formControlName="title" [value]="this.selectedTicket.title" [disabled]="viewOnly" required>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="main">
           <mat-label floatLabel="Description">Description</mat-label>
-          <textarea matInput formControlName="description" [value]="this.selectedTicket.description" required></textarea>
+          <textarea matInput formControlName="description" [value]="this.selectedTicket.description" [disabled]="viewOnly" required></textarea>
           <mat-hint>Be descriptive</mat-hint>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="details">
           <mat-label floatLabel="Status">Status</mat-label>
-          <input matInput formControlName="status_id" [value]="this.selectedTicket.status_id" required>
+          <mat-select matInput formControlName="status_id" [(value)]="this.selectedTicket.status_id" [disabled]="viewOnly" required>
+            <mat-option>None</mat-option>
+            @for (status of statuses; track status) {
+            <mat-option [value]="status.id">{{status.name}}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field class="details">
           <mat-label floatLabel="Location">Location</mat-label>
-          <input matInput formControlName="location_id" [value]="this.selectedTicket.location_id" required>
+          <mat-select matInput formControlName="location_id" [(value)]="this.selectedTicket.location_id" [disabled]="viewOnly" required>
+            <mat-option>None</mat-option>
+            @for (loc of locations; track loc) {
+            <mat-option [value]="loc.id">{{loc.name}}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field class="details">
           <mat-label floatLabel="Category">Category</mat-label>
-          <input matInput formControlName="category_id" [value]="this.selectedTicket.category_id"required>
+          <mat-select matInput formControlName="category_id" [(value)]="this.selectedTicket.category_id" [disabled]="viewOnly" required>
+            <mat-option>None</mat-option>
+            @for (cat of categories; track cat) {
+            <mat-option [value]="cat.id">{{cat.name}}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field class="details">
           <mat-label floatLabel="Group">Group</mat-label>
-          <input matInput formControlName="group_id" [value]="this.selectedTicket.group_id" required>
+          <mat-select matInput formControlName="group_id" [(value)]="this.selectedTicket.group_id" [disabled]="viewOnly" required>
+            <mat-option>None</mat-option>
+            @for (group of groups; track group) {
+            <mat-option [value]="group.id">{{group.name}}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
 
       </div>
-      <button type="button" (click)="goBack()">Cancel</button>
-      @if (isNewTicket){  <button type="submit" [disabled]="!ticketForm.valid">Submit</button> }
-      @if (!isNewTicket && (this.selectedTicket.user_id === this.currentUser.id) ){  <button type="button" [disabled]="!ticketForm.valid" (click)="updateTicket()">Update</button> }
-      @if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null) && (this.selectedTicket.id !== undefined)){  <button type="button" (click)="claimTicket(this.selectedTicket.id)">Claim</button> }
+      <div>
+        <mat-form-field class="main">
+          <mat-label floatLabel="Comments">Add Comment</mat-label>
+          <textarea matInput formControlName="comment_content" [value]="this.newComment" [disabled]="viewOnly">
+          </textarea>
+        </mat-form-field>
+      </div>
+      <div>
+        @for (comment of this.selectedTicket.comments; track comment) {
+        <div class="comment">
+          <p>{{ findItemById(comment.user_id, this.users).f_name }} {{ findItemById(comment.user_id, this.users).l_name }}: {{comment.comment}}</p>
+          <small>{{comment.created_at | date: 'medium'}}</small>
+        </div>
+        }
+      </div>
+      <button type="button" (click)="closeDialog()">Cancel</button>
+      @if (isNewTicket){  <button type="button" [disabled]="!ticketForm.valid" (click)="onSubmit()">Submit</button> }
+      @if (!isNewTicket && (this.selectedTicket.user_id === this.currentUser.id) || (!isNewTicket && this.currentUser.is_admin) ){  <button type="button" [disabled]="!ticketForm.valid || viewOnly" (click)="updateTicket()">Update</button> }
+      @if (!isNewTicket && (this.selectedTicket.assigned_tech_id == null) && (this.selectedTicket.id !== undefined) && (this.currentUser.is_tech)){  <button type="button" (click)="claimTicket(this.selectedTicket.id)">Claim</button> }
     </form>
   </div>

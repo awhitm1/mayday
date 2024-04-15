@@ -1,3 +1,5 @@
+import { Group } from "./group.model";
+
 export class User {
   id!: number;
   email: string = '';
@@ -7,4 +9,6 @@ export class User {
   is_admin?: boolean = false;
   is_tech?: boolean = false;
   token?: string;
+  groups?: Group[] = [];
+  profile_image_url?: string;
 }

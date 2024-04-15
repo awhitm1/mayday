@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 
@@ -9,15 +9,21 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class AuthService {
-  public readonly tokenSubject = new BehaviorSubject<string | null>(null);
-  private readonly userSubject = new BehaviorSubject< User | null>(null);
-  currentUser = new BehaviorSubject<User | null>(null);
+  tokenSubject = new BehaviorSubject<string | null>(null);
+  userSubject = new BehaviorSubject< User | null>(null);
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    console.log('Auth Service Initialized');
+    if (this.getToken() && this.getUser()) {
+      this.tokenSubject.next(this.getToken());
+      this.userSubject.next(this.getUser());
+    }
+  }
+
 
   login(email: string, password:string){
     console.log('Logging in with username: ', email, ' and password: ', password);
-    return this.http.post<{token: string, user: User}>(`${environment.apiUrl}/login`, {email, password});
+    return this.http.post<{token: string, user: User}>(`${environment.apiUrl}login`, {email, password});
   }
 
   setToken(token: string){
@@ -29,9 +35,9 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  setUser(user: User){
-    localStorage.setItem('user', JSON.stringify(user));
-    this.userSubject.next(user);
+  setUser(user: any){
+    localStorage.setItem('user', user);
+    this.userSubject.next(JSON.parse(user));
   }
 
   getUser(){
@@ -41,11 +47,16 @@ export class AuthService {
   getAdmin(){
     return JSON.parse(localStorage.getItem('user') || '{}').is_admin;
   }
+
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.tokenSubject.next(null);
     this.userSubject.next(null);
     this.router.navigate(['/']);
+  }
+
+  getCurrentUser(){
+    return this.http.get<User>(`${environment.apiUrl}current_user`);
   }
 }
