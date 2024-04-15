@@ -47,7 +47,7 @@ export interface TicketData {
   templateUrl: './queue.component.html',
   styleUrl: './queue.component.css'
 })
-export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
+export class QueueComponent implements OnInit, OnDestroy {
   viewClosed: boolean = false;
   options = this._formBuilder.group({
     bottom: 0,
@@ -108,11 +108,11 @@ export class QueueComponent implements AfterViewInit, OnInit, OnDestroy {
     this.getMyTickets();
   }
 
-  ngAfterViewInit() {
-    this.dataSource = new MatTableDataSource(this.allTickets);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource = new MatTableDataSource(this.allTickets);
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  // }
 
   ngOnDestroy(): void {
     this.isTechSub.unsubscribe();
