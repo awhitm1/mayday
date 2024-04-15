@@ -4,7 +4,8 @@ import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
   MatDialogContent,
-  MatDialogClose, MatDialogActions
+  MatDialogClose, MatDialogActions,
+  MatDialogRef
 } from '@angular/material/dialog';
 import { DialogData } from '../config.component';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -33,7 +34,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class ConfigDialogComponent implements OnInit{
   // optionsTF: string[] = ['true', 'false'];
-
+  dialogRef: MatDialogRef<ConfigDialogComponent>;
 
   userConfigForm: FormGroup = new FormGroup({
     is_tech: new FormControl<boolean>(false),
@@ -60,7 +61,8 @@ export class ConfigDialogComponent implements OnInit{
 
   announcer = inject(LiveAnnouncer);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private userService: UserService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private userService: UserService, dialogRef: MatDialogRef<ConfigDialogComponent>) {
+    this.dialogRef = dialogRef;
     this.filteredGroups = this.groupCtrl.valueChanges.pipe(
       startWith(null),
       map((group: string | null) => group ? this._filter(group) : this.allGroups.slice())
@@ -123,11 +125,16 @@ export class ConfigDialogComponent implements OnInit{
     this.userService.updateUser(this.userConfigForm.value).subscribe({
       next: (user: User) => {
         console.log('User updated: ', user);
+        this.closeDialog();
       },
       error: (error: any) => {
         console.error('Error updating user: ', error);
       }
     });
+  }
+
+  closeDialog(){
+    this.dialogRef.close();
   }
 
 }
