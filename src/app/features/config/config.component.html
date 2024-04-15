@@ -1,10 +1,9 @@
 
 <mat-card class="config">
   <mat-card-header>
-    <mat-card-title>Groups</mat-card-title>
+    <mat-card-title>Groups:</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <p>Available Groups:</p>
       <ul>
         @for (group of this.lists.groups; track $index){
           <li>{{group.name}}</li>
@@ -26,10 +25,9 @@
 
 <mat-card class="config">
   <mat-card-header>
-    <mat-card-title>Statuses</mat-card-title>
+    <mat-card-title>Statuses:</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <p>Available Statuses:</p>
       <ul>
         @for (status of this.lists.statuses; track $index){
           <li>{{status.name}}</li>
@@ -51,10 +49,9 @@
 
 <mat-card class="config">
   <mat-card-header>
-    <mat-card-title>Locations</mat-card-title>
+    <mat-card-title>Locations:</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <p>Available Locations:</p>
       <ul>
         @for (loc of this.lists.locations; track $index){
           <li>{{loc.name}}</li>
@@ -76,10 +73,9 @@
 
 <mat-card class="config">
   <mat-card-header>
-    <mat-card-title>Categories</mat-card-title>
+    <mat-card-title>Categories:</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <p>Available Categories:</p>
       <ul>
         @for (cat of this.lists.categories; track $index){
           <li>{{cat.name}}</li>
