@@ -13,10 +13,9 @@
             <div class="container">
               <div class="row justify-left">
                 <div class="column">
-                  <p>ID:{{item.id}}</p>
-                </div>
-                <div class="column">
-                  <p>Created by: {{this.findUser(item.user_id)?.f_name}} {{this.findUser(item.user_id)?.l_name}}</p>
+                  <strong>
+                    ID:{{item.id}} | Created by: {{this.findUser(item.user_id)?.f_name}} {{this.findUser(item.user_id)?.l_name}}
+                  </strong>
                 </div>
               </div>
               <div class="row justify-content-between">

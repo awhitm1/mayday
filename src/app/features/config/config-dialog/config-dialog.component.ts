@@ -32,7 +32,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrl: './config-dialog.component.css'
 })
 export class ConfigDialogComponent implements OnInit{
-  optionsTF: string[] = ['true', 'false'];
+  // optionsTF: string[] = ['true', 'false'];
 
 
   userConfigForm: FormGroup = new FormGroup({
