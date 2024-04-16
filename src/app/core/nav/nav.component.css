@@ -35,14 +35,13 @@ mat-sidenav {
   right: 0;
 }
 
-button {
+/* button {
   padding: 5px;
   margin: 10px;
-}
+} */
 
 .nav-img {
   width: 40px;
   height: 40px;
-  padding: 1rem;
   border-radius: 75%;
 }
