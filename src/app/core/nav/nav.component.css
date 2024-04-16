@@ -2,6 +2,9 @@ mat-sidenav {
   padding-top: 10px;
 }
 
+.greeting {
+  padding: 1rem;
+}
 .nav-container {
   position: absolute;
   top: 60px;

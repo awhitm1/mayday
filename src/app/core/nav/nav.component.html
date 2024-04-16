@@ -28,7 +28,7 @@
       <div class="d-flex">
         @if (authService.getToken()){
           <img class="nav-img" src="{{imageRootUrl}}{{this.currentUser?.profile_image_url}}">
-          <p class="p-2"> Hello, {{this.currentUser?.f_name}}</p>
+          <p class="greeting"> Hello, {{this.currentUser?.f_name}}</p>
           <button mat-raised-button (click)="logout()">Logout</button>
         } @else{
           <button mat-raised-button routerLink="/signup">Sign Up</button>
